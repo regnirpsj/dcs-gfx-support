@@ -19,9 +19,9 @@ include_directories(SYSTEM ${GLM_INCLUDE_DIR})
 set(SRC)
 list(APPEND SRC "gtx/io.cpp")
 
-set(LIB "gli")
+set(LIB "hugh_gli")
 
 cma_setup_library(${LIB} SOURCES ${SRC} INCDIR "gli")
-cma_setup_export(${LIB})
+cma_setup_export(${LIB} PATH "gli")
 
 add_subdirectory(test EXCLUDE_FROM_ALL)

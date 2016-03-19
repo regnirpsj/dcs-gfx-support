@@ -22,9 +22,9 @@ list(APPEND SRC "gtx/utilities.cpp")
 set(LIBS)
 list(APPEND LIBS hugh_support)
 
-set(LIB "glm")
+set(LIB "hugh_glm")
 
 cma_setup_library(${LIB} SOURCES ${SRC} DEPENDENCIES ${LIBS} INCDIR "glm")
-cma_setup_export(${LIB})
+cma_setup_export(${LIB} PATH "glm")
 
 add_subdirectory(test EXCLUDE_FROM_ALL)
