@@ -23,10 +23,10 @@ addons:
 script:
 - mkdir extra && cd extra
 - git clone https://github.com/g-truc/gli.git gli-git
-- git clone https://github.com/regnirpsj/glm.git glm-regnirpsj-git
+- git clone https://github.com/g-truc/glm.git glm-git
 - cd ..
 - export GLI_ROOT_DIR=`pwd`/extra/gli-git
-- export GLM_ROOT_DIR=`pwd`/extra/glm-regnirpsj-git
+- export GLM_ROOT_DIR=`pwd`/extra/glm-git
 - export CC=gcc-5
 - export CXX=g++-5
 - mkdir build && cd build
