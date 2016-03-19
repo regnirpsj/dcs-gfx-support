@@ -16,9 +16,15 @@ addons:
       - cmake-data
       - gcc-5
       - g++-5
+      - git
       - libboost1.55-dev
 
 script:
-- mkdir build
-- cd build
+- mkdir extra && cd extra
+- git clone git@github.com:g-truc/gli.git gli-git
+- git clone git@github.com:regnirpsj/glm.git glm-regnirpsj-git
+- cd ..
+- export GLI_ROOT_DIR=`pwd`/extra/gli-git
+- export GLM_ROOT_DIR=`pwd`/extra/glm-regnirpsj-git
+- mkdir build && cd build
 - cmake -DCMAKE_INSTALL_PREFIX=../install .. && cmake --build . --target test_all && cmake --build . --target install
