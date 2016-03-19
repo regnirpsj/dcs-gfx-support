@@ -1,6 +1,6 @@
-===============
-DCS GFX Support
-===============
+==============================================
+Hull University Graphics Helper (HUGH) Support
+==============================================
 
 :Author: Jan P Springer <regnirpsj@gmail.com>
 
@@ -17,7 +17,7 @@ DCS GFX Support
 Introduction
 ============
 
-``dcs-gfx-support`` is an (experimental) infrastructure project to support the various graphics modules at the `Department of Computer Science`_, `The University of Hull`_.
+``hugh-support`` is an (experimental) infrastructure project to support the various graphics modules at the `Department of Computer Science`_, `The University of Hull`_.
 
 Building and Installation
 =========================
