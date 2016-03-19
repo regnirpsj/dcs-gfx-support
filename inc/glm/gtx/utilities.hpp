@@ -28,7 +28,7 @@ namespace glm {
   
   // types, exported (class, enum, struct, union, typedef)
 
-  struct GLM_EXPORT decompose {
+  struct HUGH_GLM_EXPORT decompose {
         
   public:
 
@@ -50,12 +50,12 @@ namespace glm {
      * \brief transformtion to be left multiplied to an opengl projection matrix for use in a
      *        D3D11 pipeline
      */
-    extern GLM_EXPORT mat4 const opengl_to_d3d;
+    extern HUGH_GLM_EXPORT mat4 const opengl_to_d3d;
 
     /**
      * \brief glm::inverse(opengl_to_d3d); \see opengl_to_d3d
      */
-    extern GLM_EXPORT mat4 const d3d_to_opengl;
+    extern HUGH_GLM_EXPORT mat4 const d3d_to_opengl;
     
   } // namespace convert {
   
@@ -109,7 +109,7 @@ namespace glm {
      *
      * \return converted matrix
      */
-    GLM_EXPORT mat4 transform(mat4 const&, decompose::order);
+    HUGH_GLM_EXPORT mat4 transform(mat4 const&, decompose::order);
   
     /**
      * \brief converts the input matrix into its equivalent as
@@ -119,11 +119,11 @@ namespace glm {
      *
      * \return converted matrix as well as rotation, scale, and translation parts
      */
-    GLM_EXPORT mat4 transform(mat4 const&      /* input            */,
-                              decompose::order /* output order     */,
-                              mat4&            /* rotation part    */,
-                              mat4&            /* scale part       */,
-                              mat4&            /* translation part */);
+    HUGH_GLM_EXPORT mat4 transform(mat4 const&      /* input            */,
+                                   decompose::order /* output order     */,
+                                   mat4&            /* rotation part    */,
+                                   mat4&            /* scale part       */,
+                                   mat4&            /* translation part */);
     
   } // namespace convert {
 

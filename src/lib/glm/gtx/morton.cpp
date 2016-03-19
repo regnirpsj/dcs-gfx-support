@@ -49,5 +49,5 @@ namespace glm {
 } // namespace glm {
 
 #if defined(_MSC_VER)
-GLM_EXPORT void getRidOfLNK4221GlmGtxMorton(){}
+HUGH_GLM_EXPORT void getRidOfLNK4221GlmGtxMorton(){}
 #endif

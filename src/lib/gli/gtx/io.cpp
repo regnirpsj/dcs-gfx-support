@@ -22,7 +22,7 @@
 
 // includes, project
 
-#include <glm/export.h>
+#include <gli/export.h>
 
 #define HUGH_USE_TRACE
 #undef HUGH_USE_TRACE
@@ -49,5 +49,5 @@ namespace gli {
 } // namespace gli {
 
 #if defined(_MSC_VER)
-GLM_EXPORT void getRidOfLNK4221GlmGtxLimits(){}
+HUGH_GLI_EXPORT void getRidOfLNK4221GliGtxIo(){}
 #endif
