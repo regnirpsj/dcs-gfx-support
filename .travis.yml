@@ -40,9 +40,17 @@ matrix:
             - clang-3.7
       env: COMPILER=clang++-3.7
 
+addons:
+  apt:
+    sources:
+      - george-edison55-precise-backports
+    packages:
+      - cmake
+      - cmake-data
+      - libboost-dev
+
 before_script:
-  - sudo apt-get update -qq
-  - sudo apt-get install libboost-dev
+  - cmake --version
 
 script:
 - mkdir build

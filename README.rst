@@ -2,6 +2,8 @@
 Hull University Graphics Helper (HUGH) Support
 ==============================================
 
+[![Build Status](https://travis-ci.org/regnirpsj/hugh-support.svg?branch=master)](https://travis-ci.org/regnirpsj/hugh-support)
+
 :Author: Jan P Springer <regnirpsj@gmail.com>
 
 .. contents::
