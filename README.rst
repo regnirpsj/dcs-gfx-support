@@ -9,16 +9,10 @@ DCS GFX Support
 .. _Boost:                          http://www.boost.org/
 .. _CMake:                          http://www.cmake.org/
 .. _Department of Computer Science: http://www2.hull.ac.uk/science/computer_science.aspx
-.. _DirectX:                        http://msdn.microsoft.com/en-us/library/windows/desktop/ee663274%28v=vs.85%29.aspx
 .. _Doxygen:                        http://www.doxygen.org/
-.. _FreeGLUT:                       http://freeglut.sourceforge.net/
-.. _GLEW:                           http://glew.sourceforge.net/
 .. _GLI:                            http://gli.g-truc.net/
 .. _GLM:                            http://glm.g-truc.net/
-.. _OGLplus:                        http://oglplus.org/
-.. _OpenGL:                         http://opengl.org/
 .. _The University of Hull:         http://www.hull.ac.uk/
-.. _cmake-modules:                  http://github.com/regnirpsj/cmake-modules
 
 Introduction
 ============
@@ -74,7 +68,6 @@ Mandatory:
 
 * `Boost`_
 * `GLM`_/`GLI`_
-* `cmake-modules`_
 
 Optional:
 
@@ -88,4 +81,4 @@ Acknowledgements
 License
 =======
 
-Copyright 2014-2016 `The University of Hull`_. Distributed under the LGPLv2.1 (see the accompanying file LICENSE).
+Copyright 2016 `The University of Hull`_. Distributed under the LGPLv2.1 (see the accompanying file LICENSE).
