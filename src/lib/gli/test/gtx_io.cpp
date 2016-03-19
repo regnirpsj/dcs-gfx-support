@@ -38,9 +38,9 @@ namespace {
 #include <boost/test/test_case_template.hpp>
 #include <boost/mpl/list.hpp>
 
-typedef boost::mpl::list<gli::texture1D,
-                         gli::texture2D,
-                         gli::texture3D> tex_types;
+using tex_types = boost::mpl::list<gli::texture1D,
+                                   gli::texture2D,
+                                   gli::texture3D>;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(test_gli_gtx_io, T, tex_types)
 {

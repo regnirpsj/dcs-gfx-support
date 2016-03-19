@@ -42,8 +42,8 @@ namespace {
   {
     static unsigned const max_precision(std::numeric_limits<long double>::digits10);
     
-    typedef std::numeric_limits<T>                      numlimits_t;
-    typedef std::numeric_limits<typename T::value_type> numlimits_t_value;
+    using numlimits_t       = std::numeric_limits<T>                      ;
+    using numlimits_t_value = std::numeric_limits<typename T::value_type>;
     
     BOOST_CHECK(numlimits_t::epsilon() == numlimits_t_value::epsilon());
 
@@ -68,26 +68,26 @@ namespace {
 #include <boost/test/test_case_template.hpp>
 #include <boost/mpl/list.hpp>
 
-typedef boost::mpl::list<glm::dmat2, glm::dmat3, glm::dmat4,
-                         glm::mat2,  glm::mat3,  glm::mat4> mat_types;
+using mat_types = boost::mpl::list<glm::dmat2, glm::dmat3, glm::dmat4,
+                                   glm::mat2,  glm::mat3,  glm::mat4>;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_limits_mat, T, mat_types)
 {
   check_epsilon<T>();
 }
 
-typedef boost::mpl::list<glm::quat, glm::fquat, glm::dquat> quat_types;
+using quat_types = boost::mpl::list<glm::quat, glm::fquat, glm::dquat>;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_limits_quat, T, quat_types)
 {
   check_epsilon<T>();
 }
 
-typedef boost::mpl::list<glm::bvec1, glm::bvec2, glm::bvec3, glm::bvec4,
-                         glm::dvec1, glm::dvec2, glm::dvec3, glm::dvec4,
-                         glm::vec1,  glm::vec2,  glm::vec3,  glm::vec4,
-                         glm::ivec1, glm::ivec2, glm::ivec3, glm::ivec4,
-                         glm::uvec1, glm::uvec2, glm::uvec3, glm::uvec4> vec_types;
+using vec_types = boost::mpl::list<glm::bvec1, glm::bvec2, glm::bvec3, glm::bvec4,
+                                   glm::dvec1, glm::dvec2, glm::dvec3, glm::dvec4,
+                                   glm::vec1,  glm::vec2,  glm::vec3,  glm::vec4,
+                                   glm::ivec1, glm::ivec2, glm::ivec3, glm::ivec4,
+                                   glm::uvec1, glm::uvec2, glm::uvec3, glm::uvec4>;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_limits_vec, T, vec_types)
 {

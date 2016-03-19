@@ -257,10 +257,10 @@ BOOST_AUTO_TEST_CASE(test_support_io_utils_array)
   BOOST_CHECK(test_array(std::wcout));
 }
 
-typedef boost::mpl::list<std::forward_list<unsigned>,
-                         std::list<unsigned>,
-                         std::set<unsigned>,
-                         std::vector<unsigned>> seq_types;
+using seq_types = boost::mpl::list<std::forward_list<unsigned>,
+                                   std::list<unsigned>,
+                                   std::set<unsigned>,
+                                   std::vector<unsigned>>;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(test_support_io_utils_seq_types, T, seq_types)
 {
@@ -268,8 +268,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(test_support_io_utils_seq_types, T, seq_types)
   BOOST_CHECK(test_sequence<T>(std::wcout));
 }
 
-typedef boost::mpl::list<std::map<unsigned,double>,
-                         std::unordered_map<unsigned,double>> assoc_types;
+using assoc_types = boost::mpl::list<std::map<unsigned,double>,
+                                     std::unordered_map<unsigned,double>>;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(test_support_io_utils_assoc_types, T, assoc_types)
 {

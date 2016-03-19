@@ -41,10 +41,10 @@ namespace {
 
 BOOST_AUTO_TEST_CASE(test_support_hasher)
 {
-  typedef std::pair<unsigned, double>                           pair_type;
-  typedef unsigned                                              mapped_type;
-  typedef std::hash<pair_type>                                  hash_type;
-  typedef std::unordered_map<pair_type, mapped_type, hash_type> ud_hash_map;
+  using pair_type   = std::pair<unsigned, double>;
+  using mapped_type = unsigned;
+  using hash_type   = std::hash<pair_type>;
+  using ud_hash_map = std::unordered_map<pair_type, mapped_type, hash_type>;
   
   ud_hash_map hmap;
 

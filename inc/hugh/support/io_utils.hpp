@@ -149,7 +149,7 @@ namespace hugh {
       template <typename CTy>
       class format_punct : public std::locale::facet {
 
-        typedef CTy char_type;
+        using char_type = CTy;
 
       public:
 
@@ -180,8 +180,8 @@ namespace hugh {
 
         };
 
-      typedef basic_format_saver<char>     format_saver;
-      typedef basic_format_saver<wchar_t> wformat_saver;
+      using format_saver  = basic_format_saver<char>;
+      using wformat_saver = basic_format_saver<wchar_t>;
     
       template <typename CTy>
       struct delimeter { 

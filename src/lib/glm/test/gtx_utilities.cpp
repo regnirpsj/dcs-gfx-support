@@ -80,8 +80,8 @@ BOOST_AUTO_TEST_CASE(test_glm_gtx_utilities_op_literal_rad)
 #endif
 }
 
-typedef boost::mpl::list<glm::vec1,  glm::vec2,  glm::vec3,  glm::vec4,
-                         glm::dvec1, glm::dvec2, glm::dvec3, glm::dvec4> rev_types;
+using rev_types = boost::mpl::list<glm::vec1,  glm::vec2,  glm::vec3,  glm::vec4,
+                                   glm::dvec1, glm::dvec2, glm::dvec3, glm::dvec4>;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_utilities_rev, T, rev_types)
 {
@@ -96,7 +96,7 @@ BOOST_AUTO_TEST_CASE(test_glm_gtx_utilities_sgn)
 
 BOOST_AUTO_TEST_CASE(test_glm_gtx_utilities_convert_transform)
 {
-  typedef std::pair<glm::mat4 const, glm::mat4 const> matrix_pair;
+  using matrix_pair = std::pair<glm::mat4 const, glm::mat4 const>;
   
 #if defined(_MSC_VER) && (_MSC_VER <= 1900)
   glm::vec3::value_type const angle(float(45 _deg));

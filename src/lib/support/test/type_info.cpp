@@ -49,13 +49,13 @@ namespace {
 #include <boost/test/test_case_template.hpp>
 #include <boost/mpl/list.hpp>
 
-typedef boost::mpl::list<bool,
-                         char,
-                         int,
-                         float,
-                         double,
-                         udt_derived,
-                         string_list_type> types;
+using types = boost::mpl::list<bool,
+                               char,
+                               int,
+                               float,
+                               double,
+                               udt_derived,
+                               string_list_type>;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(test_support_type_info_demangle, T, types)
 {

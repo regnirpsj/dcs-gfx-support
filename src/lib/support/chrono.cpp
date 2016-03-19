@@ -56,7 +56,7 @@ namespace {
 #  define CLOCK_PROCESS_CPUTIME_ID 3
 #  define CLOCK_THREAD_CPUTIME_ID  4
 
-  typedef int clockid_t;
+  using clockid_t = int;
   
 #  if defined(_MSC_VER) && (_MSC_VER < 1900)
   struct timespec {

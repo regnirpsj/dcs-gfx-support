@@ -96,7 +96,7 @@ namespace {
 
 #if !defined(_MSC_VER) || (defined(_MSC_VER) && (_MSC_VER > 1900))
 
-typedef boost::mpl::list<signed, unsigned> array_types;
+using array_types = boost::mpl::list<signed, unsigned>;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_array1, T, array_types)
 {
@@ -234,7 +234,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_array5, T, array_types)
 //glm::bvec1,
 //glm::dvec1,
 //glm::vec1,
-typedef boost::mpl::list<glm::ivec1,glm::uvec1> vec1_types;
+using vec1_types = boost::mpl::list<glm::ivec1,glm::uvec1>;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_vec1, T, vec1_types)
 {
@@ -260,7 +260,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_vec1, T, vec1_types)
 //glm::bvec2,
 //glm::dvec2,
 //glm::vec2,
-typedef boost::mpl::list<glm::ivec2,glm::uvec2> vec2_types;
+using vec2_types = boost::mpl::list<glm::ivec2,glm::uvec2>;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_vec2, T, vec2_types)
 {
@@ -288,7 +288,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_vec2, T, vec2_types)
 //glm::bvec3,
 //glm::dvec3,
 //glm::vec3,
-typedef boost::mpl::list<glm::ivec3,glm::uvec3> vec3_types;
+using vec3_types = boost::mpl::list<glm::ivec3,glm::uvec3>;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_vec3, T, vec3_types)
 {
@@ -318,7 +318,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_vec3, T, vec3_types)
 //glm::bvec4,
 //glm::dvec4,
 //glm::vec4,
-typedef boost::mpl::list<glm::ivec4,glm::uvec4> vec4_types;
+using vec4_types = boost::mpl::list<glm::ivec4,glm::uvec4>;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_vec4, T, vec4_types)
 {
