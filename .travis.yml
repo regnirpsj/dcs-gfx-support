@@ -1,7 +1,15 @@
 # Use new trusty images, should yield newer compilers and packages
-sudo: required
+sudo: false
 dist: precise
 language: cpp
+
+addons:
+  apt:
+    sources:
+      - george-edison55-precise-backports
+    packages:
+      - cmake
+      - cmake-data
 
 matrix:
   include:
@@ -39,15 +47,6 @@ matrix:
           packages:
             - clang-3.7
       env: COMPILER=clang++-3.7
-
-addons:
-  apt:
-    sources:
-      - george-edison55-precise-backports
-    packages:
-      - cmake
-      - cmake-data
-      - libboost-dev
 
 before_script:
   - cmake --version
