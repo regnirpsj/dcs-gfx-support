@@ -6,6 +6,7 @@ compiler:
 sudo: false
 
 addons:
+  ssh_known_hosts: github.com
   apt:
     sources:
       - ubuntu-toolchain-r-test
