@@ -13,7 +13,7 @@ endif()
 include(CMakeAddons_SetupVariables)
 
 # GL[I|M]
-set(GLI_MINIMUM_VERSION "0.8.0")
+set(GLI_MINIMUM_VERSION "0.8.1")
 set(GLM_MINIMUM_VERSION "0.9.7")
 if(CMAKE_HOST_WIN32)
   set(GLI_ROOT_DIR "C:/Tools/gli/gli-git")
