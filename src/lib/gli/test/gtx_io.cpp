@@ -38,15 +38,15 @@ namespace {
 #include <boost/test/test_case_template.hpp>
 #include <boost/mpl/list.hpp>
 
-using tex_types = boost::mpl::list<gli::texture1D,
-                                   gli::texture2D,
-                                   gli::texture3D>;
+using tex_types = boost::mpl::list<gli::texture1d,
+                                   gli::texture2d,
+                                   gli::texture3d>;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(test_gli_gtx_io, T, tex_types)
 {
   using namespace gli;
   
-  T const t(FORMAT_RGBA8_UNORM_PACK32, typename T::texelcoord_type(1));
+  T const t(FORMAT_RGBA8_UNORM_PACK32, typename T::extent_type(1), 1);
 
   BOOST_CHECK(!t.empty());
   

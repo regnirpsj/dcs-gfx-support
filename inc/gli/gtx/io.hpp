@@ -36,11 +36,13 @@ namespace gli {
   template <typename CTy, typename CTr>
   std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&, format const&);
   template <typename CTy, typename CTr>
-  std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&, texture1D const&);
-  template <typename CTy, typename CTr, typename T>
-  std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&, texture2D const&);
+  std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&, target const&);
   template <typename CTy, typename CTr>
-  std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&, texture3D const&);
+  std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&, texture1d const&);
+  template <typename CTy, typename CTr, typename T>
+  std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&, texture2d const&);
+  template <typename CTy, typename CTr>
+  std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&, texture3d const&);
   
   // functions, exported (extern)
   
