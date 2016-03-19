@@ -17,7 +17,7 @@ addons:
       - gcc-5
       - g++-5
       - git
-      - libboost1.55-dev
+      - libboost1.55-all-dev
 
 script:
 - mkdir extra && cd extra
