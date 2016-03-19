@@ -10,6 +10,7 @@ include(compiler/common-clang-gnu)
 
 set(GLOBAL_COMPILER_FLAGS "${GLOBAL_COMPILER_FLAGS} -fdiagnostics-show-option")
 set(GLOBAL_COMPILER_FLAGS "${GLOBAL_COMPILER_FLAGS} -ferror-limit=5")
+set(GLOBAL_COMPILER_FLAGS "${GLOBAL_COMPILER_FLAGS} -Wno-missing-braces")
 
 if(${CMAKE_CXX_COMPILER_VERSION} VERSION_GREATER "3.0")
   set(GLOBAL_COMPILER_FLAGS "-std=c++11 ${GLOBAL_COMPILER_FLAGS}")
