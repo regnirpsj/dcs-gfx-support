@@ -6,7 +6,6 @@ compiler:
 sudo: false
 
 addons:
-  ssh_known_hosts: github.com
   apt:
     sources:
       - ubuntu-toolchain-r-test
@@ -22,8 +21,8 @@ addons:
 
 script:
 - mkdir extra && cd extra
-- git clone git@github.com:g-truc/gli.git gli-git
-- git clone git@github.com:regnirpsj/glm.git glm-regnirpsj-git
+- git clone https://github.com/g-truc/gli.git gli-git
+- git clone https://github.com/regnirpsj/glm.git glm-regnirpsj-git
 - cd ..
 - export GLI_ROOT_DIR=`pwd`/extra/gli-git
 - export GLM_ROOT_DIR=`pwd`/extra/glm-regnirpsj-git
