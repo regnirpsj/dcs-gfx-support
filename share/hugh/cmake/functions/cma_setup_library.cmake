@@ -47,6 +47,9 @@ function(cma_setup_library LIB_NAME)
     endif()
   endif()
 
+  file(GLOB TOPLVLHDR RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${LIB_INCDIR}*.hpp)
+  list(APPEND LIB_SOURCES ${TOPLVLHDR})
+
   file(GLOB_RECURSE PUBHDRS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${LIB_INCDIR}/*.hpp)
   list(APPEND LIB_SOURCES ${PUBHDRS})
 
@@ -102,7 +105,13 @@ function(cma_setup_library LIB_NAME)
             DESTINATION ${${PROJECT_NAME}_HEADER_DIRECTORY}/${LIB_INCDIR_INSTALL}
             COMPONENT   ${${PROJECT_NAME}_HDR_COMPONENT_NAME}
             PATTERN "*~" EXCLUDE)
-   endif()
+  endif()
 
-   cma_add_target_to_list(${LIB_NAME} CMAKE_TARGET_LIST)
+  if (TOPLVLHDR)
+    install(FILES       ${TOPLVLHDR}
+            DESTINATION ${${PROJECT_NAME}_HEADER_DIRECTORY}/${LIB_INCDIR_INSTALL}/..
+            COMPONENT   ${${PROJECT_NAME}_HDR_COMPONENT_NAME})
+  endif()
+
+  cma_add_target_to_list(${LIB_NAME} CMAKE_TARGET_LIST)
 endfunction()
