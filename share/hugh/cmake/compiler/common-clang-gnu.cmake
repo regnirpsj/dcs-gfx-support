@@ -21,6 +21,9 @@ if(${PROJECT_NAME}_PROFILE)
   set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -pg")
 endif()
 
+# [http://stackoverflow.com/questions/17150075]
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-as-needed")
+
 # linker flags
 if("Release" STREQUAL "${CMAKE_BUILD_TYPE}")
   set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-O1")
