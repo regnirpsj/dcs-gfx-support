@@ -18,7 +18,9 @@ matrix:
             - git
             - libboost1.55-all-dev
             - g++-5
-      env: COMPILER=g++-5
+      env:
+        - CC=gcc-5
+        - CXX=g++-5
     - compiler: clang
       addons:
         apt:
@@ -33,7 +35,9 @@ matrix:
             - git
             - libboost1.55-all-dev
             - clang-3.7
-      env: COMPILER=clang++-3.7
+      env:
+        - CC=clang-3.7
+        - CXX=clang++-3.7
       
 script:
 - mkdir extra && cd extra
