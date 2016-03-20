@@ -6,12 +6,8 @@
 #                                                                                                  #
 ####################################################################################################
 
-if(NOT CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/install")
-
-  if(DEFINED ENV{HUGH_INSTALL_PREFIX})
-    set(CMAKE_INSTALL_PREFIX $ENV{HUGH_INSTALL_PREFIX})
-  endif()
+if(DEFINED ENV{HUGH_INSTALL_PREFIX})
+  set(CMAKE_INSTALL_PREFIX $ENV{HUGH_INSTALL_PREFIX})
 endif()
 
 if(VERBOSE)
