@@ -52,7 +52,7 @@ set(_hugh_LIBRARY_SEARCH_DIRS
 find_path(HUGH_INCLUDE_DIRS
           NAMES "hugh/support.hpp"
           HINTS ${_hugh_HEADER_SEARCH_DIRS}
-          DOC   "The directory where <hugh/support> resides")
+          DOC   "The directory where <hugh/support.hpp> resides")
 list(REMOVE_DUPLICATES HUGH_INCLUDE_DIRS)
 
 foreach(lib ${HUGH_FIND_COMPONENTS})
@@ -70,10 +70,10 @@ find_package_handle_standard_args(HUGH
                                   FOUND_VAR     HUGH_FOUND
                                   REQUIRED_VARS HUGH_ROOT_DIR HUGH_INCLUDE_DIRS HUGH_LIBRARIES)
 
-#if(HUGH_FOUND AND VERBOSE)
+if(HUGH_FOUND AND VERBOSE)
   message(STATUS "HUGH setup:\n"
     "   HUGH_ROOT_DIR     = ${HUGH_ROOT_DIR}\n"
     "   HUGH_INCLUDE_DIRS = ${HUGH_INCLUDE_DIRS}\n"
     "   HUGH_LIBRARIES    = ${HUGH_LIBRARIES}"
     )
-#endif()
+endif()
