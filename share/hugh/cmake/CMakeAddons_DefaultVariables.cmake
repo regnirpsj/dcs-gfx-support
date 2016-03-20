@@ -21,3 +21,10 @@ if(VERBOSE)
 else()
   set(Boost_FIND_QUIETLY ON)
 endif()
+
+# Cmake 'install'
+if(VERBOSE)
+  set(CMAKE_INSTALL_MESSAGE ALWAYS)
+else()
+  set(CMAKE_INSTALL_MESSAGE LAZY)
+endif()
