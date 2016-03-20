@@ -13,4 +13,4 @@ endif()
 include(CMakeAddons_SetupOptions)
 
 # tracing
-option(DCS08961_TRACE_ALL "Enable runtime function tracing for everything!" OFF)
+option(HUGH_TRACE_ALL "Enable runtime function tracing for everything!" OFF)
