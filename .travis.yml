@@ -40,12 +40,15 @@ matrix:
         - CXX=clang++-3.7
       
 script:
-- mkdir extra && cd extra
-- git clone https://github.com/g-truc/gli.git gli-git
-- git clone https://github.com/g-truc/glm.git glm-git
-- cd ..
-- export GLI_ROOT_DIR=`pwd`/extra/gli-git
-- export GLM_ROOT_DIR=`pwd`/extra/glm-git
-- export CMAKE_INSTALL_PREFIX=`pwd`/install
-- mkdir build && cd build
-- cmake .. && cmake --build . --target test_all && cmake --build . --target install
+  - mkdir extra && cd extra
+  - git clone https://github.com/g-truc/gli.git gli-git
+  - git clone https://github.com/g-truc/glm.git glm-git
+  - cd ..
+  - export GLI_ROOT_DIR=`pwd`/extra/gli-git
+  - export GLM_ROOT_DIR=`pwd`/extra/glm-git
+  - export CMAKE_INSTALL_PREFIX=`pwd`/install
+  - export CMAKE_C_COMPILER=$CC
+  - export CMAKE_CXX_COMPILER=$CXX
+  - env
+  - mkdir build && cd build
+  - cmake .. && cmake --build . --target test_all && cmake --build . --target install
