@@ -46,6 +46,9 @@ list(APPEND SRC "functions/cma_setup_library.cmake")
 list(APPEND SRC "functions/cma_setup_test.cmake")
 list(APPEND SRC "functions/cma_utilities.cmake")
 
-install(FILES ${SRC}
-        DESTINATION ${${PROJECT_NAME}_SHARE_DIRECTORY}/hugh/cmake
-	COMPONENT   ${${PROJECT_NAME}_HDR_COMPONENT_NAME})
+foreach(file ${SRC})
+  get_filename_component(dir ${file} DIRECTORY)
+  install(FILES       ${file}
+          DESTINATION ${${PROJECT_NAME}_SHARE_DIRECTORY}/hugh/cmake/${dir}
+	  COMPONENT   ${${PROJECT_NAME}_HDR_COMPONENT_NAME})
+endforeach()
