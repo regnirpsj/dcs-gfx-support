@@ -16,12 +16,13 @@
 
 #include <array>                   // std::array<>
 #include <boost/intrusive_ptr.hpp> // boost::intrusive_ptr<>
-#include <condition_variable>      // std::condition_variable
+#include <memory>                  // std::unique_ptr<>
 #include <mutex>                   // std::mutex
 #include <thread>                  // std::thread
 
 // includes, project
 
+#include <hugh/support/chrono.hpp>
 #include <hugh/support/refcounted.hpp>
 
 // internal unnamed namespace
@@ -38,18 +39,14 @@ namespace {
 
     explicit refcount_user(refcounted_test* a)
       : rt_(a)
-    {
-      //rt_->add_ref();
-    }
+    {}
 
     ~refcount_user()
-    {
-      //rt_->sub_ref();
-    }
+    {}
     
   private:
 
-    refcounted_test* rt_;
+    boost::intrusive_ptr<refcounted_test> rt_;
     
   };
   
@@ -64,156 +61,74 @@ namespace {
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 
-// mh, since using boost::intrusive_ref_counter<T, ...> these tests need to be rewritten
-#if 0
-BOOST_AUTO_TEST_CASE(test_support_refcounted_add_ref)
+BOOST_AUTO_TEST_CASE(test_support_refcounted_ctor)
 {
-  refcounted_test a;
+  boost::intrusive_ptr<refcounted_test> a(new refcounted_test);
 
-  a.add_ref();
-  
-  BOOST_CHECK(1 == a.get_ref());
+  BOOST_CHECK(1 == a->use_count());
+  {
+    refcount_user b(a.get());
+
+    BOOST_CHECK(2 == a->use_count());
+  }
+  BOOST_CHECK(1 == a->use_count());
 }
 
-BOOST_AUTO_TEST_CASE(test_support_refcounted_sub_ref)
+BOOST_AUTO_TEST_CASE(test_support_refcounted_replace)
 {
-  refcounted_test a;
+  boost::intrusive_ptr<refcounted_test> a(new refcounted_test);
 
-  a.add_ref();
-  a.add_ref();
-  a.sub_ref();
-  
-  BOOST_CHECK(1 == a.get_ref());
+  BOOST_CHECK(1 == a->use_count());
+  {
+    boost::intrusive_ptr<refcounted_test> b(a);
+
+    BOOST_CHECK(a == b.get());
+    BOOST_CHECK(2 == b->use_count());
+    BOOST_CHECK(2 == a->use_count());
+    
+    b = new refcounted_test;
+
+    BOOST_CHECK(a != b.get());
+    BOOST_CHECK(1 == b->use_count());
+    BOOST_CHECK(1 == a->use_count());
+  }
+  BOOST_CHECK(1 == a->use_count());
 }
 
 BOOST_AUTO_TEST_CASE(test_support_refcounted_async)
 {
-  std::array<std::thread*, 10> const tpool = {
-    { }
-  };
+  std::string const                     l(20, '-'); 
+  boost::intrusive_ptr<refcounted_test> a(new refcounted_test);
 
-  refcounted_test a;
-  std::mutex      m;
-  
-  for (auto t : tpool) {
-    t = new std::thread([&]{        
-        a.add_ref();
-        a.add_ref();
-        a.sub_ref();
+  BOOST_CHECK       (1 == a->use_count());
+  BOOST_TEST_MESSAGE(std::this_thread::get_id() << ':' << a->use_count() << '\n' << l);
 
-#if 1
-        {
-          std::lock_guard<std::mutex> lk(m);
-          
-          BOOST_TEST_MESSAGE(std::this_thread::get_id() << ':' << a.get_ref());
-        }
-#endif
-      });
+  {
+    std::array<std::unique_ptr<std::thread>, 10> tp = { { } };
+    std::chrono::microseconds const              d(tp.size());
+    std::mutex                                   m;
     
-    t->detach();
-  }
-  
-  std::this_thread::sleep_for(std::chrono::seconds(1));
-  
-  for (auto t : tpool) {    
-    delete t;
-  }
-  
-  BOOST_CHECK(tpool.size() == unsigned(a.get_ref()));
+    for (auto& t : tp) {
+      t.reset(new std::thread([&]{
+            refcount_user const b(a.get());
 
-#if 1
-  BOOST_TEST_MESSAGE(a.get_ref());
-#endif
-}
+            {
+              std::lock_guard<std::mutex> lk(m);
 
-BOOST_AUTO_TEST_CASE(test_support_refcounted_user)
-{
-  refcounted_test* a(new refcounted_test);
-  refcount_user    b(a);
+              BOOST_CHECK       (1           <  a->use_count());
+              BOOST_CHECK       (tp.size()+1 >= a->use_count());
+              BOOST_TEST_MESSAGE(std::this_thread::get_id() << ':' << a->use_count());
+            }
+
+            std::this_thread::sleep_for(d);
+          }));
+    
+      t->detach();
+    }
   
-  {
-    refcount_user bb(a);
-
-    BOOST_CHECK(2 == a->get_ref());
+    std::this_thread::sleep_for((tp.size() * 2) * d);
   }
 
-  BOOST_CHECK(1 == a->get_ref());
+  BOOST_CHECK       (1 == a->use_count());
+  BOOST_TEST_MESSAGE(l << '\n' << std::this_thread::get_id() << ':' << a->use_count());
 }
-
-BOOST_AUTO_TEST_CASE(test_support_refcounted_guard)
-{
-  refcounted_test* a(new refcounted_test);
-
-  a->add_ref();
-  
-  {
-    support::refcounted::guard const rcg(a);
-  
-    BOOST_CHECK(2 == a->get_ref());
-  }
-
-  BOOST_CHECK(1 == a->get_ref());
-}
-
-#if defined(_MSC_VER) && (_MSC_VER < 1900)
-BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES(test_support_refcounted_intrusive_ptr_0, 1);
-#endif
-
-BOOST_AUTO_TEST_CASE(test_support_refcounted_intrusive_ptr_0)
-{
-  refcounted_test* rct(new refcounted_test);
-  
-  BOOST_CHECK(0 == rct->use_count());
-  {
-    boost::intrusive_ptr<refcounted_test> irct(rct);
-
-    BOOST_CHECK(1 == irct->use_count());
-  }
-  BOOST_CHECK(0 == rct->use_count());
-}
-
-BOOST_AUTO_TEST_CASE(test_support_refcounted_intrusive_ptr_1)
-{
-  refcounted_test* rct(new refcounted_test);
-
-  // rct->add_ref();
-  
-  BOOST_CHECK(1 == rct->use_count());
-  {
-    boost::intrusive_ptr<refcounted_test> irct(rct);
-
-    BOOST_CHECK(2 == irct->use_count());
-  }
-  BOOST_CHECK(1 == rct->use_count());
-
-  // rct->sub_ref();
-}
-
-#if defined(_MSC_VER) && (_MSC_VER < 1900)
-BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES(test_support_refcounted_intrusive_ptr_2, 1);
-#endif
-
-BOOST_AUTO_TEST_CASE(test_support_refcounted_intrusive_ptr_2)
-{  
-  refcounted_test* rct(new refcounted_test);
-
-  BOOST_CHECK(0 == rct->use_count());
-  {
-    boost::intrusive_ptr<refcounted_test> irct(rct);
-
-    BOOST_CHECK(rct == irct.get());
-    BOOST_CHECK(  1 == irct->use_count());
-
-    irct = new refcounted_test;
-
-    BOOST_CHECK(rct != irct.get());
-    BOOST_CHECK(  1 == irct->use_count());
-  }
-  BOOST_CHECK(0 == rct->use_count());
-}
-#else // #if 0
-BOOST_AUTO_TEST_CASE(test_support_refcounted_dummy)
-{  
-  BOOST_CHECK(true);
-}
-#endif // #if 0
