@@ -1,25 +1,40 @@
+# -*- Mode: YAML -*-
+
+sudo: false # request container-base infrastructure
 language: cpp
 
-compiler:
-  - gcc
-
-sudo: required
-dist: trusty
-
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-      - george-edison55-precise-backports
-      - boost-latest
-    packages:
-      - cmake
-      - cmake-data
-      - gcc-5
-      - g++-5
-      - git
-      - libboost1.55-all-dev
-
+matrix:
+  include:
+    - compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - george-edison55-precise-backports
+            - boost-latest
+          packages:
+            - cmake
+            - cmake-data
+            - git
+            - libboost1.55-all-dev
+            - g++-5
+      env: COMPILER=g++-5
+    - compiler: clang
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.7
+            - george-edison55-precise-backports
+            - boost-latest
+          packages:
+            - cmake
+            - cmake-data
+            - git
+            - libboost1.55-all-dev
+            - clang-3.7
+      env: COMPILER=clang++-3.7
+      
 script:
 - mkdir extra && cd extra
 - git clone https://github.com/g-truc/gli.git gli-git
@@ -27,7 +42,6 @@ script:
 - cd ..
 - export GLI_ROOT_DIR=`pwd`/extra/gli-git
 - export GLM_ROOT_DIR=`pwd`/extra/glm-git
-- export CC=gcc-5
-- export CXX=g++-5
+- export CMAKE_INSTALL_PREFIX=`pwd`/install
 - mkdir build && cd build
-- cmake -DCMAKE_INSTALL_PREFIX=../install .. && cmake --build . --target test_all && cmake --build . --target install
+- cmake .. && cmake --build . --target test_all && cmake --build . --target install
