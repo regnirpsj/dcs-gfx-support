@@ -32,7 +32,7 @@ list(APPEND SRC "thread.cpp")
 list(APPEND SRC "trace.cpp")
 list(APPEND SRC "type_info.cpp")
 
-#add_definitions("-DUKACHULLDCS_ALL_TRACE")
+#add_definitions("-DHUGH_ALL_TRACE")
 
 set(LIBS)
 list(APPEND LIBS ${LIB})
