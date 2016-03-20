@@ -48,7 +48,6 @@ script:
   - cd ..
   - export GLI_ROOT_DIR=`pwd`/extra/gli-git
   - export GLM_ROOT_DIR=`pwd`/extra/glm-git
-  - export CMAKE_INSTALL_PREFIX=`pwd`/install
-  - env
+  - export HUGH_INSTALL_PREFIX=`pwd`/install
   - mkdir build && cd build
-  - cmake .. && cmake --build . --target test_all && cmake --build . --target install
+  - cmake -DVERBOSE=1 .. && cmake --build . --target test_all && cmake --build . --target install

@@ -16,6 +16,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 include(CheckOutOfTreeBuild)
 include(SetupInitialCache)
 include(SetupBuildType)
+include(SetupInstallPrefix)
 include(SetupPlatformAndArchitecture)
 include(SetupFunctionsAndMacros)
 
