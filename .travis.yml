@@ -43,8 +43,8 @@ script:
   - export CC=$MATRIX_CC
   - export CXX=$MATRIX_CXX
   - mkdir extra && cd extra
-  - git clone https://github.com/g-truc/gli.git gli-git
-  - git clone https://github.com/g-truc/glm.git glm-git
+  - git clone http://github.com/g-truc/gli.git gli-git
+  - git clone http://github.com/g-truc/glm.git glm-git
   - cd ..
   - export GLI_ROOT_DIR=`pwd`/extra/gli-git
   - export GLM_ROOT_DIR=`pwd`/extra/glm-git
