@@ -113,5 +113,12 @@ function(cma_setup_library LIB_NAME)
             COMPONENT   ${${PROJECT_NAME}_HDR_COMPONENT_NAME})
   endif()
 
+  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/version.hpp.in)
+    configure_file(version.hpp.in version.hpp @ONLY)
+    install(FILES       ${CMAKE_CURRENT_BINARY_DIR}/version.hpp
+            DESTINATION ${${PROJECT_NAME}_HEADER_DIRECTORY}/${LIB_INCDIR_INSTALL}
+            COMPONENT   ${${PROJECT_NAME}_HDR_COMPONENT_NAME})
+  endif()
+
   cma_add_target_to_list(${LIB_NAME} CMAKE_TARGET_LIST)
 endfunction()
