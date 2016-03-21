@@ -1,0 +1,21 @@
+// -*- Mode:C++ -*-
+
+/**************************************************************************************************/
+/*                                                                                                */
+/* Copyright (C) 2016 University of Hull                                                          */
+/*                                                                                                */
+/**************************************************************************************************/
+/*                                                                                                */
+/*  module     :  hugh/support/version.hpp                                                        */
+/*  project    :                                                                                  */
+/*  description:                                                                                  */
+/*                                                                                                */
+/**************************************************************************************************/
+
+#if !defined(HUGH_SUPPORT_VERSION_HPP)
+
+#define HUGH_SUPPORT_VERSION_HPP
+
+#cmakedefine HUGH_SUPPORT_VERSION @HUGH_SUPPORT_VERSION@
+
+#endif // #if !defined(HUGH_SUPPORT_VERSION_HPP)
