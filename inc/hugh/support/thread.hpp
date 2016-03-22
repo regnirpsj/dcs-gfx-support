@@ -26,15 +26,7 @@
 // includes, project
 
 #include <hugh/support/chrono.hpp> // support::clock::duration
-
-#if defined(__GNUC__)
-// 'thread_local' <> '__thread'
-// #  define thread_local __thread
-#elif defined(_MSC_VER)
-#  define thread_local __declspec(thread)
-#else
-#  error "unable to determine 'thread_local' keyword workaround"
-#endif
+#include <hugh/support/config.hpp>
 
 namespace hugh {
   

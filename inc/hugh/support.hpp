@@ -34,14 +34,18 @@
 #include <hugh/support/type_info.hpp>
 
 namespace hugh {
-  
-  // types, exported (class, enum, struct, union, typedef)
 
-  // variables, exported (extern)
+  namespace support {
+    
+    // types, exported (class, enum, struct, union, typedef)
 
-  // functions, inlined (inline)
+    // variables, exported (extern)
+
+    // functions, inlined (inline)
   
-  // functions, exported (extern)
+    // functions, exported (extern)
+
+  } // namespace support {
   
 } // namespace hugh {
 

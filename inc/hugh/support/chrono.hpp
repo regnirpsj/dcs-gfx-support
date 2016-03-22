@@ -25,6 +25,7 @@
 
 // includes, project
 
+#include <hugh/support/config.hpp>
 #include <hugh/support/export.h>
 
 namespace hugh {

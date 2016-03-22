@@ -23,6 +23,7 @@
 
 // includes, project
 
+#include <hugh/support/config.hpp>
 #include <hugh/support/export.h>
 
 namespace std {
@@ -54,8 +55,7 @@ namespace hugh {
      *
      * \throws \c std::bad_alloc or \c std::domain_error or \c std::invalid_argument
      */
-    HUGH_SUPPORT_EXPORT
-    std::string demangle(std::type_info const&);
+    HUGH_SUPPORT_EXPORT std::string demangle(std::type_info const&);
 
     /**
      * \brief returns the demangled type name of an object
@@ -71,8 +71,7 @@ namespace hugh {
      *
      * \throws nothing
      */
-    HUGH_SUPPORT_EXPORT
-    std::string demangle(std::type_info const&, std::nothrow_t const&) noexcept;
+    HUGH_SUPPORT_EXPORT std::string demangle(std::type_info const&, std::nothrow_t const&) noexcept;
   
   } // namespace support {
 

@@ -30,6 +30,7 @@
 
 // includes, project
 
+#include <hugh/support/config.hpp>
 #include <hugh/support/export.h>
 #include <hugh/support/printable.hpp>
 
