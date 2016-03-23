@@ -6,15 +6,15 @@
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  proto.inl                                                                       */
+/*  module     :  hugh/proto.inl                                                                  */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
 /**************************************************************************************************/
 
-#if !defined(PREFIX_PROTO_INL)
+#if !defined(HUGH_PROTO_INL)
 
-#define PREFIX_PROTO_INL
+#define HUGH_PROTO_INL
 
 // includes, system
 
@@ -24,10 +24,10 @@
 
 #include <>
 
-#define PREFIX_USE_TRACE
-#undef PREFIX_USE_TRACE
+#define HUGH_USE_TRACE
+#undef HUGH_USE_TRACE
 #include <hugh/support/trace.hpp>
-//#if defined(PREFIX_USE_TRACE) || defined(PREFIX_ALL_TRACE)
+//#if defined(HUGH_USE_TRACE) || defined(HUGH_ALL_TRACE)
 //#  include <typeinfo>
 //#  include <support/type_info.hpp>
 //#endif
@@ -38,8 +38,8 @@ namespace hugh {
   
 } // namespace hugh {
 
-#if defined(PREFIX_USE_TRACE)
-#  undef PREFIX_USE_TRACE
+#if defined(HUGH_USE_TRACE)
+#  undef HUGH_USE_TRACE
 #endif
 
-#endif // #if !defined(PREFIX_PROTO_INL)
+#endif // #if !defined(HUGH_PROTO_INL)

@@ -6,15 +6,15 @@
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  proto.h                                                                         */
+/*  module     :  hugh/proto.h                                                                    */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
 /**************************************************************************************************/
 
-#if !defined(PREFIX_PROTO_H)
+#if !defined(HUGH_PROTO_H)
 
-#define PREFIX_PROTO_H
+#define HUGH_PROTO_H
 
 /* includes, system */
 
@@ -40,4 +40,4 @@ extern "C" {
 } /* extern "C" { */
 #endif
 
-#endif /* #if !defined(PREFIX_PROTO_H) */
+#endif /* #if !defined(HUGH_PROTO_H) */

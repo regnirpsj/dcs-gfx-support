@@ -6,15 +6,15 @@
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  proto.hlsl                                                                      */
+/*  module     :  hugh/proto.hlsl                                                                 */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
 /**************************************************************************************************/
 
-#if !defined(PREFIX_PROTO_HLSL)
+#if !defined(HUGH_PROTO_HLSL)
 
-#define PREFIX_PROTO_HLSL
+#define HUGH_PROTO_HLSL
 
 /* includes, system */
 
@@ -36,4 +36,4 @@
 
 /* techniques */
 
-#endif /* #if !defined(PREFIX_PROTO_HLSL) */
+#endif /* #if !defined(HUGH_PROTO_HLSL) */

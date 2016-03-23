@@ -6,7 +6,7 @@
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  proto.c                                                                         */
+/*  module     :  hugh/proto.c                                                                    */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
@@ -14,7 +14,7 @@
 
 /* include i/f header */
 
-#include "proto.h"
+#include "hugh/proto.h"
 
 /* includes, system */
 

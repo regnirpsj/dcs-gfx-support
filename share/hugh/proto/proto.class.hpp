@@ -6,15 +6,15 @@
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  proto.hpp                                                                       */
+/*  module     :  hugh/proto.hpp                                                                  */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
 /**************************************************************************************************/
 
-#if !defined(PREFIX_PROTO_HPP)
+#if !defined(HUGH_PROTO_HPP)
 
-#define PREFIX_PROTO_HPP
+#define HUGH_PROTO_HPP
 
 // includes, system
 
@@ -36,4 +36,4 @@ namespace hugh {
   
 } // namespace hugh {
 
-#endif // #if !defined(PREFIX_PROTO_HPP)
+#endif // #if !defined(HUGH_PROTO_HPP)

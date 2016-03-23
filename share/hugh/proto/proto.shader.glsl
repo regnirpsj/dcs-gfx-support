@@ -6,7 +6,7 @@
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  proto.glsl                                                                      */
+/*  module     :  hugh/proto.glsl                                                                 */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
@@ -14,9 +14,9 @@
 
 // #version 400 core
 
-#if !defined(PREFIX_PROTO_GLSL)
+#if !defined(HUGH_PROTO_GLSL)
 
-#define PREFIX_PROTO_GLSL
+#define HUGH_PROTO_GLSL
 
 // #extension GL_ARB_shading_language_include : require
 
@@ -43,4 +43,4 @@ main()
 {
 }
 
-#endif /* #if !defined(PREFIX_PROTO_GLSL) */
+#endif /* #if !defined(HUGH_PROTO_GLSL) */
