@@ -126,7 +126,7 @@ BOOST_AUTO_TEST_CASE(test_hugh_support_refcounted_async)
       t->detach();
     }
   
-    std::this_thread::sleep_for((tp.size() * 2) * d);
+    std::this_thread::sleep_for((tp.size() * 3) * d);
   }
 
   BOOST_CHECK       (1 == a->use_count());
