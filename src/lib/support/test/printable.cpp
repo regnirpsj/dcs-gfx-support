@@ -95,7 +95,7 @@ namespace {
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE(test_support_printable_derived)
+BOOST_AUTO_TEST_CASE(test_hugh_support_printable_derived)
 {
   BOOST_TEST_MESSAGE('\n'
                      << "printable_derived:         " << printable_derived()         << '\n'
@@ -103,7 +103,7 @@ BOOST_AUTO_TEST_CASE(test_support_printable_derived)
   BOOST_CHECK(true);
 }
 
-BOOST_AUTO_TEST_CASE(test_support_printable_derived_via_base)
+BOOST_AUTO_TEST_CASE(test_hugh_support_printable_derived_via_base)
 {
   std::unique_ptr<hugh::support::printable> p(new printable_derived_derived);
   

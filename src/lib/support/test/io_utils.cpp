@@ -223,7 +223,7 @@ namespace {
 #include <boost/test/test_case_template.hpp>
 #include <boost/mpl/list.hpp>
 
-BOOST_AUTO_TEST_CASE(test_support_io_utils_manipulator_remove)
+BOOST_AUTO_TEST_CASE(test_hugh_support_io_utils_manipulator_remove)
 {
   using namespace hugh::support;
   using ostream::remove;
@@ -251,7 +251,7 @@ BOOST_AUTO_TEST_CASE(test_support_io_utils_manipulator_remove)
 #endif
 }
 
-BOOST_AUTO_TEST_CASE(test_support_io_utils_array)
+BOOST_AUTO_TEST_CASE(test_hugh_support_io_utils_array)
 {
   BOOST_CHECK(test_array(std::cout));
   BOOST_CHECK(test_array(std::wcout));
@@ -262,7 +262,7 @@ using seq_types = boost::mpl::list<std::forward_list<unsigned>,
                                    std::set<unsigned>,
                                    std::vector<unsigned>>;
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(test_support_io_utils_seq_types, T, seq_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_support_io_utils_seq_types, T, seq_types)
 {
   BOOST_CHECK(test_sequence<T>(std::cout));
   BOOST_CHECK(test_sequence<T>(std::wcout));
@@ -271,19 +271,19 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(test_support_io_utils_seq_types, T, seq_types)
 using assoc_types = boost::mpl::list<std::map<unsigned,double>,
                                      std::unordered_map<unsigned,double>>;
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(test_support_io_utils_assoc_types, T, assoc_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_support_io_utils_assoc_types, T, assoc_types)
 {
   BOOST_CHECK(test_associative<T>(std::cout));
   BOOST_CHECK(test_associative<T>(std::wcout));
 }
 
-BOOST_AUTO_TEST_CASE(test_support_io_utils_initializer_list)
+BOOST_AUTO_TEST_CASE(test_hugh_support_io_utils_initializer_list)
 {
   BOOST_CHECK(test_initializer_list(std::cout));
   BOOST_CHECK(test_initializer_list(std::wcout));
 }
 
-BOOST_AUTO_TEST_CASE(test_support_io_utils_std_unique_ptr)
+BOOST_AUTO_TEST_CASE(test_hugh_support_io_utils_std_unique_ptr)
 {
   std::unique_ptr<unsigned> p(new unsigned(42));
   

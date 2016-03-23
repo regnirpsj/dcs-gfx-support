@@ -37,7 +37,7 @@ namespace {
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE(test_support_stats)
+BOOST_AUTO_TEST_CASE(test_hugh_support_stats)
 {
   using namespace hugh::support;
 

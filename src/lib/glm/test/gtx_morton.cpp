@@ -98,7 +98,7 @@ namespace {
 
 using array_types = boost::mpl::list<signed, unsigned>;
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_array1, T, array_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_glm_gtx_morton_array1, T, array_types)
 {
   print_variant<T,1>();
   
@@ -122,7 +122,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_array1, T, array_types)
   }
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_array2, T, array_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_glm_gtx_morton_array2, T, array_types)
 {
   print_variant<T,2>();
   
@@ -146,7 +146,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_array2, T, array_types)
   }
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_array3, T, array_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_glm_gtx_morton_array3, T, array_types)
 {
   print_variant<T,3>();
   
@@ -172,7 +172,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_array3, T, array_types)
   }
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_array4, T, array_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_glm_gtx_morton_array4, T, array_types)
 {
   print_variant<T,4>();
   
@@ -200,7 +200,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_array4, T, array_types)
   }
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_array5, T, array_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_glm_gtx_morton_array5, T, array_types)
 {
   print_variant<T,5>();
   
@@ -236,7 +236,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_array5, T, array_types)
 //glm::vec1,
 using vec1_types = boost::mpl::list<glm::ivec1,glm::uvec1>;
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_vec1, T, vec1_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_glm_gtx_morton_vec1, T, vec1_types)
 {
   print_variant(T());
   
@@ -262,7 +262,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_vec1, T, vec1_types)
 //glm::vec2,
 using vec2_types = boost::mpl::list<glm::ivec2,glm::uvec2>;
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_vec2, T, vec2_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_glm_gtx_morton_vec2, T, vec2_types)
 {
   print_variant(T());
   
@@ -290,7 +290,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_vec2, T, vec2_types)
 //glm::vec3,
 using vec3_types = boost::mpl::list<glm::ivec3,glm::uvec3>;
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_vec3, T, vec3_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_glm_gtx_morton_vec3, T, vec3_types)
 {
   print_variant(T());
   
@@ -320,7 +320,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_vec3, T, vec3_types)
 //glm::vec4,
 using vec4_types = boost::mpl::list<glm::ivec4,glm::uvec4>;
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_morton_vec4, T, vec4_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_glm_gtx_morton_vec4, T, vec4_types)
 {
   print_variant(T());
   
