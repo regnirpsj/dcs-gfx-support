@@ -71,14 +71,14 @@ namespace {
 using mat_types = boost::mpl::list<glm::dmat2, glm::dmat3, glm::dmat4,
                                    glm::mat2,  glm::mat3,  glm::mat4>;
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_limits_mat, T, mat_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_glm_limits_mat, T, mat_types)
 {
   check_epsilon<T>();
 }
 
 using quat_types = boost::mpl::list<glm::quat, glm::fquat, glm::dquat>;
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_limits_quat, T, quat_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_glm_limits_quat, T, quat_types)
 {
   check_epsilon<T>();
 }
@@ -89,7 +89,7 @@ using vec_types = boost::mpl::list<glm::bvec1, glm::bvec2, glm::bvec3, glm::bvec
                                    glm::ivec1, glm::ivec2, glm::ivec3, glm::ivec4,
                                    glm::uvec1, glm::uvec2, glm::uvec3, glm::uvec4>;
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_limits_vec, T, vec_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_glm_limits_vec, T, vec_types)
 {
   check_epsilon<T>();
 }

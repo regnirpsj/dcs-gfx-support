@@ -46,7 +46,7 @@ namespace {
 #include <boost/test/test_case_template.hpp>
 #include <boost/mpl/list.hpp>
 
-BOOST_AUTO_TEST_CASE(test_glm_gtx_utilities_op_literal_deg)
+BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_op_literal_deg)
 {
 #if defined(_MSC_VER) && (_MSC_VER <= 1900)
   BOOST_CHECK(glm::pi<double>() == 180.0 _deg);
@@ -63,7 +63,7 @@ BOOST_AUTO_TEST_CASE(test_glm_gtx_utilities_op_literal_deg)
 #endif
 }
 
-BOOST_AUTO_TEST_CASE(test_glm_gtx_utilities_op_literal_rad)
+BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_op_literal_rad)
 {
 #if defined(_MSC_VER) && (_MSC_VER <= 1900)
   BOOST_CHECK(glm::pi<double>() == 180.0 _deg);
@@ -83,18 +83,18 @@ BOOST_AUTO_TEST_CASE(test_glm_gtx_utilities_op_literal_rad)
 using rev_types = boost::mpl::list<glm::vec1,  glm::vec2,  glm::vec3,  glm::vec4,
                                    glm::dvec1, glm::dvec2, glm::dvec3, glm::dvec4>;
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(test_glm_gtx_utilities_rev, T, rev_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_glm_gtx_utilities_rev, T, rev_types)
 {
   BOOST_CHECK(glm::rev(T(glm::two_pi<typename T::value_type>())) == T(0.0));
 }
 
-BOOST_AUTO_TEST_CASE(test_glm_gtx_utilities_sgn)
+BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_sgn)
 {
   BOOST_CHECK(glm::sgn(-1) < 0);
   BOOST_CHECK(glm::sgn(+1) > 0);
 }
 
-BOOST_AUTO_TEST_CASE(test_glm_gtx_utilities_convert_transform)
+BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_convert_transform)
 {
   using matrix_pair = std::pair<glm::mat4 const, glm::mat4 const>;
   

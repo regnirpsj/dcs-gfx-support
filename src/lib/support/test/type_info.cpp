@@ -57,7 +57,7 @@ using types = boost::mpl::list<bool,
                                udt_derived,
                                string_list_type>;
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(test_support_type_info_demangle, T, types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_support_type_info_demangle, T, types)
 {
   BOOST_CHECK(typeid(T) == typeid(T));
 

@@ -61,7 +61,7 @@ namespace {
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE(test_support_refcounted_ctor)
+BOOST_AUTO_TEST_CASE(test_hugh_support_refcounted_ctor)
 {
   boost::intrusive_ptr<refcounted_test> a(new refcounted_test);
 
@@ -74,7 +74,7 @@ BOOST_AUTO_TEST_CASE(test_support_refcounted_ctor)
   BOOST_CHECK(1 == a->use_count());
 }
 
-BOOST_AUTO_TEST_CASE(test_support_refcounted_replace)
+BOOST_AUTO_TEST_CASE(test_hugh_support_refcounted_replace)
 {
   boost::intrusive_ptr<refcounted_test> a(new refcounted_test);
 
@@ -95,7 +95,7 @@ BOOST_AUTO_TEST_CASE(test_support_refcounted_replace)
   BOOST_CHECK(1 == a->use_count());
 }
 
-BOOST_AUTO_TEST_CASE(test_support_refcounted_async)
+BOOST_AUTO_TEST_CASE(test_hugh_support_refcounted_async)
 {
   std::string const                     l(20, '-'); 
   boost::intrusive_ptr<refcounted_test> a(new refcounted_test);

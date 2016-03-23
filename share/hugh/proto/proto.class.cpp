@@ -14,7 +14,7 @@
 
 // include i/f header
 
-#include "proto.hpp"
+#include "hugh/proto.hpp"
 
 // includes, system
 

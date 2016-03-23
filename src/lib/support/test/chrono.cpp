@@ -38,7 +38,7 @@ namespace {
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE(test_support_clock)
+BOOST_AUTO_TEST_CASE(test_hugh_support_clock)
 {
   static unsigned const width(15);
   
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE(test_support_clock)
                      << date_time_iso8601());
 }
 
-BOOST_AUTO_TEST_CASE(test_support_timer)
+BOOST_AUTO_TEST_CASE(test_hugh_support_timer)
 {
   using namespace hugh::support;
   using namespace std::chrono;
@@ -78,7 +78,7 @@ BOOST_AUTO_TEST_CASE(test_support_timer)
   BOOST_CHECK(d2 >= d1);
 }
 
-BOOST_AUTO_TEST_CASE(test_support_timer_guard)
+BOOST_AUTO_TEST_CASE(test_hugh_support_timer_guard)
 {
   using namespace hugh::support;
   using namespace std::chrono;
@@ -102,7 +102,7 @@ BOOST_AUTO_TEST_CASE(test_support_timer_guard)
                      << std::fixed << std::right << std::setfill(' ') << duration_cast<dsec>(d2));
 }
 
-BOOST_AUTO_TEST_CASE(test_support_sleep)
+BOOST_AUTO_TEST_CASE(test_hugh_support_sleep)
 {
   using namespace hugh::support;
   using namespace std::chrono;

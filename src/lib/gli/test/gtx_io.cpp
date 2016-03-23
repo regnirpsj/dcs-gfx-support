@@ -14,7 +14,7 @@
 
 // includes, system
 
-// x#include <>
+// #include <>
 
 // includes, project
 
@@ -42,7 +42,7 @@ using tex_types = boost::mpl::list<gli::texture1d,
                                    gli::texture2d,
                                    gli::texture3d>;
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(test_gli_gtx_io, T, tex_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_gli_gtx_io, T, tex_types)
 {
   using namespace gli;
   
