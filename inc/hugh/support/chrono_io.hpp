@@ -892,7 +892,7 @@ minutes
 __extract_z(_InputIterator& __b, _InputIterator __e,
             ios_base::iostate& __err, const ctype<_CharT>& __ct)
 {
-    int __min = 0;
+    int __mn = 0;
     if (__b != __e)
     {
         char __cn = __ct.narrow(*__b, 0);
@@ -931,16 +931,16 @@ __extract_z(_InputIterator& __b, _InputIterator __e,
                 __err |= ios_base::failbit;
                 return minutes(0);
             }
-            __min = __min * 10 + __cn - '0';
+            __mn = __mn * 10 + __cn - '0';
         }
         if (++__b == __e)
             __err |= ios_base::eofbit;
-        __min += __hr * 60;
-        __min *= __sn;
+        __mn += __hr * 60;
+        __mn *= __sn;
     }
     else
         __err |= ios_base::eofbit | ios_base::failbit;
-    return minutes(__min);
+    return minutes(__mn);
 }
 
 template <class _CharT, class _Traits, class _Duration>
@@ -995,12 +995,12 @@ operator>>(basic_istream<_CharT, _Traits>& __is,
                     err |= ios_base::failbit;
                     goto __exit;
                 }
-                minutes __min = __extract_z(__i, __eof, err, __ct);
+                minutes __mn = __extract_z(__i, __eof, err, __ct);
                 if (err & ios_base::failbit)
                     goto __exit;
                 time_t __t;
                 __t = timegm(&__tm);
-                __tp = system_clock::from_time_t(__t) - __min
+                __tp = system_clock::from_time_t(__t) - __mn
                                  + round<microseconds>(duration<double>(__sec));
             }
             else
@@ -1008,7 +1008,7 @@ operator>>(basic_istream<_CharT, _Traits>& __is,
                 const _CharT __z[2] = {'%', 'z'};
                 const _CharT* __fz = std::search(pb, pe, __z, __z+2);
                 tg.get(__is, 0, __is, err, &__tm, pb, __fz);
-                minutes __min(0);
+                minutes __mn(0);
                 if (__fz != pe)
                 {
                     if (err != ios_base::goodbit)
@@ -1018,7 +1018,7 @@ operator>>(basic_istream<_CharT, _Traits>& __is,
                     }
                     _I __i(__is);
                     _I __eof;
-                    __min = __extract_z(__i, __eof, err, __ct);
+                    __mn = __extract_z(__i, __eof, err, __ct);
                     if (err & ios_base::failbit)
                         goto __exit;
                     if (__fz+2 != pe)
@@ -1039,7 +1039,7 @@ operator>>(basic_istream<_CharT, _Traits>& __is,
                     __t = timegm(&__tm);
                 else
                     __t = mktime(&__tm);
-                __tp = system_clock::from_time_t(__t) - __min;
+                __tp = system_clock::from_time_t(__t) - __mn;
             }
         }
         catch (...)
