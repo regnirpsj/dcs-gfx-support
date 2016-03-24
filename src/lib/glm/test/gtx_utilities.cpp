@@ -137,15 +137,15 @@ BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_convert_transform)
     }
   };
 
-  for (auto i : input_xform_list) {
+  for (auto ix : input_xform_list) {
     for (auto e : decompose_order_list) {
       glm::mat4 r, s, t;
     
-      glm::mat4 const   x(glm::convert::transform(i.first, e.first, r, s, t));
-      matrix_pair const p(std::make_pair(i.first, x));
+      glm::mat4 const   x(glm::convert::transform(ix.first, e.first, r, s, t));
+      matrix_pair const p(std::make_pair(ix.first, x));
 
       BOOST_TEST_MESSAGE(glm::io::precision(7) << glm::io::width(1 + 1 + 1 + 7)
-                         << i.second << ':' << std::string(47 - i.second.length(), ' ')
+                         << ix.second << ':' << std::string(47 - ix.second.length(), ' ')
                          << e.second << ':' << p << '\n');
 
       static float const epsilon(177 * std::numeric_limits<float>::epsilon());
