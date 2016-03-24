@@ -53,14 +53,14 @@ namespace {
 #if defined(HUGH_USE_UNIQUE_PTR)
   std::unique_ptr<hugh::support::simple_lock> trace_lock (nullptr);
 #else
-  support::simple_lock*                       trace_lock (nullptr);
+  hugh::support::simple_lock*                 trace_lock (nullptr);
 #endif
 
   // global time tagged to process start
 #if defined(HUGH_USE_UNIQUE_PTR)
   std::unique_ptr<hugh::support::timer>       trace_timer(nullptr);
 #else
-  support::timer*                             trace_timer(nullptr);
+  hugh::support::timer*                       trace_timer(nullptr);
 #endif
   
   // functions, internal
