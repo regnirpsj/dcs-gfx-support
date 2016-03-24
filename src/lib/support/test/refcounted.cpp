@@ -16,6 +16,8 @@
 
 #include <array>                   // std::array<>
 #include <boost/intrusive_ptr.hpp> // boost::intrusive_ptr<>
+#include <condition_variable>      // std::condition_variable
+#include <iomanip>                 // std::setfill, std::setw
 #include <memory>                  // std::unique_ptr<>
 #include <mutex>                   // std::mutex
 #include <thread>                  // std::thread
@@ -101,11 +103,13 @@ BOOST_AUTO_TEST_CASE(test_hugh_support_refcounted_async)
   boost::intrusive_ptr<refcounted_test> a(new refcounted_test);
 
   BOOST_CHECK       (1 == a->use_count());
-  BOOST_TEST_MESSAGE(std::this_thread::get_id() << ':' << a->use_count() << '\n' << l);
+  BOOST_TEST_MESSAGE(std::right << std::setfill(' ') << std::setw(6)
+                     <<std::this_thread::get_id() << ':' << a->use_count() << '\n' << l);
 
   {
-    std::array<std::unique_ptr<std::thread>, 10> tp = { { } };
-    std::chrono::microseconds const              d(tp.size());
+    std::array<std::unique_ptr<std::thread>, 100> tp = { { } };
+    unsigned                                     f(0);
+    std::condition_variable                      cv;
     std::mutex                                   m;
     
     for (auto& t : tp) {
@@ -115,20 +119,30 @@ BOOST_AUTO_TEST_CASE(test_hugh_support_refcounted_async)
             {
               std::lock_guard<std::mutex> lk(m);
 
+              ++f;
+              
               BOOST_CHECK       (1           <  a->use_count());
               BOOST_CHECK       (tp.size()+1 >= a->use_count());
-              BOOST_TEST_MESSAGE(std::this_thread::get_id() << ':' << a->use_count());
+              BOOST_TEST_MESSAGE(std::right << std::setfill(' ') << std::setw(6)
+                                 << std::this_thread::get_id() << ':' << a->use_count()
+                                 << ':' << f);
             }
 
-            std::this_thread::sleep_for(d);
+            cv.notify_one();
           }));
     
       t->detach();
     }
-  
-    std::this_thread::sleep_for((tp.size() * 3) * d);
+    
+    {
+      std::unique_lock<std::mutex> lk(m);
+      
+      cv.wait(lk, [&]{ return tp.size() <= f; });
+    }
   }
 
   BOOST_CHECK       (1 == a->use_count());
-  BOOST_TEST_MESSAGE(l << '\n' << std::this_thread::get_id() << ':' << a->use_count());
+  BOOST_TEST_MESSAGE(l << '\n'
+                     << std::right << std::setfill(' ') << std::setw(6)
+                     << std::this_thread::get_id() << ':' << a->use_count());
 }
