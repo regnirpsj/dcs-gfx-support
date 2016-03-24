@@ -34,11 +34,6 @@
 #  define __CLANG_VER (__clang_major__ * 10000 + __clang_minor__ * 100 + __patch_patchlevel__)
 #endif
 
-// min
-#if defined(_MSC_VER) && (_MSC_VER < 2000)
-#  undef __min
-#endif
-
 // noexcept
 #if defined(_MSC_VER) && (_MSC_VER < 1900)
 #  define noexcept
@@ -48,7 +43,7 @@
 #if defined(__GNUC__) && (__GNUC_VER < 40800) && !defined(__clang__)
 #  pragma message("Note: using GCC '__thread' implement 'thread_local' c++ keyword")
 #  define thread_local __thread
-#elif defined(_MSC_VER) && (_MSC_VER < 2000)
+#elif defined(_MSC_VER) && (_MSC_VER < 1900)
 #  pragma message("Note: using __declspec(thread) to implement 'thread_local' c++ keyword")
 #  define thread_local __declspec(thread)
 #endif
