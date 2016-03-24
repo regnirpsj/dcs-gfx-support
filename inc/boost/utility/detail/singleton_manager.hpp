@@ -96,8 +96,8 @@ namespace boost
             static inline void attach(context& d)
             {
 #   ifdef BOOST_HAS_THREADS
-                static boost::once_flag initialized = BOOST_ONCE_INIT;
-                boost::call_once(& create_instance, initialized);
+                static boost::once_flag initialized_here = BOOST_ONCE_INIT;
+                boost::call_once(& create_instance, initialized_here);
                 boost::mutex::scoped_lock lock(ptr_instance->obj_mutex); 
 #   else
                 if (! ptr_instance) create_instance();
