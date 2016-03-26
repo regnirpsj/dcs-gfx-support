@@ -29,7 +29,7 @@
 #include <hugh/support/trace.hpp>
 //#if defined(HUGH_USE_TRACE) || defined(HUGH_ALL_TRACE)
 //#  include <typeinfo>
-//#  include <support/type_info.hpp>
+//#  include <hugh/support/type_info.hpp>
 //#endif
 
 namespace hugh {
