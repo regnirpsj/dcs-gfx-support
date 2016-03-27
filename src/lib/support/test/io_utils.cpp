@@ -23,6 +23,7 @@
 #include <map>                     // std::map<>
 #include <memory>                  // std::unique_ptr<>
 #include <set>                     // std::set<>
+#include <sstream>                 // std::ostringstream
 #include <typeinfo>                // typeid usage
 #include <unordered_map>           // std::unordered_map<>
 #include <vector>                  // std::vector<>
@@ -287,6 +288,19 @@ BOOST_AUTO_TEST_CASE(test_hugh_support_io_utils_std_unique_ptr)
 {
   std::unique_ptr<unsigned> p(new unsigned(42));
   
-  BOOST_CHECK  (nullptr != p.get());
+  BOOST_CHECK       (nullptr != p.get());
   BOOST_TEST_MESSAGE("\nstd::unique_ptr<unsigned>:" << p << ':' << *p);
+}
+
+BOOST_AUTO_TEST_CASE(test_hugh_support_io_utils_binary)
+{
+  using binary = hugh::support::ostream::binary;
+
+  unsigned const     n(1234567890);
+  std::ostringstream ostr;
+
+  ostr << n << " -> " << binary(n);
+
+  BOOST_CHECK       (!ostr.str().empty());
+  BOOST_TEST_MESSAGE('\n' << ostr.str());
 }
