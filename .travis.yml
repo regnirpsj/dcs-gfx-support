@@ -42,12 +42,15 @@ matrix:
         - MATRIX_CXX=clang++-3.7
 
 before_script:
-  - gem install coveralls-lcov
   - mkdir ${TRAVIS_BUILD_DIR}/extra
-  - mkdir ${TRAVIS_BUILD_DIR}/build
   - cd ${TRAVIS_BUILD_DIR}/extra
+  - wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.11.orig.tar.gz
+  - tar xf lcov_1.11.orig.tar.gz
+  - sudo make -C lcov-1.11/ install
+  - gem install coveralls-lcov
   - git clone http://github.com/g-truc/gli.git gli-git
   - git clone http://github.com/g-truc/glm.git glm-git
+  - mkdir ${TRAVIS_BUILD_DIR}/build
   - cd ${TRAVIS_BUILD_DIR}/build
   - lcov --directory . --zerocounters
   
