@@ -41,7 +41,7 @@ matrix:
         - MATRIX_CC=clang-3.7
         - MATRIX_CXX=clang++-3.7
 
-before_script
+before_script:
   - gem install coveralls-lcov
   - mkdir ${TRAVIS_BUILD_DIR}/extra
   - mkdir ${TRAVIS_BUILD_DIR}/build
