@@ -59,7 +59,16 @@ using types = boost::mpl::list<bool,
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_support_type_info_demangle, T, types)
 {
-  BOOST_CHECK(typeid(T) == typeid(T));
+  using namespace hugh::support;
+  
+  BOOST_CHECK       (typeid(T) == typeid(T));
+  BOOST_TEST_MESSAGE(demangle(typeid(T)) << "\t: " << typeid(T).name());
+}
 
-  BOOST_TEST_MESSAGE(hugh::support::demangle(typeid(T)) << "\t: " << typeid(T).name());
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_support_type_info_demangle_nothrow, T, types)
+{
+  using namespace hugh::support;
+  
+  BOOST_CHECK       (typeid(T) == typeid(T));
+  BOOST_TEST_MESSAGE(demangle(typeid(T), std::nothrow) << "\t: " << typeid(T).name());
 }

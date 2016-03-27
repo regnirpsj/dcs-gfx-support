@@ -97,7 +97,7 @@ BOOST_AUTO_TEST_CASE(test_hugh_support_refcounted_replace)
   BOOST_CHECK(1 == a->use_count());
 }
 
-#if 0
+#if 1
 BOOST_AUTO_TEST_CASE(test_hugh_support_refcounted_async)
 {
   std::string const                     l(20, '-'); 
@@ -108,10 +108,10 @@ BOOST_AUTO_TEST_CASE(test_hugh_support_refcounted_async)
                      <<std::this_thread::get_id() << ':' << a->use_count() << '\n' << l);
 
   {
-    std::array<std::unique_ptr<std::thread>, 10> tp = { { } };
-    unsigned                                     f(0);
-    std::condition_variable                      cv;
-    std::mutex                                   m;
+    std::array<std::unique_ptr<std::thread>, 9> tp = { { } };
+    unsigned                                    f(0);
+    std::condition_variable                     cv;
+    std::mutex                                  m;
     
     for (auto& t : tp) {
       t.reset(new std::thread([&]{

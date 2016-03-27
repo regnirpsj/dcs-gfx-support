@@ -17,10 +17,12 @@
 #include <iomanip> // std::boolalpha
 #include <memory>  // std::unique_ptr<>
 #include <ostream> // std::ostream
+#include <sstream> // std::[w]ostringstream
 
 // includes, project
 
 #include <hugh/support/printable.hpp>
+#include <hugh/support/string.hpp>
 
 // internal unnamed namespace
 
@@ -94,20 +96,33 @@ namespace {
 
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
+#include <boost/test/test_case_template.hpp>
+#include <boost/mpl/list.hpp>
 
-BOOST_AUTO_TEST_CASE(test_hugh_support_printable_derived)
+using ostream_types = boost::mpl::list<std::ostringstream,
+                                       std::wostringstream>;
+
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_support_printable_derived, T, ostream_types)
 {
-  BOOST_TEST_MESSAGE('\n'
-                     << "printable_derived:         " << printable_derived()         << '\n'
-                     << "printable_derived_derived: " << printable_derived_derived());
-  BOOST_CHECK(true);
+  T ostr;
+  
+  ostr << '\n'
+       << "printable_derived:         " << printable_derived()         << '\n'
+       << "printable_derived_derived: " << printable_derived_derived();
+
+  BOOST_CHECK       (!ostr.str().empty());
+  BOOST_TEST_MESSAGE(hugh::support::wstring_to_string(ostr.str()));
 }
 
-BOOST_AUTO_TEST_CASE(test_hugh_support_printable_derived_via_base)
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_support_printable_derived_via_base, T, ostream_types)
 {
   std::unique_ptr<hugh::support::printable> p(new printable_derived_derived);
+
+  T ostr;
   
-  BOOST_TEST_MESSAGE('\n'
-                     << "printable: " << *p);
-  BOOST_CHECK(true);
+  ostr << '\n'
+       << "printable: " << *p;
+  
+  BOOST_CHECK       (!ostr.str().empty());
+  BOOST_TEST_MESSAGE(hugh::support::wstring_to_string(ostr.str()));
 }
