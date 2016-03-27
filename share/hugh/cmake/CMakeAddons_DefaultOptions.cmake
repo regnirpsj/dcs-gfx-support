@@ -20,4 +20,7 @@ option(${PROJECT_NAME}_RUN_CTEST "Enable unit-test execution using CTest"       
 option(${PROJECT_NAME}_RUN_UTEST "Enable unit-test execution using the build system" OFF)
 
 # coverage testing
-option(${PROJECT_NAME}_PROFILE   "Enable support for coverage testing"               OFF)
+option(${PROJECT_NAME}_COVERAGE  "Enable support for coverage testing"               OFF)
+
+# profiling
+option(${PROJECT_NAME}_PROFILE   "Enable support for profiling support"              OFF)
