@@ -24,3 +24,6 @@ option(${PROJECT_NAME}_COVERAGE  "Enable support for coverage testing"          
 
 # profiling
 option(${PROJECT_NAME}_PROFILE   "Enable support for profiling support"              OFF)
+
+# runt-time tracing
+option(${PROJECT_NAME}_TRACE_ALL "Enable support for run-time tracing"               OFF)

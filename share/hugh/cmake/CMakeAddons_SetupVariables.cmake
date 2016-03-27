@@ -82,7 +82,7 @@ add_definitions("-DGLM_PRECISION_HIGHP_FLOAT")
 add_definitions("-DGLM_PRECISION_HIGHP_INT")
 add_definitions("-DGLM_SWIZZLE")
 
-if(HUGH_TRACE_ALL)
+if(HUGH_TRACE_ALL OR ${PROJECT_NAME}_TRACE_ALL)
   if(VERBOSE)
     message(STATUS "Enabling run-time tracing for complete project!")
   endif()
