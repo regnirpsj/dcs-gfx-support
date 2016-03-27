@@ -14,7 +14,7 @@
 
 // includes, system
 
-// #include <>
+#include <sstream> // std::ostringstream
 
 // includes, project
 
@@ -49,8 +49,13 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_gli_gtx_io, T, tex_types)
   T const t(FORMAT_RGBA8_UNORM_PACK32, typename T::extent_type(1), 1);
 
   BOOST_CHECK(!t.empty());
-  
+
+  std::ostringstream ostr;
+
+  ostr << t;
+
+  BOOST_CHECK       (!ostr.str().empty());
   BOOST_TEST_MESSAGE(hugh::support::demangle(typeid(T)) << ':'
                      << glm::io::precision(0) << glm::io::width(0 + 2 + 0 + 0)
-                     << t);
+                     << ostr.str());
 }
