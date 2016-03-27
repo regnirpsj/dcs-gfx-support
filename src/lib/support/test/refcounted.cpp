@@ -107,7 +107,7 @@ BOOST_AUTO_TEST_CASE(test_hugh_support_refcounted_async)
                      <<std::this_thread::get_id() << ':' << a->use_count() << '\n' << l);
 
   {
-    std::array<std::unique_ptr<std::thread>, 100> tp = { { } };
+    std::array<std::unique_ptr<std::thread>, 10> tp = { { } };
     unsigned                                     f(0);
     std::condition_variable                      cv;
     std::mutex                                   m;
