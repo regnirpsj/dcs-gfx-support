@@ -47,7 +47,8 @@ before_script:
   - mkdir ${TRAVIS_BUILD_DIR}/build
   - mkdir ${TRAVIS_BUILD_DIR}/extra
   - mkdir ${TRAVIS_BUILD_DIR}/install
-  - export PATH=${PATH}:${TRAVIS_BUILD_DIR}/install/bin
+  - export PATH=${PATH}:${TRAVIS_BUILD_DIR}/install/bin/
+  - echo ${PATH}
   - cd ${TRAVIS_BUILD_DIR}/extra
   - wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.11.orig.tar.gz
   - tar xf lcov_1.11.orig.tar.gz
