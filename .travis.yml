@@ -80,9 +80,8 @@ script:
   - cmake -DVERBOSE=1 -DHUGH_SUPPORT_COVERAGE=1 .. && cmake --build . --target test_all
   
 after_success:
-  - export SKIP_PREFIX="'/usr/*' '${HOME}/extra/*' 'inc/boost/*' 'test/*'"
   - cd ${TRAVIS_BUILD_DIR}/build
   - ${LCOV} --directory . --capture --output-file coverage.info
-  - ${LCOV} --remove coverage.info ${SKIP_PREFIX} --output-file coverage.info
+  - ${LCOV} --remove coverage.info '/usr/*' '${HOME}/extra/*' 'inc/boost/*' 'test/*' --output-file coverage.info
   - ${LCOV} --list coverage.info
   - coveralls-lcov --repo-token ${COVERALLS_TOKEN} coverage.info
