@@ -41,13 +41,17 @@ matrix:
 
 before_script:
   - export CC=${MATRIX_CC}
+  - ${CC} --version
   - export CXX=${MATRIX_CXX}
+  - ${CXX} --version
   - mkdir ${TRAVIS_BUILD_DIR}/build
   - mkdir ${TRAVIS_BUILD_DIR}/extra
+  - mkdir ${TRAVIS_BUILD_DIR}/install
+  - export PATH=${PATH}:${TRAVIS_BUILD_DIR}/install/bin
   - cd ${TRAVIS_BUILD_DIR}/extra
   - wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.11.orig.tar.gz
   - tar xf lcov_1.11.orig.tar.gz
-  - make -C lcov-1.11/ install
+  - env PREFIX=${TRAVIS_BUILD_DIR}/install make -C lcov-1.11/ install  
   - gem install coveralls-lcov
   - lcov --version
   - git clone http://github.com/g-truc/gli.git gli-git
