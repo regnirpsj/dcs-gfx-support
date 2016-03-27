@@ -97,7 +97,7 @@ BOOST_AUTO_TEST_CASE(test_hugh_support_refcounted_replace)
   BOOST_CHECK(1 == a->use_count());
 }
 
-#if 1
+#if 0
 BOOST_AUTO_TEST_CASE(test_hugh_support_refcounted_async)
 {
   std::string const                     l(20, '-'); 
