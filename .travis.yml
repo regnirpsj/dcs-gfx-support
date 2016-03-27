@@ -44,7 +44,8 @@ before_script:
   - ${CC} --version
   - export CXX=${MATRIX_CXX}
   - ${CXX} --version
-  - gcov --version
+  - export GCOV=gcov-1
+  - ${GCOV} --version
   - mkdir ${TRAVIS_BUILD_DIR}/build
   - mkdir ${TRAVIS_BUILD_DIR}/extra
   - mkdir ${TRAVIS_BUILD_DIR}/install
@@ -55,9 +56,10 @@ before_script:
   - export GLM_ROOT_DIR=${TRAVIS_BUILD_DIR}/extra/glm-git
   - wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.11.orig.tar.gz
   - tar xf lcov_1.11.orig.tar.gz
-  - env PREFIX=${TRAVIS_BUILD_DIR}/install make -C lcov-1.11/ install  
+  - env PREFIX=${TRAVIS_BUILD_DIR}/install make -C lcov-1.11/ install
+  - export PATH=${TRAVIS_BUILD_DIR}/install/usr/bin:${PATH}
   - gem install coveralls-lcov
-  - export LCOV="${TRAVIS_BUILD_DIR}/install/usr/bin/lcov --gcov-tool gcov-tool-5"
+  - export LCOV="lcov --gcov-tool ${GCOV}"
   - ${LCOV} --version
   - cd ${TRAVIS_BUILD_DIR}/build
   - ${LCOV} --directory . --zerocounters
