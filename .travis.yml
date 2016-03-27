@@ -57,7 +57,7 @@ before_script:
   - tar xf lcov_1.11.orig.tar.gz
   - env PREFIX=${TRAVIS_BUILD_DIR}/install make -C lcov-1.11/ install  
   - gem install coveralls-lcov
-  - export LCOV=${TRAVIS_BUILD_DIR}/install/usr/bin/lcov --gcov-tool gcov-tool-5
+  - export LCOV="${TRAVIS_BUILD_DIR}/install/usr/bin/lcov --gcov-tool gcov-tool-5"
   - ${LCOV} --version
   - cd ${TRAVIS_BUILD_DIR}/build
   - ${LCOV} --directory . --zerocounters
