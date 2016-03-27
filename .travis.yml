@@ -21,6 +21,7 @@ matrix:
       env:
         - MATRIX_CC=gcc-5
         - MATRIX_CXX=g++-5
+        - MATRIX_GCOV=gcov-5
     - compiler: clang
       addons:
         apt:
@@ -38,13 +39,14 @@ matrix:
       env:
         - MATRIX_CC=clang-3.7
         - MATRIX_CXX=clang++-3.7
-
+        - MATRIX_GCOV=gcov-5
+        
 before_script:
   - export CC=${MATRIX_CC}
   - ${CC} --version
   - export CXX=${MATRIX_CXX}
   - ${CXX} --version
-  - export GCOV=gcov-1
+  - export GCOV=${MATRIX_GCOV}
   - ${GCOV} --version
   - mkdir ${TRAVIS_BUILD_DIR}/build
   - mkdir ${TRAVIS_BUILD_DIR}/extra
