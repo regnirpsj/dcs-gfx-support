@@ -21,7 +21,7 @@ if [ ! -d $2 -o ! -d "$2/.git" ]; then
     mkdir -p $2
 
     echo "cloning '$1 $branch' -> '$2'"
-    git clone -b $branch $1 $2
+    git clone --depth 50 -b $branch $1 $2
 else
     echo "updating '$2'"
     cd $2
