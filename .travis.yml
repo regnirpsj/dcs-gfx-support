@@ -58,11 +58,6 @@ before_script:
   - mkdir ${TRAVIS_BUILD_DIR}/build
   - mkdir ${TRAVIS_BUILD_DIR}/extra
   - mkdir ${TRAVIS_BUILD_DIR}/install
-  - export FETCHREPO=${TRAVIS_BUILD_DIR}/share/hugh/travis.ci/fetch-or-update-git-repo.sh
-  - ${FETCHREPO} http://github.com/g-truc/gli.git ${HOME}/extra/gli-git
-  - ${FETCHREPO} http://github.com/g-truc/glm.git ${HOME}/extra/glm-git
-  - export GLI_ROOT_DIR=${HOME}/extra/gli-git
-  - export GLM_ROOT_DIR=${HOME}/extra/glm-git
   - cd ${TRAVIS_BUILD_DIR}/extra
   - wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.11.orig.tar.gz
   - tar xf lcov_1.11.orig.tar.gz
@@ -71,8 +66,11 @@ before_script:
   - gem install coveralls-lcov
   - export LCOV="lcov --gcov-tool ${GCOV}"
   - ${LCOV} --version
-  - cd ${TRAVIS_BUILD_DIR}/build
-  - ${LCOV} --directory . --zerocounters
+  - export FETCHREPO=${TRAVIS_BUILD_DIR}/share/hugh/travis.ci/fetch-or-update-git-repo.sh
+  - ${FETCHREPO} http://github.com/g-truc/gli.git ${HOME}/extra/gli-git
+  - ${FETCHREPO} http://github.com/g-truc/glm.git ${HOME}/extra/glm-git
+  - export GLI_ROOT_DIR=${HOME}/extra/gli-git
+  - export GLM_ROOT_DIR=${HOME}/extra/glm-git
   
 script:
   - cd ${TRAVIS_BUILD_DIR}/build
