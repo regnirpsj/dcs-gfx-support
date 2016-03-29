@@ -53,7 +53,6 @@ before_script:
   - export CC=${MATRIX_CC} && ${CC} --version
   - export CXX=${MATRIX_CXX} && ${CXX} --version
   - export LCOV_ARGS=${MATRIX_LCOV_ARGS} && echo ${LCOV_ARGS}
-  - lcov --help
 #  - mkdir ${TRAVIS_BUILD_DIR}/extra
 #  - mkdir ${TRAVIS_BUILD_DIR}/install
 #  - cd ${TRAVIS_BUILD_DIR}/extra

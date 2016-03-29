@@ -22,17 +22,34 @@ if(${PROJECT_NAME}_COVERAGE)
 
   set(LCOV_ARGS $ENV{LCOV_ARGS})
 
-  if(TRUE OR VERBOSE)
+  if(VERBOSE)
     message(STATUS "Found GCOV front-end: ${LCOV} ${LCOV_ARGS}")
   endif()
 
+  if(FALSE)
+    cma_print_variable(LCOV_ARGS)
+    cma_print_variable(${PROJECT_NAME}_COVERAGE_EXCLUDE)
+    cma_print_variable(${PROJECT_NAME}_COVERAGE_INCLUDE)
+  endif()
+  
+  # see [https://cmake.org/pipermail/cmake/2005-October/007343.html]
+  separate_arguments(LCOV_ARGS)
+  separate_arguments(${PROJECT_NAME}_COVERAGE_EXCLUDE)
+  separate_arguments(${PROJECT_NAME}_COVERAGE_INCLUDE)
+  
+  if(FALSE)
+    cma_print_variable(LCOV_ARGS)
+    cma_print_variable(${PROJECT_NAME}_COVERAGE_EXCLUDE)
+    cma_print_variable(${PROJECT_NAME}_COVERAGE_INCLUDE)
+  endif()
+  
   add_custom_command(TARGET coverage_zero POST_BUILD
-    COMMAND ${LCOV} --zerocounters --directory .
+    COMMAND ${LCOV} ${LCOV_ARGS} --zerocounters --directory .
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
   add_custom_command(TARGET coverage_collect POST_BUILD
     COMMAND ${LCOV} ${LCOV_ARGS} --output-file coverage.info --directory . --capture
-    COMMAND ${LCOV} ${LCOV_ARGS} --output-file coverage.info --extract coverage.info '${CMAKE_SOURCE_DIR}/*'
+    COMMAND ${LCOV} ${LCOV_ARGS} --output-file coverage.info --extract coverage.info ${${PROJECT_NAME}_COVERAGE_INCLUDE}
     COMMAND ${LCOV} ${LCOV_ARGS} --output-file coverage.info --remove coverage.info ${${PROJECT_NAME}_COVERAGE_EXCLUDE}
     COMMAND ${LCOV} ${LCOV_ARGS} --list coverage.info
     BYPRODUCTS   coverage.info
