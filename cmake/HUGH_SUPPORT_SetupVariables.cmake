@@ -12,6 +12,6 @@ endif()
 
 include(CMakeAddons_SetupVariables)
 
-set(${PROJECT_NAME}_COVERAGE_EXCLUDE "${${PROJECT_NAME}_COVERAGE_EXCLUDE} 'inc/boost/*'")
-set(${PROJECT_NAME}_COVERAGE_EXCLUDE "${${PROJECT_NAME}_COVERAGE_EXCLUDE} 'support/chrono_io.hpp'")
-set(${PROJECT_NAME}_COVERAGE_EXCLUDE "${${PROJECT_NAME}_COVERAGE_EXCLUDE} 'support/ratio_io.hpp'")
+list(APPEND ${PROJECT_NAME}_COVERAGE_EXCLUDE "'inc/boost/*'")
+list(APPEND ${PROJECT_NAME}_COVERAGE_EXCLUDE "'support/chrono_io.hpp'")
+list(APPEND ${PROJECT_NAME}_COVERAGE_EXCLUDE "'support/ratio_io.hpp'")
