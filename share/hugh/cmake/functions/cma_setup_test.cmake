@@ -41,9 +41,9 @@ function(cma_setup_test TST_PREFIX)
   set(TST_TESTS)
   
   set(BOOSTTEST_ARGS)
-  list(APPEND BOOSTTEST_ARGS "--random=1") # randomized execution order
+  # list(APPEND BOOSTTEST_ARGS "--random=1") # randomized execution order
   if(TST_DEBUG OR VERBOSE)
-    list(APPEND BOOSTTEST_ARGS "--report_level=detailed")
+    # list(APPEND BOOSTTEST_ARGS "--report_level=detailed")
     # list(APPEND BOOSTTEST_ARGS "--log_level=message")
   endif()
 
@@ -98,7 +98,7 @@ function(cma_setup_test TST_PREFIX)
       else()
 	set(CTEST_ARGS)
 	if(TST_DEBUG OR VERBOSE)
-	  list(APPEND CTEST_ARGS "-V")
+	  #list(APPEND CTEST_ARGS "-V")
 	endif()
 	add_custom_target(test_${TST_PREFIX}
 	                  COMMAND ${CMAKE_CTEST_COMMAND} ${CTEST_ARGS}
