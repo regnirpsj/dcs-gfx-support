@@ -43,7 +43,7 @@ function(cma_setup_test TST_PREFIX)
   set(BOOSTTEST_ARGS)
   list(APPEND BOOSTTEST_ARGS "--random=1") # randomized execution order
   if(TST_DEBUG OR VERBOSE)
-    list(APPEND BOOSTTEST_ARGS "--report_level=short")
+    list(APPEND BOOSTTEST_ARGS "--report_level=detailed")
     list(APPEND BOOSTTEST_ARGS "--log_level=message")
   endif()
 
