@@ -44,7 +44,7 @@ function(cma_setup_test TST_PREFIX)
   list(APPEND BOOSTTEST_ARGS "--random=1") # randomized execution order
   if(TST_DEBUG OR VERBOSE)
     list(APPEND BOOSTTEST_ARGS "--report_level=detailed")
-    list(APPEND BOOSTTEST_ARGS "--log_level=message")
+    # list(APPEND BOOSTTEST_ARGS "--log_level=message")
   endif()
 
   foreach(APP ${TST_SOURCES})
