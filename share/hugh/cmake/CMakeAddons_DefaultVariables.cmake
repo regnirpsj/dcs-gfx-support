@@ -28,3 +28,5 @@ if(VERBOSE)
 else()
   set(CMAKE_INSTALL_MESSAGE LAZY)
 endif()
+
+set(${PROJECT_NAME}_COVERAGE_EXCLUDE 'test/*')

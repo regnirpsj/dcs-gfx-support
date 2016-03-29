@@ -77,6 +77,12 @@ function(cma_setup_test TST_PREFIX)
       add_custom_target(test_all)
       #set_property(TARGET test_all PROPERTY FOLDER "Tests")
       add_dependencies(test_all test_libs)
+
+      if(${PROJECT_NAME}_COVERAGE)
+	add_custom_command(TARGET test_all POST_BUILD
+	  COMMAND ${CMAKE_COMMAND} --build . --target coverage_collect
+	  WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+      endif()
     endif()
 
     if(${PROJECT_NAME}_RUN_CTEST)
