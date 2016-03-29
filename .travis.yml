@@ -27,7 +27,7 @@ matrix:
       env:
         - MATRIX_CC=gcc-5
         - MATRIX_CXX=g++-5
-        - MATRIX_LCOV_ARGS="\-\-gcov-tool gcov-5"
+        - MATRIX_LCOV_ARGS="\\-\\-gcov-tool gcov-5"
     - compiler: clang
       addons:
         apt:
@@ -52,7 +52,7 @@ matrix:
 before_script:
   - export CC=${MATRIX_CC} && ${CC} --version
   - export CXX=${MATRIX_CXX} && ${CXX} --version
-  - export LCOV_ARGS=${MATRIX_LCOV_ARGS}
+  - export LCOV_ARGS=${MATRIX_LCOV_ARGS} && echo ${LCOV_ARGS}
 #  - mkdir ${TRAVIS_BUILD_DIR}/extra
 #  - mkdir ${TRAVIS_BUILD_DIR}/install
 #  - cd ${TRAVIS_BUILD_DIR}/extra
