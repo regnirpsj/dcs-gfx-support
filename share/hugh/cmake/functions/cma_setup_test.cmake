@@ -40,6 +40,13 @@ function(cma_setup_test TST_PREFIX)
   set(TST_EXES)
   set(TST_TESTS)
   
+  set(BOOSTTEST_ARGS)
+  list(APPEND BOOSTTEST_ARGS "--random=1") # randomized execution order
+  if(TST_DEBUG OR VERBOSE)
+    list(APPEND BOOSTTEST_ARGS "--report_level=short")
+    list(APPEND BOOSTTEST_ARGS "--log_level=message")
+  endif()
+
   foreach(APP ${TST_SOURCES})
     get_filename_component(EXE "test_${TST_PREFIX}_${APP}" NAME_WE)
     add_executable(${EXE} EXCLUDE_FROM_ALL ${APP} ${TST_ADDITIONAL})
@@ -51,7 +58,7 @@ function(cma_setup_test TST_PREFIX)
     #set_property(TARGET ${EXE} PROPERTY FOLDER "Tests/${TST_PREFIX}")
     
     target_link_libraries(${EXE} ${TST_DEPENDENCIES})
-    add_test(${EXE} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${EXE})
+    add_test(${EXE} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${EXE} ${BOOSTTEST_ARGS})
     list(APPEND TST_EXES ${EXE})
     
     get_filename_component(TEST "unit_test_${TST_PREFIX}_${APP}" NAME_WE)
@@ -80,8 +87,8 @@ function(cma_setup_test TST_PREFIX)
 
       if(${PROJECT_NAME}_COVERAGE)
 	add_custom_command(TARGET test_all POST_BUILD
-	  COMMAND ${CMAKE_COMMAND} --build . --target coverage_collect
-	  WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+	                   COMMAND ${CMAKE_COMMAND} --build . --target coverage_collect
+			   WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
       endif()
     endif()
 
@@ -89,7 +96,13 @@ function(cma_setup_test TST_PREFIX)
       if(TARGET test_${TST_PREFIX})
 	add_dependencies(test_${TST_PREFIX} ${TST_EXES})
       else()
-	add_custom_target(test_${TST_PREFIX} COMMAND ${CMAKE_CTEST_COMMAND} DEPENDS ${TST_EXES})
+	set(CTEST_ARGS)
+	if(TST_DEBUG OR VERBOSE)
+	  list(APPEND CTEST_ARGS "-V")
+	endif()
+	add_custom_target(test_${TST_PREFIX}
+	                  COMMAND ${CMAKE_CTEST_COMMAND} ${CTEST_ARGS}
+			  DEPENDS ${TST_EXES})
       endif()
     elseif(${PROJECT_NAME}_RUN_UTEST)
       if(TARGET test_${TST_PREFIX})
