@@ -27,7 +27,7 @@ matrix:
       env:
         - MATRIX_CC=gcc-5
         - MATRIX_CXX=g++-5
-        - MATRIX_LCOV_ARGS="--gcov-tool gcov-5"
+        - MATRIX_LCOV_ARGS="\-\-gcov-tool gcov-5"
     - compiler: clang
       addons:
         apt:
