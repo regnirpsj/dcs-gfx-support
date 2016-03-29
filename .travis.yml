@@ -21,7 +21,6 @@ matrix:
             - cmake
             - cmake-data
             - git
-            - lcov
             - libboost1.55-all-dev
             - g++-5
       env:
@@ -41,7 +40,6 @@ matrix:
             - cmake-data
             - git
             - libboost1.55-all-dev
-            - lcov
             - g++-5
             - clang-3.7
       env:
