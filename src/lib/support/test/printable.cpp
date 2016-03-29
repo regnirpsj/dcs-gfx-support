@@ -116,7 +116,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_support_printable_derived, T, ostream_ty
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_support_printable_derived_via_base, T, ostream_types)
 {
-  std::unique_ptr<hugh::support::printable> p(new printable_derived_derived);
+  using hugh::support::printable;
+  
+  std::unique_ptr<printable> p(new printable_derived_derived);
 
   T ostr;
   
@@ -125,4 +127,25 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_support_printable_derived_via_base, T, o
   
   BOOST_CHECK       (!ostr.str().empty());
   BOOST_TEST_MESSAGE(hugh::support::wstring_to_string(ostr.str()));
+}
+
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_support_printable_print_on, T, ostream_types)
+{
+  using hugh::support::printable;
+  
+  class derived : public printable {
+
+  public:
+
+    virtual void print_on(std::ostream& os) const
+    {
+      printable::print_on(os);
+    }
+    
+  };
+
+  std::unique_ptr<printable> p(new derived);
+  T                          ostr;
+  
+  BOOST_REQUIRE_THROW(p->print_on(ostr), std::logic_error);
 }

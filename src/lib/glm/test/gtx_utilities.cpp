@@ -94,6 +94,16 @@ BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_sgn)
   BOOST_CHECK(glm::sgn(+1) > 0);
 }
 
+BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_decompose)
+{
+  glm::mat4 const      m;
+  glm::decompose const d(m);
+
+  BOOST_CHECK(glm::mat4() == d.rotation);
+  BOOST_CHECK(glm::mat4() == d.scale);
+  BOOST_CHECK(glm::mat4() == d.translation);  
+}
+
 BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_convert_transform)
 {
   using matrix_pair = std::pair<glm::mat4 const, glm::mat4 const>;
@@ -142,6 +152,26 @@ BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_convert_transform)
       glm::mat4 r, s, t;
     
       glm::mat4 const   x(glm::convert::transform(ix.first, e.first, r, s, t));
+      matrix_pair const p(std::make_pair(ix.first, x));
+
+      BOOST_TEST_MESSAGE(glm::io::precision(7) << glm::io::width(1 + 1 + 1 + 7)
+                         << ix.second << ':' << std::string(47 - ix.second.length(), ' ')
+                         << e.second << ':' << p << '\n');
+
+      static float const epsilon(177 * std::numeric_limits<float>::epsilon());
+      
+      for (unsigned i(0); i < 4; ++i) {
+        for (unsigned j(0); j < 4; ++j) {
+          BOOST_CHECK(std::abs(p.first[i][j] - p.second[i][j]) < epsilon);
+        }
+      }
+    }
+  }
+
+
+  for (auto ix : input_xform_list) {
+    for (auto e : decompose_order_list) {
+      glm::mat4 const   x(glm::convert::transform(ix.first, e.first));
       matrix_pair const p(std::make_pair(ix.first, x));
 
       BOOST_TEST_MESSAGE(glm::io::precision(7) << glm::io::width(1 + 1 + 1 + 7)

@@ -34,6 +34,7 @@ namespace {
   
   // variables, internal
 
+  bool handled_fpe (false);
   bool handled_int (false);
   bool handled_term(false);
   
@@ -42,9 +43,11 @@ namespace {
   void
   signal_handler(signed signo)
   {
-    TRACE("<unnamed>::signal_handler(" + std::to_string(signo) + ")");
+    TRACE("<unnamed>::signal_handler(" + std::to_string(signo) + ") [" +
+          hugh::support::signal_name(signo) + "]");
     
     switch (signo) {
+    case SIGFPE:  handled_fpe  = true; break;
     case SIGINT:  handled_int  = true; break;
     case SIGTERM: handled_term = true; break;
     default:                           break;
@@ -72,7 +75,8 @@ main()
   TRACE("main");
 
   using namespace hugh;
-  
+
+  support::signal_handler::instance->handler(SIGFPE,  signal_handler);
   support::signal_handler::instance->handler(SIGINT,  signal_handler);
   support::signal_handler::instance->handler(SIGTERM, signal_handler);
 
@@ -81,11 +85,23 @@ main()
   {
     static support::clock::duration const delay(std::chrono::microseconds(725));
     
+    int const raised_sigfpe(raise_signal(SIGFPE));
+  
+    support::sleep(delay);
+  
+    if ((0 != raised_sigfpe) || !handled_fpe) {
+      std::cout << "unhandled signal: " << hugh::support::signal_name(SIGFPE) << std::endl;
+      
+      result = EXIT_FAILURE;
+    }
+
     int const raised_sigint(raise_signal(SIGINT));
   
     support::sleep(delay);
   
     if ((0 != raised_sigint) || !handled_int) {
+      std::cout << "unhandled signal: " << hugh::support::signal_name(SIGINT) << std::endl;
+      
       result = EXIT_FAILURE;
     }
 
@@ -94,6 +110,8 @@ main()
     support::sleep(delay);
   
     if ((0 != raised_sigterm) || !handled_term) {
+      std::cout << "unhandled signal: " << hugh::support::signal_name(SIGTERM) << std::endl;
+      
       result = EXIT_FAILURE;
     }
   }
