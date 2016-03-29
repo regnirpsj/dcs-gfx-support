@@ -26,7 +26,6 @@ matrix:
       env:
         - MATRIX_CC=gcc-5
         - MATRIX_CXX=g++-5
-        - MATRIX_GCOV=gcov-5
     - compiler: clang
       addons:
         apt:
@@ -45,15 +44,12 @@ matrix:
       env:
         - MATRIX_CC=clang-3.7
         - MATRIX_CXX=clang++-3.7
-        - MATRIX_GCOV=gcov-5
         
 before_script:
   - export CC=${MATRIX_CC}
   - ${CC} --version
   - export CXX=${MATRIX_CXX}
   - ${CXX} --version
-  - export GCOV=${MATRIX_GCOV}
-  - ${GCOV} --version
   - mkdir ${TRAVIS_BUILD_DIR}/build
   - mkdir ${TRAVIS_BUILD_DIR}/extra
   - mkdir ${TRAVIS_BUILD_DIR}/install
@@ -62,9 +58,8 @@ before_script:
   - tar xf lcov_1.11.orig.tar.gz
   - env PREFIX=${TRAVIS_BUILD_DIR}/install make -C lcov-1.11/ install
   - export PATH=${TRAVIS_BUILD_DIR}/install/usr/bin:${PATH}
+  - lcov --version
   - gem install coveralls-lcov
-  - export LCOV="lcov --gcov-tool ${GCOV}"
-  - ${LCOV} --version
   - export FETCHREPO=${TRAVIS_BUILD_DIR}/share/hugh/travis.ci/fetch-or-update-git-repo.sh
   - ${FETCHREPO} http://github.com/g-truc/gli.git ${HOME}/extra/gli-git
   - ${FETCHREPO} http://github.com/g-truc/glm.git ${HOME}/extra/glm-git
@@ -73,14 +68,14 @@ before_script:
   
 script:
   - cd ${TRAVIS_BUILD_DIR}
-  - ${LCOV} --directory . --zerocounters
+  - lcov --directory . --zerocounters
   - cd ${TRAVIS_BUILD_DIR}/build
   - export HUGH_INSTALL_PREFIX=${TRAVIS_BUILD_DIR}/install
   - cmake -DVERBOSE=1 -DHUGH_SUPPORT_COVERAGE=1 .. && cmake --build . --target test_all
   
 after_success:
   - cd ${TRAVIS_BUILD_DIR}/build
-  - ${LCOV} --directory . --capture --output-file coverage.info
-  - ${LCOV} --remove coverage.info '/usr/*' 'extra/*' 'inc/boost/*' 'support/chrono_io.hpp' 'support/ratio_io.hpp' 'test/*' --output-file coverage.info
-  - ${LCOV} --list coverage.info
+  - lcov --directory . --capture --output-file coverage.info
+  - lcov --remove coverage.info '/usr/*' 'extra/*' 'inc/boost/*' 'support/chrono_io.hpp' 'support/ratio_io.hpp' 'test/*' --output-file coverage.info
+  - lcov --list coverage.info
   - coveralls-lcov --repo-token ${COVERALLS_TOKEN} coverage.info
