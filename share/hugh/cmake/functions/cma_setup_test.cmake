@@ -55,8 +55,6 @@ function(cma_setup_test TST_PREFIX)
       cma_add_winrt_props(${EXE})
     endif()
 
-    #set_property(TARGET ${EXE} PROPERTY FOLDER "Tests/${TST_PREFIX}")
-    
     target_link_libraries(${EXE} ${TST_DEPENDENCIES})
     add_test(${EXE} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${EXE} ${BOOSTTEST_ARGS})
     list(APPEND TST_EXES ${EXE})
@@ -75,23 +73,6 @@ function(cma_setup_test TST_PREFIX)
   endif()
   
   if(${PROJECT_NAME}_BLD_UTEST)
-#    if(NOT TARGET test_libs)
- #     add_custom_target(test_libs)
-  #    #set_property(TARGET test_libs PROPERTY FOLDER "Tests")
-   # endif()
-
-    #if(NOT TARGET test_all)
-     # add_custom_target(test_all)
-#      #set_property(TARGET test_all PROPERTY FOLDER "Tests")
- #     add_dependencies(test_all test_libs)
-
-      #if(${PROJECT_NAME}_COVERAGE)
-      #	add_custom_command(TARGET test_all POST_BUILD
-      #	                   COMMAND ${CMAKE_COMMAND} --build . --target coverage_collect
-      #			   WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
-      #endif()
-  #  endif()
-
     if(${PROJECT_NAME}_RUN_CTEST)
       if(TARGET test_${TST_PREFIX})
 	add_dependencies(test_${TST_PREFIX} ${TST_EXES})
@@ -118,7 +99,6 @@ function(cma_setup_test TST_PREFIX)
       endif()
     endif()
 
-    #set_property(TARGET test_${TST_PREFIX} PROPERTY FOLDER "Tests/${TST_PREFIX}")
     add_dependencies(test_libs test_${TST_PREFIX})
   endif()
 endfunction()
