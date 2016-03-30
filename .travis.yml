@@ -70,8 +70,7 @@ before_script:
 script:
   - cd ${TRAVIS_BUILD_DIR}/build
   - cmake -DVERBOSE=1 -DHUGH_SUPPORT_COVERAGE=1 ..
-  - cmake --build . --target coverage_zero
-  - cmake --build . --target test_all
+  - cmake --build . --target test_coverage
   
 after_success:
   - cd ${TRAVIS_BUILD_DIR}/build
