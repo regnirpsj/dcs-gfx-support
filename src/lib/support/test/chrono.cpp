@@ -52,10 +52,14 @@ BOOST_AUTO_TEST_CASE(test_hugh_support_clock)
   BOOST_TEST_MESSAGE("clock resolution:\t"
                      << std::right << std::setw(width)
                      << std::chrono::duration_fmt(std::chrono::symbol) << clock::resolution);
+
+  std::ostringstream ostr;
+
+  // trigger operator<<(clock::timepoint)
+  ostr << std::right << std::setw(width) << clock::now();
   
   BOOST_TEST_MESSAGE("clock now:\t\t"
-                     << std::right << std::setw(width)
-                     << clock::now());
+                     << ostr.str());
 
   BOOST_TEST_MESSAGE("iso8601 datetime:\t"
                      << std::right << std::setw(width)
