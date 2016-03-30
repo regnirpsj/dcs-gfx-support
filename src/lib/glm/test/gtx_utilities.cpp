@@ -168,7 +168,6 @@ BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_convert_transform)
     }
   }
 
-
   for (auto ix : input_xform_list) {
     for (auto e : decompose_order_list) {
       glm::mat4 const   x(glm::convert::transform(ix.first, e.first));
