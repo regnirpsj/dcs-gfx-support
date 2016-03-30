@@ -63,7 +63,8 @@ namespace {
   void
   default_handler(signed signo)
   {
-    TRACE("hugh::support::signal_handler::<unnamed>::default_handler");
+    TRACE("hugh::support::signal_handler::<unnamed>::default_handler(" + std::to_string(signo) +
+          ") [" + hugh::support::signal_name(signo) + "]");
     
     volatile bool ignore_signal(false);
     volatile bool create_core(false);
