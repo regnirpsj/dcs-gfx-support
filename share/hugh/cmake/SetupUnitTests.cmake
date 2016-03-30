@@ -73,8 +73,9 @@ if(${PROJECT_NAME}_BLD_UTEST AND ${PROJECT_NAME}_COVERAGE)
       list(APPEND LCOV_ARGS "--quiet")
     endif()
     
-    list(APPEND LCOV_ARGS "--rc lcov_branch_coverage=1")
-    list(APPEND LCOV_ARGS "--rc lcov_function_coverage=1")
+    #list(APPEND LCOV_ARGS "--debug")
+    #list(APPEND LCOV_ARGS "--rc lcov_branch_coverage=1")
+    #list(APPEND LCOV_ARGS "--rc lcov_function_coverage=1")
 
     if(VERBOSE)
       message(STATUS "Found GCOV front-end: ${LCOV} ${LCOV_ARGS}")
@@ -87,11 +88,11 @@ if(${PROJECT_NAME}_BLD_UTEST AND ${PROJECT_NAME}_COVERAGE)
 
     set(CAPTURE_FNAME "coverage.info")
 
-    add_custom_command(TARGET test_coverage_zero POST_BUILD
-      COMMENT "Cleaning coverage data"
-      COMMAND ${LCOV} ${LCOV_ARGS} --zerocounters --directory .
-      COMMAND ${CMAKE_COMMAND} -E remove ${CAPTURE_FNAME}
-      WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+    #add_custom_command(TARGET test_coverage_zero POST_BUILD
+    #  COMMAND ${LCOV} ${LCOV_ARGS} --zerocounters --directory .
+    #  COMMAND ${CMAKE_COMMAND} -E remove ${CAPTURE_FNAME}
+    #  COMMENT "Cleaning coverage data"
+    #  WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
     list(APPEND LCOV_ARGS "--output-file ${CAPTURE_FNAME}")
     separate_arguments(LCOV_ARGS)
