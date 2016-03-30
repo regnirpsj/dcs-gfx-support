@@ -42,7 +42,7 @@ list(APPEND DISABLED_WARNINGS "/wd4459")
 # unreachable code (somewhere in boost)
 list(APPEND DISABLED_WARNINGS "/wd4702")
 
-string(REGEX REPLACE ";" " " DISABLED_WARNINGS "${DISABLED_WARNINGS}") # ";" -> " "
+separate_arguments(DISABLED_WARNINGS)
 
 set(GLOBAL_COMPILER_FLAGS)
 set(GLOBAL_COMPILER_FLAGS "${GLOBAL_COMPILER_FLAGS} /W4")  # warn almost everything
