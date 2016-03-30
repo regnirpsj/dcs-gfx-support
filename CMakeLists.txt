@@ -8,9 +8,13 @@
 
 cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 
-project(HUGH_SUPPORT VERSION 0.0.1)
+project(HUGH_SUPPORT VERSION 0.1.0)
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/share/hugh/cmake")
+if(DEFINED ENV{HUGH_INSTALL_PREFIX})
+  set(HUGH_INSTALL_PREFIX $ENV{HUGH_INSTALL_PREFIX} CACHE INTERNAL "")
+endif()
+
+list(APPEND CMAKE_MODULE_PATH "${HUGH_INSTALL_PREFIX}/share/hugh/cmake")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 include(CheckOutOfTreeBuild)
@@ -29,7 +33,6 @@ include(SetupUnitTests)
 include_directories(${CMAKE_SOURCE_DIR}/inc)
 include_directories(${CMAKE_BINARY_DIR}/exports)
 
-add_subdirectory(doc)
 add_subdirectory(share)
 add_subdirectory(src)
 

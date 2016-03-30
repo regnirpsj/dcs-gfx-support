@@ -60,7 +60,12 @@ before_script:
   - export PATH=${TRAVIS_BUILD_DIR}/install/usr/bin:${PATH}
   - lcov --version
   - gem install coveralls-lcov
-  - export FETCHREPO=${TRAVIS_BUILD_DIR}/share/hugh/travis.ci/fetch-or-update-git-repo.sh
+  - export HUGH_INSTALL_PREFIX=${TRAVIS_BUILD_DIR}/install
+  - export HUGH_BUILDSYS_ROOT_DIR=${TRAVIS_BUILD_DIR}/extra/hugh-build-system
+  - git clone --depth 1 http://github.com/regnirpsj/hugh-build-system.git ${HUGH_BUILDSYS_ROOT_DIR}
+  - cd ${HUGH_BUILDSYS_ROOT_DIR} && mkdir build && cd build
+  - cmake .. && cmake --build . --target install
+  - export FETCHREPO=${HUGH_INSTALL_PREFIX}/share/hugh/travis.ci/fetch-or-update-git-repo.sh
   - export GLI_ROOT_DIR=${HOME}/extra/gli-git
   - export GLM_ROOT_DIR=${HOME}/extra/glm-git
   - ${FETCHREPO} http://github.com/g-truc/gli.git ${GLI_ROOT_DIR}
