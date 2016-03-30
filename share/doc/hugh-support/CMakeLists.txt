@@ -10,6 +10,8 @@ cma_print_current_directory()
 
 if(${PROJECT_NAME}_DOC_DEV OR ${PROJECT_NAME}_DOC_USR)
   find_package(Doxygen REQUIRED)
+
+  string(TOLOWER ${CMAKE_PROJECT_NAME} DOC_INSTALL_DIR)
 endif()
 
 if(${PROJECT_NAME}_DOC_DEV)
@@ -21,8 +23,8 @@ if(${PROJECT_NAME}_DOC_DEV)
                     COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.dev
 		    SOURCES ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.dev)
   install(DIRECTORY   ${CMAKE_CURRENT_BINARY_DIR}/dev
-          DESTINATION ${${PROJECT_NAME}_DOC_DIRECTORY}
-	  COMPONENT   ${PROJECT_NAME}_DOC_COMPONENT_NAME)
+          DESTINATION ${${PROJECT_NAME}_DOC_DIRECTORY}/${DOC_INSTALL_DIR}
+	  COMPONENT   ${${PROJECT_NAME}_DOC_COMPONENT_NAME})
 else()
   if(VERBOSE)
     message(STATUS "Generation of developer documentation disabled")
@@ -38,8 +40,8 @@ if(${PROJECT_NAME}_DOC_USR)
                     COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.usr
 		    SOURCES ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.usr)
   install(DIRECTORY   ${CMAKE_CURRENT_BINARY_DIR}/usr
-          DESTINATION ${${PROJECT_NAME}_DOC_DIRECTORY}
-          COMPONENT   ${PROJECT_NAME}_DOC_COMPONENT_NAME)
+          DESTINATION ${${PROJECT_NAME}_DOC_DIRECTORY}/${DOC_INSTALL_DIR}
+          COMPONENT   ${${PROJECT_NAME}_DOC_COMPONENT_NAME})
 else()
   if(VERBOSE)
     message(STATUS "Generation of user documentation disabled")
