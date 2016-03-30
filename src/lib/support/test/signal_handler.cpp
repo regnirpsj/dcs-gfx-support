@@ -14,8 +14,10 @@
 
 // includes, system
 
+#include <array>   // std::array<>
 #include <csignal> // std::raise
 #include <cstdlib> // EXIT_*
+#include <tuple>   // std::tuple<>
 
 // includes, project
 
@@ -34,9 +36,49 @@ namespace {
   
   // variables, internal
 
-  bool handled_fpe (false);
-  bool handled_int (false);
-  bool handled_term(false);
+#if defined(_WIN32)
+  unsigned const signal_test_size( 6);
+#else
+  unsigned const signal_test_size(29);
+#endif
+  
+  std::array<std::tuple<signed /* signo   */,
+                        signed /* raised  */,
+                        bool   /* handled */>, signal_test_size> signal_test = {
+    {
+      std::make_tuple(SIGABRT,   -1, false),
+      std::make_tuple(SIGFPE,    -1, false),
+      std::make_tuple(SIGILL,    -1, false),      
+      std::make_tuple(SIGINT,    -1, false),
+      std::make_tuple(SIGSEGV,   -1, false),
+      std::make_tuple(SIGTERM,   -1, false),
+#if !defined(_WIN32)
+      std::make_tuple(SIGALRM,   -1, false),
+      std::make_tuple(SIGBUS,    -1, false),
+      std::make_tuple(SIGCHLD,   -1, false),
+      std::make_tuple(SIGCONT,   -1, false),
+      std::make_tuple(SIGHUP,    -1, false),
+      std::make_tuple(SIGPIPE,   -1, false),
+      std::make_tuple(SIGPOLL,   -1, false),
+      std::make_tuple(SIGPROF,   -1, false),
+      std::make_tuple(SIGPWR,    -1, false),
+      std::make_tuple(SIGQUIT,   -1, false),
+      std::make_tuple(SIGSTKFLT, -1, false),
+      std::make_tuple(SIGSYS,    -1, false),
+      std::make_tuple(SIGTRAP,   -1, false),
+      std::make_tuple(SIGTSTP,   -1, false),
+      std::make_tuple(SIGTTIN,   -1, false),
+      std::make_tuple(SIGTTOU,   -1, false),
+      std::make_tuple(SIGURG,    -1, false),
+      std::make_tuple(SIGUSR1,   -1, false),
+      std::make_tuple(SIGUSR2,   -1, false),
+      std::make_tuple(SIGVTALRM, -1, false),
+      std::make_tuple(SIGWINCH,  -1, false),
+      std::make_tuple(SIGXCPU,   -1, false),
+      std::make_tuple(SIGXFSZ,   -1, false),
+#endif
+    }
+  };
   
   // functions, internal
   
@@ -45,18 +87,19 @@ namespace {
   {
     TRACE("<unnamed>::signal_handler(" + std::to_string(signo) + ") [" +
           hugh::support::signal_name(signo) + "]");
-    
-    switch (signo) {
-    case SIGFPE:  handled_fpe  = true; break;
-    case SIGINT:  handled_int  = true; break;
-    case SIGTERM: handled_term = true; break;
-    default:                           break;
-    }
+
+    for (auto& s : signal_test) {
+      if (signo == std::get<0>(s)) {
+        std::get<2>(s) = true;
+      }
+    }    
   }
   
   signed
   raise_signal(signed signo)
   {
+    TRACE("<unnamed>::raise_signal");
+    
     // current linux/glibc implementation provides raise(2) as a wrapper for tgkill(2), which sends
     // the signal to the current thread/thread group but not all threads in the process; need to
     // find out how to make the signal-handler thread part of the parent thread's group!
@@ -76,44 +119,37 @@ main()
 
   using namespace hugh;
 
-  support::signal_handler::instance->handler(SIGFPE,  signal_handler);
-  support::signal_handler::instance->handler(SIGINT,  signal_handler);
-  support::signal_handler::instance->handler(SIGTERM, signal_handler);
+  support::signal_handler::handler_function_type
+    urg_handler(support::signal_handler::instance->handler(SIGURG));
+  support::signal_handler::handler_function_type
+    fpe_handler(support::signal_handler::instance->handler(SIGFPE));
+  
+  for (auto& s : signal_test) {
+    support::signal_handler::instance->handler(std::get<0>(s), signal_handler);
+  }
+  
+  int                            result(EXIT_SUCCESS);
+  support::clock::duration const delay(std::chrono::microseconds(725));
+  
+  for (auto& s : signal_test) {
+    std::get<1>(s) = raise_signal(std::get<0>(s));
+  
+    support::sleep(delay);
+  
+    if ((0 != std::get<1>(s)) || !std::get<2>(s)) {
+      std::cout << "unhandled signal: " << support::signal_name(std::get<0>(s)) << std::endl;
+      
+      result = EXIT_FAILURE;
+    }
+  }
 
-  int result(EXIT_SUCCESS);
-
-  {
-    static support::clock::duration const delay(std::chrono::microseconds(725));
+  if (EXIT_FAILURE != result) {
+    support::signal_handler::instance->handler(SIGURG, urg_handler);
+    support::signal_handler::instance->handler(SIGFPE, fpe_handler);
     
-    int const raised_sigfpe(raise_signal(SIGFPE));
-  
+    raise_signal(SIGURG); // ignored,   direct handler
+    //raise_signal(SIGFPE); // abort,   indirect handler
     support::sleep(delay);
-  
-    if ((0 != raised_sigfpe) || !handled_fpe) {
-      std::cout << "unhandled signal: " << hugh::support::signal_name(SIGFPE) << std::endl;
-      
-      result = EXIT_FAILURE;
-    }
-
-    int const raised_sigint(raise_signal(SIGINT));
-  
-    support::sleep(delay);
-  
-    if ((0 != raised_sigint) || !handled_int) {
-      std::cout << "unhandled signal: " << hugh::support::signal_name(SIGINT) << std::endl;
-      
-      result = EXIT_FAILURE;
-    }
-
-    int const raised_sigterm(raise_signal(SIGTERM));
-  
-    support::sleep(delay);
-  
-    if ((0 != raised_sigterm) || !handled_term) {
-      std::cout << "unhandled signal: " << hugh::support::signal_name(SIGTERM) << std::endl;
-      
-      result = EXIT_FAILURE;
-    }
   }
   
   return result;
