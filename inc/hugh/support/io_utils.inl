@@ -345,7 +345,7 @@ namespace hugh {
           if (fmt.formatted) {
             os << fmt.delim_left;
 
-            for (auto e : a) {
+            for (auto const& e : a) {
               os << fmt.indent << e << fmt.separator;
             }
 
@@ -355,7 +355,7 @@ namespace hugh {
         
             os << fmt.delim_right;
           } else {
-            for (auto e : a) {
+            for (auto const& e : a) {
               os << e << fmt.space;
             }
           }
@@ -377,7 +377,7 @@ namespace hugh {
           if (fmt.formatted) {
             os << fmt.delim_left;
 
-            for (auto e : a) {
+            for (auto const& e : a) {
               os << fmt.indent << e << fmt.separator;
             }
       
@@ -387,7 +387,7 @@ namespace hugh {
         
             os << fmt.delim_right;
           } else {
-            for (auto e : a) {
+            for (auto const& e : a) {
               os << e << fmt.space;
             }
           }
@@ -409,7 +409,7 @@ namespace hugh {
           if (fmt.formatted) {
             os << fmt.delim_left;
 
-            for (auto e : a) {
+            for (auto const& e : a) {
               os << fmt.indent << e << fmt.separator;
             }
       
@@ -419,7 +419,7 @@ namespace hugh {
         
             os << fmt.delim_right;
           } else {
-            for (auto e : a) {
+            for (auto const& e : a) {
               os << e << fmt.space;
             }
           }
@@ -427,7 +427,7 @@ namespace hugh {
       
         return os;
       }
-  
+      
       template <typename CTy, typename CTr,
                 template <typename, typename, typename, typename> class Container, class K, class V,
                 class C, class A>
@@ -446,7 +446,7 @@ namespace hugh {
           if (fmt.formatted) {
             os << fmt.delim_left;
 
-            for (auto e : a) {
+            for (auto const& e : a) {
               os << fmt.delim_left
                  << fmt.indent << e.first << fmt.separator << e.second
                  << fmt.delim_right
@@ -459,7 +459,7 @@ namespace hugh {
         
             os << fmt.delim_right;
           } else {
-            for (auto e : a) {
+            for (auto const& e : a) {
               os << fmt.delim_left
                  << e.first << fmt.separator << e.second
                  << fmt.delim_right
@@ -485,7 +485,7 @@ namespace hugh {
           if (fmt.formatted) {
             os << fmt.delim_left;
 
-            for (auto e : a) {
+            for (auto const& e : a) {
               os << fmt.delim_left
                  << fmt.indent << e.first << fmt.separator << e.second
                  << fmt.delim_right
@@ -498,7 +498,7 @@ namespace hugh {
         
             os << fmt.delim_right;
           } else {
-            for (auto e : a) {
+            for (auto const& e : a) {
               os << fmt.delim_left
                  << e.first << fmt.separator << e.second
                  << fmt.delim_right
@@ -524,7 +524,7 @@ namespace hugh {
           if (fmt.formatted) {
             os << fmt.delim_left;
 
-            for (auto e : a) {
+            for (auto const& e : a) {
               os << fmt.indent << e << fmt.separator;
             }
           
@@ -534,7 +534,7 @@ namespace hugh {
         
             os << fmt.delim_right;
           } else {
-            for (auto e : a) {
+            for (auto const& e : a) {
               os << e << fmt.space;
             }
           }
