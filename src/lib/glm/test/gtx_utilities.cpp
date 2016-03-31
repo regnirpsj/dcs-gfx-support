@@ -148,6 +148,8 @@ BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_convert_transform)
   };
 
   static float const epsilon(256 * std::numeric_limits<float>::epsilon());
+
+  BOOST_TEST_MESSAGE("epsilon used for equality comparison to pass: " << std::fixed << epsilon);
   
   for (auto ix : input_xform_list) {
     for (auto e : decompose_order_list) {
