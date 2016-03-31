@@ -147,6 +147,8 @@ BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_convert_transform)
     }
   };
 
+  static float const epsilon(256 * std::numeric_limits<float>::epsilon());
+  
   for (auto ix : input_xform_list) {
     for (auto e : decompose_order_list) {
       glm::mat4 r, s, t;
@@ -157,8 +159,6 @@ BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_convert_transform)
       BOOST_TEST_MESSAGE(glm::io::precision(7) << glm::io::width(1 + 1 + 1 + 7)
                          << ix.second << ':' << std::string(47 - ix.second.length(), ' ')
                          << e.second << ':' << p << '\n');
-
-      static float const epsilon(177 * std::numeric_limits<float>::epsilon());
       
       for (unsigned i(0); i < 4; ++i) {
         for (unsigned j(0); j < 4; ++j) {
@@ -167,7 +167,7 @@ BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_convert_transform)
       }
     }
   }
-
+  
   for (auto ix : input_xform_list) {
     for (auto e : decompose_order_list) {
       glm::mat4 const   x(glm::convert::transform(ix.first, e.first));
@@ -176,8 +176,6 @@ BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_convert_transform)
       BOOST_TEST_MESSAGE(glm::io::precision(7) << glm::io::width(1 + 1 + 1 + 7)
                          << ix.second << ':' << std::string(47 - ix.second.length(), ' ')
                          << e.second << ':' << p << '\n');
-
-      static float const epsilon(177 * std::numeric_limits<float>::epsilon());
       
       for (unsigned i(0); i < 4; ++i) {
         for (unsigned j(0); j < 4; ++j) {
