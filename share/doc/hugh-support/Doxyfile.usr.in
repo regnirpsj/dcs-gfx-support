@@ -38,11 +38,13 @@ DOT_TRANSPARENT         = YES
 DOT_MULTI_TARGETS       = YES
 DOT_FONTNAME            = DejaVu Sans Mono
 DOT_FONTSIZE            = 12
-#DOT_IMAGE_FORMAT        = svg
+DOT_IMAGE_FORMAT        = svg
+INTERACTIVE_SVG         = YES
 DOT_PATH                = @DOXYGEN_DOT_PATH@
 # MSCGEN_PATH
 
 TAGFILES               += "@CMAKE_CURRENT_SOURCE_DIR@/cppreference-doxygen-web.tag.xml=http://en.cppreference.com/w/"
 
+GENERATE_TAGFILE        = @CMAKE_CURRENT_BINARY_DIR@/usrdoc.tag.xml
 GENERATE_HTML           = YES
 GENERATE_LATEX          = NO
