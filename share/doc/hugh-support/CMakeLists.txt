@@ -11,6 +11,9 @@ cma_print_current_directory()
 if(${PROJECT_NAME}_DOC_DEV OR ${PROJECT_NAME}_DOC_USR)
   find_package(Doxygen REQUIRED)
 
+  cma_fetch_url(http://upload.cppreference.com/mwiki/images/f/f8/cppreference-doxygen-web.tag.xml
+                ${CMAKE_CURRENT_BINARY_DIR}/cppreference-doxygen-web.tag.xml)
+
   string(TOLOWER ${CMAKE_PROJECT_NAME} DOC_INSTALL_DIR)
 endif()
 

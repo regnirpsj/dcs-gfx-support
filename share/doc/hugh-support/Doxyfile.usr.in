@@ -43,7 +43,7 @@ INTERACTIVE_SVG         = YES
 DOT_PATH                = @DOXYGEN_DOT_PATH@
 # MSCGEN_PATH
 
-TAGFILES               += "@CMAKE_CURRENT_SOURCE_DIR@/cppreference-doxygen-web.tag.xml=http://en.cppreference.com/w/"
+TAGFILES               += "@CMAKE_CURRENT_BINARY_DIR@/cppreference-doxygen-web.tag.xml=http://en.cppreference.com/w/"
 
 GENERATE_TAGFILE        = @CMAKE_CURRENT_BINARY_DIR@/usrdoc.tag.xml
 GENERATE_HTML           = YES
