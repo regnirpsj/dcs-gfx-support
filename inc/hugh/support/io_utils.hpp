@@ -109,11 +109,11 @@ namespace hugh {
       };
 
       /**
-       * \brief (temporarily) redirect \c std::ostream content from to another \c std::ostream
+       * \brief (temporarily) redirect \c std::ostream content to another \c std::ostream
        *
        * example:
        *
-       * <code>
+       * \code{.cpp}
        *  {
        *  #if defined(HUGH_ALL_TRACE)
        *    std::ofstream                           logfile ("log.txt");
@@ -122,11 +122,11 @@ namespace hugh {
        *    support::ostream::scoped_redirect const sor_cout(std::cout, logfile);
        *  #endif
        *
-       *    std::cout << "this will end up in'log.txt'" << std::endl;
+       *    std::cout << "this will end up in 'log.txt'" << std::endl;
        *  }
-       * </code>
+       * \endcode
        *
-       * [http://stackoverflow.com/questions/4753153/redirecting-stdcout]
+       * \see http://stackoverflow.com/questions/4753153/redirecting-stdcout
        */
       template <typename CTy, typename CTr>
       class scoped_redirect : private boost::noncopyable {
@@ -147,6 +147,10 @@ namespace hugh {
       
       };
 
+      /**
+       * \brief describes the formatting attributes when inserting a container into a
+       * \c std::ostream
+       */
       template <typename CTy>
       class format_punct : public std::locale::facet {
 
@@ -168,6 +172,9 @@ namespace hugh {
 
       };
 
+      /**
+       * \brief an \c std::ostream format saver similar to \c boost::io::basic_ios_all_saver
+       */
       template <typename CTy, typename CTr = std::char_traits<CTy>>
         class basic_format_saver : private boost::noncopyable {
     
@@ -183,7 +190,10 @@ namespace hugh {
 
       using format_saver  = basic_format_saver<char>;
       using wformat_saver = basic_format_saver<wchar_t>;
-    
+
+      /**
+       * \brief delimeter description: left/right braces and element separator
+       */
       template <typename CTy>
       struct delimeter { 
     
@@ -194,6 +204,9 @@ namespace hugh {
 
       };
 
+      /**
+       * \brief indentation description
+       */
       template <typename CTy>
       struct indent { 
     
@@ -204,6 +217,9 @@ namespace hugh {
       
       };
 
+      /**
+       * \brief (experimental) char remover (will probably never work)
+       */
       struct remove { 
 
         unsigned const value;
@@ -331,7 +347,10 @@ namespace hugh {
 namespace std {
 
   template <typename T, typename D> class unique_ptr;
-  
+
+  /**
+   * \brief \c std::ostream operator<< for std::unique_ptr<> instances
+   */
   template <typename CTy, typename CTr, typename T, typename D>
   basic_ostream<CTy,CTr>& operator<<(basic_ostream<CTy,CTr>&, unique_ptr<T,D> const&);
   

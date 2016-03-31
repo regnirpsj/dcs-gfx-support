@@ -101,12 +101,12 @@ namespace hugh {
      * object is inserted as a \c clock::duration by subtracting an static internal
      * \c clock::time_point from it, which is initialized once at process startup.
      *
-     * \param  os         \c std::ostream&
-     * \param  time_point \c clock::time_point
+     * \param  os \c std::ostream&
+     * \param  a  \c clock::time_point
      *
      * \return modified ostream
      *
-     * \throws nothing
+     * \throw  nothing
      */
     HUGH_SUPPORT_EXPORT std::ostream& operator<<(std::ostream&, clock::time_point const&);
   

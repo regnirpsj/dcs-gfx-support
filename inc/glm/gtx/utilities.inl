@@ -64,9 +64,9 @@ namespace glm {
   // http://stackoverflow.com/questions/1903954
   template <typename T>
   inline signed
-  sgn(T val)
+  sgn(T a)
   {
-    return (val > T(0)) - (val < T(0));
+    return (a > T(0)) - (a < T(0));
   }
 
 } // namespace glm {

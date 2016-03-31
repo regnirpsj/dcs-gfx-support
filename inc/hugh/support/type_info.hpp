@@ -51,9 +51,11 @@ namespace hugh {
      *
      * \param  tinfo \c std::type_info object of an actual object
      *
-     * \return demangled type name
+     * \retval demangled type name
      *
-     * \throws \c std::bad_alloc or \c std::domain_error or \c std::invalid_argument
+     * \throw  std::bad_alloc
+     * \throw  std::domain_error
+     * \throw  std::invalid_argument
      */
     HUGH_SUPPORT_EXPORT std::string demangle(std::type_info const&);
 
@@ -64,12 +66,12 @@ namespace hugh {
      * this version internally calls the throwing \c support::demangle function and catches any
      * \c std::exceptions. in such a case the unmangled type name is returned.
      *
-     * \param  tinfo           \c std::type_info object of an actual object
-     * \param  \c std::nothrow signature disambiguation tag
+     * \param  tinfo        \c std::type_info object of an actual object
+     * \param  std::nothrow \c std::nothrow signature disambiguation tag
      *
-     * \return demangled type name or unmangled name if demangling fails
+     * \retval demangled type name or unmangled name if demangling fails
      *
-     * \throws nothing
+     * \throw  nothing
      */
     HUGH_SUPPORT_EXPORT std::string demangle(std::type_info const&, std::nothrow_t const&) noexcept;
   

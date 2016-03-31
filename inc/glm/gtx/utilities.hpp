@@ -82,18 +82,18 @@ namespace glm {
   /**
    * \brief convert the input angle (in radians) to be between [0, 2*pi]
    *
-   * \param  T
+   * \param  a
    *
-   * \return T -> [0, 2*pi]
+   * \return a -> [0, 2*pi]
    */
   template <typename T> T rev(T);
   
   /**
    * \brief compute the sign[um] of T
    *
-   * \param  T
+   * \param  a
    *
-   * \return sign(T) + identity(T)
+   * \return sign(a) + identity(a)
    */
   template <typename T> signed sgn(T);
   
