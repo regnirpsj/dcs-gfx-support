@@ -13,9 +13,9 @@ find_package(Boost ${BOOST_MINIMUM_VERSION} REQUIRED COMPONENTS unit_test_framew
 include_directories(SYSTEM ${Boost_INLCUDE_DIR})
 
 set(SRC)
-list(APPEND SRC "gtx_limits.cpp")
-list(APPEND SRC "gtx_morton.cpp")
-list(APPEND SRC "gtx_utilities.cpp")
+list(APPEND SRC gtx_limits.cpp)
+list(APPEND SRC gtx_morton.cpp)
+list(APPEND SRC gtx_utilities.cpp)
 
 set(LIBS)
 list(APPEND LIBS ${LIB})

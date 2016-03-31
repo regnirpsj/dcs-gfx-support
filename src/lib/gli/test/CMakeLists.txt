@@ -13,7 +13,7 @@ find_package(Boost ${BOOST_MINIMUM_VERSION} REQUIRED COMPONENTS unit_test_framew
 include_directories(SYSTEM ${Boost_INLCUDE_DIR})
 
 set(SRC)
-list(APPEND SRC "gtx_io.cpp")
+list(APPEND SRC gtx_io.cpp)
 
 set(LIBS)
 list(APPEND LIBS ${LIB})
