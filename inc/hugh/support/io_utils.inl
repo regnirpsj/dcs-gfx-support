@@ -222,18 +222,24 @@ namespace hugh {
       inline std::basic_ostream<CTy, CTr>&
       operator<<(std::basic_ostream<CTy, CTr>& os, remove const& a)
       {
-#if 0
-        using pos_type = typename std::basic_ostream<CTy, CTr>::pos_type;
+        typename std::basic_ostream<CTy,CTr>::sentry const cerberus(os);
+
+        if (cerberus) {
+          using pos_type = typename std::basic_ostream<CTy, CTr>::pos_type;
+          
+          if (pos_type(-1) == os.tellp()) {
+            os << std::basic_string<CTy>(a.value, '\b');
+          } else {
+            pos_type const current(os.tellp());
       
-        pos_type const current(os.tellp());
-      
-        return os.seekp(std::min(std::max(pos_type(0),
-                                          pos_type(current - pos_type(a.value))),
-                                 current),
-                        std::ios_base::beg);
-#else
-        return os << std::basic_string<CTy>(a.value, '\b');
-#endif
+            os.seekp(std::min(std::max(pos_type(0),
+                                       pos_type(current - pos_type(a.value))),
+                              current),
+                     std::ios_base::beg);
+          }
+        }
+        
+        return os;
       }
     
 #if !defined(_MSC_VER) || (defined(_MSC_VER) && (_MSC_VER > 1700))
