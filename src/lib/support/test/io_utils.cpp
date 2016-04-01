@@ -107,8 +107,7 @@ namespace {
        << ostream::formatted << s
        << '\n'
        << demangle<CTy>(typeid(s)) << ": unformatted\n"
-       << ostream::unformatted << ' ' << s
-       << std::endl;
+       << ostream::unformatted << ' ' << s;
 
     return !s.empty();
   }
@@ -135,8 +134,7 @@ namespace {
        << ostream::formatted << s
        << '\n'
        << demangle<CTy>(typeid(s)) << ": unformatted\n"
-       << ostream::unformatted << ' ' << s
-       << std::endl;
+       << ostream::unformatted << ' ' << s;
 
     return !s.empty();
   }
@@ -163,8 +161,7 @@ namespace {
        << ostream::formatted << s
        << '\n'
        << demangle<CTy>(typeid(s)) << ": unformatted\n"
-       << ostream::unformatted << ' ' << s
-       << std::endl;
+       << ostream::unformatted << ' ' << s;
 
     return !s.empty();
   }
@@ -191,8 +188,7 @@ namespace {
          << ostream::delimeter<CTy>('{', '}', ':') << s
          << '\n'
          << demangle<CTy>(typeid(s)) << ": unformatted\n"
-         << ostream::unformatted << ' ' << s
-         << std::endl;
+         << ostream::unformatted << ' ' << s;
     }
 
     {
@@ -207,8 +203,7 @@ namespace {
          << ostream::formatted << s
          << '\n'
          << demangle<CTy>(typeid(s)) << ": unformatted\n"
-         << ostream::unformatted << ' ' << s
-         << std::endl;
+         << ostream::unformatted << ' ' << s;
     }
 #else
     boost::ignore_unused_variable_warning(os);
@@ -229,31 +224,48 @@ BOOST_AUTO_TEST_CASE(test_hugh_support_io_utils_manipulator_remove)
   using namespace hugh::support;
   using ostream::remove;
 
-#if 0
-  {
-    std::ostringstream ostr;
-
-    ostr << "Hello, Monde!" << remove(6) << "World!";
-
-    BOOST_CHECK(ostr.good() && !ostr.bad());
-    
-    std::cout << ostr.str() << std::endl;
-
-    BOOST_CHECK(std::cout.good() && !std::cout.bad());
-  }
-#endif
+  unsigned const count(6);
   
-#if 0
   {
-    std::cout << "hello, monde!" << remove(6) << "world!";
-
-    BOOST_CHECK(std::cout.good() && !std::cout.bad());
-
-    std::cout << std::endl;
+    std::ostringstream           ostr;
+    std::ostringstream::pos_type tellp[4];
+    
+    tellp[0] = ostr.tellp(); ostr << "Hello, Monde!";
+    tellp[1] = ostr.tellp(); ostr << remove(count);
+    tellp[2] = ostr.tellp(); ostr << "World!";
+    tellp[3] = ostr.tellp();
+    
+    BOOST_CHECK(ostr.good() && !ostr.bad());
+    BOOST_CHECK(tellp[1] == tellp[3]);
+    BOOST_CHECK(count == (tellp[3] - tellp[2]));
+    
+    BOOST_TEST_MESSAGE(ostr.str()
+                       << " ["
+                       << tellp[0] << ':'
+                       << tellp[1] << ':'
+                       << tellp[2] << ':'
+                       << tellp[3]
+                       << ']');
   }
-#endif
+  
+  {
+    std::ostream::pos_type tellp[4];
 
-  BOOST_CHECK(true);
+    tellp[0] = std::cout.tellp(); std::cout << "hello, monde!";
+    tellp[1] = std::cout.tellp(); std::cout << remove(count);
+    tellp[2] = std::cout.tellp(); std::cout << "world!";
+    tellp[3] = std::cout.tellp();
+    
+    BOOST_CHECK(std::cout.good() && !std::cout.bad());
+    BOOST_CHECK(tellp[1] == tellp[3]);
+    
+    BOOST_TEST_MESSAGE(" ["
+                       << tellp[0] << ':'
+                       << tellp[1] << ':'
+                       << tellp[2] << ':'
+                       << tellp[3]
+                       << ']');
+  }
 }
 
 BOOST_AUTO_TEST_CASE(test_hugh_support_io_utils_array)
@@ -352,21 +364,40 @@ BOOST_AUTO_TEST_CASE(test_hugh_support_io_utils_std_unique_ptr)
 {
   std::unique_ptr<unsigned> p(new unsigned(42));
   
-  BOOST_CHECK       (nullptr != p.get());
-  BOOST_TEST_MESSAGE("\nstd::unique_ptr<unsigned>:" << p << ':' << *p);
+  BOOST_CHECK(nullptr != p.get());
+
+  std::ostringstream ostr;
+
+  ostr << "\nstd::unique_ptr<unsigned>:" << p << ':' << *p;
+  
+  BOOST_TEST_MESSAGE(ostr.str());
 }
 
 BOOST_AUTO_TEST_CASE(test_hugh_support_io_utils_binary)
 {
-  using binary = hugh::support::ostream::binary;
+  using namespace hugh::support;
 
-  unsigned const     n(1234567890);
-  std::ostringstream ostr;
+  unsigned const n(1234567890);
 
-  ostr << n << " -> " << binary(n);
+  {
+    std::ostringstream ostr;
+    
+    ostr << n << " -> "
+         << ostream::unformatted << ostream::binary(n);
+    
+    BOOST_CHECK       (!ostr.str().empty());
+    BOOST_TEST_MESSAGE('\n' << ostr.str());
+  }
 
-  BOOST_CHECK       (!ostr.str().empty());
-  BOOST_TEST_MESSAGE('\n' << ostr.str());
+  {
+    std::ostringstream ostr;
+    
+    ostr << n << " -> "
+         << ostream::delimeter<char>('[', ']', '.') << ostream::formatted << ostream::binary(n);
+    
+    BOOST_CHECK       (!ostr.str().empty());
+    BOOST_TEST_MESSAGE('\n' << ostr.str());
+  }
 }
 
 BOOST_AUTO_TEST_CASE(test_hugh_support_io_utils_position_saver)
