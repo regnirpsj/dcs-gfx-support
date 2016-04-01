@@ -45,6 +45,6 @@ DOT_PATH                = @DOXYGEN_DOT_PATH@
 
 TAGFILES               += "@CMAKE_CURRENT_BINARY_DIR@/cppreference-doxygen-web.tag.xml=http://en.cppreference.com/w/"
 
-GENERATE_TAGFILE        = @CMAKE_CURRENT_BINARY_DIR@/devdoc.tag.xml
+GENERATE_TAGFILE        = @CMAKE_CURRENT_BINARY_DIR@/@DOC_INSTALL_DIR@_devdoc.tag.xml
 GENERATE_HTML           = YES
 GENERATE_LATEX          = NO
