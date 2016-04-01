@@ -228,7 +228,11 @@ namespace hugh {
           using pos_type = typename std::basic_ostream<CTy, CTr>::pos_type;
           
           if (pos_type(-1) == os.tellp()) {
-            os << std::basic_string<CTy>(a.value, '\b');
+            switch (a.value) {
+            case 0:  /* do nothing */                             break;
+            case 1:  os << '\b';                                  break;
+            default: os << std::basic_string<CTy>(a.value, '\b'); break;
+            }
           } else {
             pos_type const current(os.tellp());
       
