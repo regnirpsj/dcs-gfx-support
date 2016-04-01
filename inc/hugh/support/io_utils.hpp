@@ -251,13 +251,13 @@ namespace hugh {
       std::basic_ios<CTy,CTr>& unformatted(std::basic_ios<CTy,CTr>&);
     
       template <typename CTy, typename CTr = std::char_traits<CTy>>
-      std::basic_ostream<CTy, CTr>& operator<<(std::basic_ostream<CTy, CTr>&, delimeter<CTy> const&);
+      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&, delimeter<CTy> const&);
 
       template <typename CTy, typename CTr = std::char_traits<CTy>>
-      std::basic_ostream<CTy, CTr>& operator<<(std::basic_ostream<CTy, CTr>&, indent<CTy> const&);
+      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&, indent<CTy> const&);
 
       template <typename CTy, typename CTr = std::char_traits<CTy>>
-      std::basic_ostream<CTy, CTr>& operator<<(std::basic_ostream<CTy, CTr>&, remove const&);
+      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&, remove const&);
 
 #if !defined(_MSC_VER) || (defined(_MSC_VER) && (_MSC_VER > 1700))
       template <typename CTy, typename CTr,
@@ -268,8 +268,7 @@ namespace hugh {
     
       template <typename CTy, typename CTr,
                 typename T>
-      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
-                                              std::pair<T, T> const&);
+      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&, std::pair<T, T> const&);
     
       template <typename CTy, typename CTr,
                 typename T>
@@ -278,8 +277,7 @@ namespace hugh {
 
       template <typename CTy, typename CTr,
                 typename T, typename U>
-      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
-                                              std::pair<T, U> const&);
+      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&, std::pair<T, U> const&);
     
       template <typename CTy, typename CTr,
                 typename T, typename U>
@@ -288,13 +286,11 @@ namespace hugh {
     
       template <typename CTy, typename CTr,
                 template <typename, std::size_t> class Container, class V, std::size_t N>
-      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
-                                              Container<V,N> const&);
+      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&, Container<V,N> const&);
     
       template <typename CTy, typename CTr,
                 template <typename, typename> class Container, class V, class A>
-      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
-                                              Container<V,A> const&);
+      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&, Container<V,A> const&);
     
       template <typename CTy, typename CTr,
                 template <typename, typename, typename> class Container, class K, class C, class A>
@@ -308,8 +304,8 @@ namespace hugh {
                                               Container<K,V,C,A> const&);
     
       template <typename CTy, typename CTr,
-                template <typename, typename, typename, typename, typename> class Container, class K,
-                class V, class H, class C, class A>
+                template <typename, typename, typename, typename, typename> class Container,
+                class K, class V, class H, class C, class A>
       std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
                                               Container<K,V,H,C,A> const&);
     
@@ -363,7 +359,8 @@ namespace std {
   /**
    * \brief \c std::ostream operator<< for std::unique_ptr<> instances
    */
-  template <typename CTy, typename CTr, typename T, typename D>
+  template <typename CTy, typename CTr,
+            typename T, typename D>
   basic_ostream<CTy,CTr>& operator<<(basic_ostream<CTy,CTr>&, unique_ptr<T,D> const&);
   
 } // namespace std {

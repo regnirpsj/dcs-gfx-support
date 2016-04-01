@@ -195,8 +195,8 @@ namespace hugh {
       }
 
       template <typename CTy, typename CTr>
-      inline std::basic_ostream<CTy, CTr>&
-      operator<<(std::basic_ostream<CTy, CTr>& os, delimeter<CTy> const& a)
+      inline std::basic_ostream<CTy,CTr>&
+      operator<<(std::basic_ostream<CTy,CTr>& os, delimeter<CTy> const& a)
       {                                        
         format_punct<CTy>& fmt(const_cast<format_punct<CTy>&>(get_facet<format_punct<CTy>>(os)));
       
@@ -208,8 +208,8 @@ namespace hugh {
       }
 
       template <typename CTy, typename CTr>
-      inline std::basic_ostream<CTy, CTr>&
-      operator<<(std::basic_ostream<CTy, CTr>& os, indent<CTy> const& a)
+      inline std::basic_ostream<CTy,CTr>&
+      operator<<(std::basic_ostream<CTy,CTr>& os, indent<CTy> const& a)
       {                                        
         format_punct<CTy>& fmt(const_cast<format_punct<CTy>&>(get_facet<format_punct<CTy>>(os)));
       
@@ -219,13 +219,13 @@ namespace hugh {
       }
 
       template <typename CTy, typename CTr>
-      inline std::basic_ostream<CTy, CTr>&
-      operator<<(std::basic_ostream<CTy, CTr>& os, remove const& a)
+      inline std::basic_ostream<CTy,CTr>&
+      operator<<(std::basic_ostream<CTy,CTr>& os, remove const& a)
       {
         typename std::basic_ostream<CTy,CTr>::sentry const cerberus(os);
 
         if (cerberus) {
-          using pos_type = typename std::basic_ostream<CTy, CTr>::pos_type;
+          using pos_type = typename std::basic_ostream<CTy,CTr>::pos_type;
           
           if (pos_type(-1) == os.tellp()) {
             switch (a.value) {
