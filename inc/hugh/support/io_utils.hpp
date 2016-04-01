@@ -42,13 +42,13 @@ namespace hugh {
 
       // types, exported (class, enum, struct, union, typedef)
 
-      template <typename CTy, typename CTr>
-      class position_saver : private boost::noncopyable {
+      template <typename CTy, typename CTr = std::char_traits<CTy>>
+      class basic_position_saver : private boost::noncopyable {
     
       public:    
     
-        explicit position_saver(std::basic_istream<CTy,CTr>&);
-                ~position_saver();
+        explicit basic_position_saver(std::basic_istream<CTy,CTr>&);
+                ~basic_position_saver();
 
         void restore();
     
@@ -61,7 +61,10 @@ namespace hugh {
         pos_type const p_;
     
       };
-    
+
+      using position_saver  = basic_position_saver<char>;
+      using wposition_saver = basic_position_saver<wchar_t>;
+
       // variables, exported (extern)
 
       // functions, inlined (inline)
@@ -88,13 +91,13 @@ namespace hugh {
       
       };
     
-      template <typename CTy, typename CTr>
-      class position_saver : private boost::noncopyable {
+      template <typename CTy, typename CTr = std::char_traits<CTy>>
+      class basic_position_saver : private boost::noncopyable {
     
       public:    
     
-        explicit position_saver(std::basic_ostream<CTy,CTr>&);
-                ~position_saver();
+        explicit basic_position_saver(std::basic_ostream<CTy,CTr>&);
+                ~basic_position_saver();
 
         void restore();
     
@@ -107,6 +110,9 @@ namespace hugh {
         pos_type const p_;
     
       };
+
+      using position_saver  = basic_position_saver<char>;
+      using wposition_saver = basic_position_saver<wchar_t>;
 
       /**
        * \brief (temporarily) redirect \c std::ostream content to another \c std::ostream
@@ -128,14 +134,14 @@ namespace hugh {
        *
        * \see http://stackoverflow.com/questions/4753153/redirecting-stdcout
        */
-      template <typename CTy, typename CTr>
-      class scoped_redirect : private boost::noncopyable {
+      template <typename CTy, typename CTr = std::char_traits<CTy>>
+      class basic_scoped_redirect : private boost::noncopyable {
       
       public:
       
-        explicit scoped_redirect(std::basic_ostream<CTy,CTr>& /* src */,
-                                 std::basic_ostream<CTy,CTr>& /* dst */);
-                ~scoped_redirect();
+        explicit basic_scoped_redirect(std::basic_ostream<CTy,CTr>& /* src */,
+                                       std::basic_ostream<CTy,CTr>& /* dst */);
+                ~basic_scoped_redirect();
       
       private:
 
@@ -147,6 +153,9 @@ namespace hugh {
       
       };
 
+      using scoped_redirect  = basic_scoped_redirect<char>;
+      using wscoped_redirect = basic_scoped_redirect<wchar_t>;
+      
       /**
        * \brief describes the formatting attributes when inserting a container into a
        * \c std::ostream
@@ -319,19 +328,22 @@ namespace hugh {
 
       // types, exported (class, enum, struct, union, typedef)
 
-      template <typename CTy, typename CTr>
-      class position_saver : public istream::position_saver<CTy,CTr>,
-                             public ostream::position_saver<CTy,CTr> {
+      template <typename CTy, typename CTr = std::char_traits<CTy>>
+      class basic_position_saver : public istream::basic_position_saver<CTy,CTr>,
+                                   public ostream::basic_position_saver<CTy,CTr> {
     
-      public:    
+      public:
     
-        explicit position_saver(std::basic_iostream<CTy,CTr>&);
-                ~position_saver();
+        explicit basic_position_saver(std::basic_iostream<CTy,CTr>&);
+                ~basic_position_saver();
 
         void restore();    
     
       };
-    
+
+      using position_saver  = basic_position_saver<char>;
+      using wposition_saver = basic_position_saver<wchar_t>;
+
       // variables, exported (extern)
 
       // functions, inlined (inline)

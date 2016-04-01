@@ -37,7 +37,7 @@ namespace hugh {
 
       template <typename CTy, typename CTr>
       inline /* explicit */
-      position_saver<CTy,CTr>::position_saver(std::basic_istream<CTy,CTr>& s)
+      basic_position_saver<CTy,CTr>::basic_position_saver(std::basic_istream<CTy,CTr>& s)
         : boost::noncopyable(),
           s_                (s),
           p_                (s_.tellg())
@@ -45,14 +45,14 @@ namespace hugh {
 
       template <typename CTy, typename CTr>
       inline
-      position_saver<CTy,CTr>::~position_saver()
+      basic_position_saver<CTy,CTr>::~basic_position_saver()
       {
         restore();
       }
 
       template <typename CTy, typename CTr>
       inline void
-      position_saver<CTy,CTr>::restore()
+      basic_position_saver<CTy,CTr>::restore()
       {
         s_.seekg(p_);
       }
@@ -65,7 +65,7 @@ namespace hugh {
 
       template <typename CTy, typename CTr>
       inline /* explicit */
-      position_saver<CTy,CTr>::position_saver(std::basic_ostream<CTy,CTr>& s)
+      basic_position_saver<CTy,CTr>::basic_position_saver(std::basic_ostream<CTy,CTr>& s)
         : boost::noncopyable(),
           s_                (s),
           p_                (s_.tellp())
@@ -73,22 +73,22 @@ namespace hugh {
   
       template <typename CTy, typename CTr>
       inline
-      position_saver<CTy,CTr>::~position_saver()
+      basic_position_saver<CTy,CTr>::~basic_position_saver()
       {
         restore();
       }
 
       template <typename CTy, typename CTr>
       inline void
-      position_saver<CTy,CTr>::restore()
+      basic_position_saver<CTy,CTr>::restore()
       {
         s_.seekp(p_);
       }
     
       template <typename CTy, typename CTr>
       inline /* explicit */
-      scoped_redirect<CTy,CTr>::scoped_redirect(std::basic_ostream<CTy,CTr>& a,
-                                                std::basic_ostream<CTy,CTr>& b)
+      basic_scoped_redirect<CTy,CTr>::basic_scoped_redirect(std::basic_ostream<CTy,CTr>& a,
+                                                            std::basic_ostream<CTy,CTr>& b)
         : boost::noncopyable(),
           s_                (a),
           b_                (s_.rdbuf(b.rdbuf()))
@@ -96,7 +96,7 @@ namespace hugh {
 
       template <typename CTy, typename CTr>
       inline
-      scoped_redirect<CTy,CTr>::~scoped_redirect()
+      basic_scoped_redirect<CTy,CTr>::~basic_scoped_redirect()
       {
         s_.rdbuf(b_);
       }
@@ -552,24 +552,24 @@ namespace hugh {
 
       template <typename CTy, typename CTr>
       inline /* explicit */
-      position_saver<CTy,CTr>::position_saver(std::basic_iostream<CTy,CTr>& s)
-        : istream::position_saver<CTy,CTr>(s),
-        ostream::position_saver<CTy,CTr>(s)
+      basic_position_saver<CTy,CTr>::basic_position_saver(std::basic_iostream<CTy,CTr>& s)
+        : istream::basic_position_saver<CTy,CTr>(s),
+          ostream::basic_position_saver<CTy,CTr>(s)
       {}
 
       template <typename CTy, typename CTr>
       inline
-      position_saver<CTy,CTr>::~position_saver()
+      basic_position_saver<CTy,CTr>::~basic_position_saver()
       {
         restore();
       }
 
       template <typename CTy, typename CTr>
       inline void
-      position_saver<CTy,CTr>::restore()
+      basic_position_saver<CTy,CTr>::restore()
       {
-        ostream::position_saver<CTy,CTr>::restore();
-        istream::position_saver<CTy,CTr>::restore();
+        ostream::basic_position_saver<CTy,CTr>::restore();
+        istream::basic_position_saver<CTy,CTr>::restore();
       }
     
     } // namespace iostream {
