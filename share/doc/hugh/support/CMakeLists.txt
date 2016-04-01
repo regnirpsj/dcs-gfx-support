@@ -6,4 +6,6 @@
 #                                                                                                  #
 ####################################################################################################
 
-add_subdirectory(hugh)
+cma_print_current_directory()
+
+include(SetupDocumentation)

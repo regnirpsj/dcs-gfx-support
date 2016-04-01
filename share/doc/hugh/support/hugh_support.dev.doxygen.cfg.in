@@ -1,0 +1,3 @@
+## -*- Mode:Doxygen -*-
+
+@INCLUDE = @CMAKE_CURRENT_BINARY_DIR@/base.dev.doxygen.cfg
