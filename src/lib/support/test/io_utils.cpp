@@ -226,7 +226,7 @@ BOOST_AUTO_TEST_CASE(test_hugh_support_io_utils_manipulator_remove)
 
   unsigned const count(6);
   
-  {
+  { // buffered stream
     std::ostringstream           ostr;
     std::ostringstream::pos_type tellp[4];
     
@@ -248,7 +248,7 @@ BOOST_AUTO_TEST_CASE(test_hugh_support_io_utils_manipulator_remove)
                        << ']');
   }
   
-  {
+  { // unbuffered stream
     std::ostream::pos_type tellp[4];
 
     tellp[0] = std::cout.tellp(); std::cout << "hello, monde!";
@@ -443,19 +443,61 @@ BOOST_AUTO_TEST_CASE(test_hugh_support_io_utils_scoped_redirect)
 {
   using namespace hugh::support;
 
-  std::ostringstream ostr;
-
   {
-    ostream::scoped_redirect const sor_cerr(std::cerr, ostr);
-    ostream::scoped_redirect const sor_clog(std::clog, ostr);
-    ostream::scoped_redirect const sor_cout(std::cout, ostr);
+    std::ostringstream ostr;
+
+    {
+      ostream::scoped_redirect const sor_cerr(std::cerr, ostr);
+      ostream::scoped_redirect const sor_clog(std::clog, ostr);
+      ostream::scoped_redirect const sor_cout(std::cout, ostr);
     
-    std::cerr << "abc";
-    std::clog << "ijk";
-    std::cout << "xyz";
+      std::cerr << "abc";
+      std::clog << "ijk";
+      std::cout << "xyz";
+    }
+
+    BOOST_CHECK       (!ostr.str().empty());
+    BOOST_CHECK       (9 == ostr.str().length());
+    BOOST_TEST_MESSAGE('\n' << ostr.str());
   }
 
-  BOOST_CHECK       (!ostr.str().empty());
-  BOOST_CHECK       (9 == ostr.str().length());
-  BOOST_TEST_MESSAGE('\n' << ostr.str());
+  {
+    std::ostringstream ostr;
+
+    {
+      ostream::scoped_redirect const sor_call({ &std::cerr, &std::clog, &std::cout }, ostr);
+    
+      std::cerr << "zyx";
+      std::clog << "kji";
+      std::cout << "cba";
+    }
+
+    BOOST_CHECK       (!ostr.str().empty());
+    BOOST_CHECK       (9 == ostr.str().length());
+    BOOST_TEST_MESSAGE('\n' << ostr.str());
+  }
+
+  {
+    std::ostringstream ostr;
+
+    {
+      ostream::scoped_redirect const sor_nullptr({ nullptr }, ostr);
+
+      BOOST_TEST_MESSAGE('\n' << "nebelbeisiebleben");
+    }
+
+    BOOST_CHECK(ostr.str().empty());
+  }
+
+  {
+    std::ostringstream ostr;
+
+    {
+      ostream::scoped_redirect const sor_empty({ }, ostr);
+
+      BOOST_TEST_MESSAGE('\n' << "nebelbeisiebleben");
+    }
+
+    BOOST_CHECK(ostr.str().empty());
+  }
 }

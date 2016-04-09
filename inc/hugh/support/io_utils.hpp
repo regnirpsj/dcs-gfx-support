@@ -22,11 +22,13 @@
 #include <boost/io_fwd.hpp>      // basic_ios_all_saver<> (fwd)
 #include <boost/noncopyable.hpp> // boost::noncopyable
 #include <functional>            // std::function<>
+#include <initializer_list>      // std::initializer_list<>
 #include <iosfwd>                // std::basic_istream<>, std::basic_iostream<>,
                                  // std::basic_ostream<> (fwd decl), std::streampos
 #include <locale>                // std::locale, std::locale::facet, std::locale::id
 #include <string>                // std::basic_string<>
 #include <utility>               // std::pair<>
+#include <vector>                // std::vector<>
 
 // includes, project
 
@@ -122,13 +124,32 @@ namespace hugh {
        * \code{.cpp}
        *  {
        *  #if defined(HUGH_ALL_TRACE)
+       *    using namespace hugh::support;
+       *
        *    std::ofstream                           logfile ("log.txt");
-       *    support::ostream::scoped_redirect const sor_cerr(std::cerr, logfile);
-       *    support::ostream::scoped_redirect const sor_clog(std::clog, logfile);
-       *    support::ostream::scoped_redirect const sor_cout(std::cout, logfile);
+       *    ostream::scoped_redirect const sor_cerr(std::cerr, logfile);
+       *    ostream::scoped_redirect const sor_clog(std::clog, logfile);
+       *    ostream::scoped_redirect const sor_cout(std::cout, logfile);
        *  #endif
        *
+       *    std::cerr << "this will end up in 'log.txt'" << std::endl;
+       *    std::clog << "this will end up in 'log.txt'" << std::endl;
        *    std::cout << "this will end up in 'log.txt'" << std::endl;
+       *  }
+       * \endcode
+       *
+       * \code{.cpp}
+       *  {
+       *  #if defined(HUGH_ALL_TRACE)
+       *    using namespace hugh::support;
+       *
+       *    std::ostringstream             ostr;
+       *    ostream::scoped_redirect const sor_call({ &std::cerr, &std::clog, &std::cout }, ostr);
+       *  #endif
+       *
+       *    std::cerr << "this will end up in 'ostr.str()'" << std::endl;
+       *    std::clog << "this will end up in 'ostr.str()'" << std::endl;
+       *    std::cout << "this will end up in 'ostr.str()'" << std::endl;
        *  }
        * \endcode
        *
@@ -138,18 +159,23 @@ namespace hugh {
       class basic_scoped_redirect : private boost::noncopyable {
       
       public:
-      
+
+        using ostream_initializer_list = std::initializer_list<std::basic_ostream<CTy,CTr>*>;
+        
         explicit basic_scoped_redirect(std::basic_ostream<CTy,CTr>& /* src */,
+                                       std::basic_ostream<CTy,CTr>& /* dst */);
+        explicit basic_scoped_redirect(ostream_initializer_list     /* srcs */,
                                        std::basic_ostream<CTy,CTr>& /* dst */);
                 ~basic_scoped_redirect();
       
       private:
 
-        using stream_type    = std::basic_ostream<CTy,CTr>;
-        using streambuf_type = std::basic_streambuf<CTy,CTr>;
-      
-        stream_type&    s_;
-        streambuf_type* b_;
+        using stream_type             = std::basic_ostream<CTy,CTr>;
+        using streambuf_type          = std::basic_streambuf<CTy,CTr>;
+        using stream_buffer_pair_type = std::pair<stream_type*, streambuf_type*>;
+        using stream_buffer_list_type = std::vector<stream_buffer_pair_type>;
+        
+        stream_buffer_list_type list_;
       
       };
 

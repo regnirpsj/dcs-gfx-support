@@ -90,17 +90,32 @@ namespace hugh {
       basic_scoped_redirect<CTy,CTr>::basic_scoped_redirect(std::basic_ostream<CTy,CTr>& a,
                                                             std::basic_ostream<CTy,CTr>& b)
         : boost::noncopyable(),
-          s_                (a),
-          b_                (s_.rdbuf(b.rdbuf()))
+          list_             (1, std::make_pair(&a, a.rdbuf(b.rdbuf())))
       {}
 
+      template <typename CTy, typename CTr>
+      inline /* explicit */
+      basic_scoped_redirect<CTy,CTr>::basic_scoped_redirect(ostream_initializer_list a,
+                                                            std::basic_ostream<CTy,CTr>& b)
+        : boost::noncopyable(),
+          list_             ()
+      {
+        for (auto s : a) {
+          if (nullptr != s) {
+            list_.push_back(std::make_pair(s, s->rdbuf(b.rdbuf())));
+          }
+        }
+      }
+      
       template <typename CTy, typename CTr>
       inline
       basic_scoped_redirect<CTy,CTr>::~basic_scoped_redirect()
       {
-        s_.rdbuf(b_);
+        for (auto& p : list_) {
+          p.first->rdbuf(p.second);
+        }
       }
-
+      
       template <typename CTy>
       inline /* explicit */
       format_punct<CTy>::format_punct(size_t a)
