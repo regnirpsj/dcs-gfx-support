@@ -61,7 +61,7 @@ namespace hugh {
     {
       TRACE_NEVER("hugh::support::printable::print_on(std::ostream)");
 
-      throw std::logic_error("pure virtual function 'support::printable::print_on' called");
+      throw std::logic_error("pure virtual function 'hugh::support::printable::print_on' called");
     }
 
     /* virtual */ void
