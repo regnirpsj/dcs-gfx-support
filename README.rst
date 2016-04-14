@@ -18,6 +18,7 @@ Hull University Graphics Helper (HUGH) Support
 .. _GLI:                            http://gli.g-truc.net/
 .. _GLM:                            http://glm.g-truc.net/
 .. _The University of Hull:         http://www.hull.ac.uk/
+.. _hugh-build-system:              http://github.com/regnirpsj/hugh-build-system
 
 Introduction
 ============
@@ -73,6 +74,7 @@ Mandatory:
 
 * `Boost`_
 * `GLM`_/`GLI`_
+* `_hugh-build-system`_
 
 Optional:
 
