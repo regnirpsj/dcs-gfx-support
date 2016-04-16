@@ -41,8 +41,8 @@ namespace hugh {
       explicit  trace(std::string const&, std::ostream& = std::cout);
       ~trace();
     
-      static void        enter(std::string const&, std::ostream& = std::cout);
-      static void        leave(std::string const&, std::ostream& = std::cout);
+      static void        enter (std::string const&, std::ostream& = std::cout);
+      static void        leave (std::string const&, std::ostream& = std::cout);
       static std::string prefix();
     
     private:
