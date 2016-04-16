@@ -14,7 +14,7 @@
 
 // includes, system
 
-// #include <>
+#include <sstream> // std::ostringstream
 
 // includes, project
 
@@ -123,4 +123,20 @@ BOOST_AUTO_TEST_CASE(test_hugh_support_trace)
   dynamic_init_test_instance.method();
   
   BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_hugh_support_trace_prefix)
+{
+  TRACE_FUNC;
+  
+  std::string const pfx1(hugh::support::trace::prefix());
+  std::string const pfx2(hugh::support::trace::prefix());
+
+  BOOST_CHECK(pfx1 != pfx2);
+  
+  std::ostringstream ostr;
+
+  ostr << pfx1 << ".\n" << pfx2 << '.';
+
+  BOOST_TEST_MESSAGE(ostr.str());
 }
