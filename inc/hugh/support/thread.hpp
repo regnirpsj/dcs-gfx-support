@@ -35,9 +35,11 @@ namespace hugh {
     // types, exported (class, enum, struct, union, typedef)
 
     namespace this_thread = std::this_thread;
-  
-    using simple_lock       = std::mutex;
-    using simple_lock_guard = std::lock_guard<simple_lock>;
+    
+    using recursive_lock       = std::recursive_mutex;
+    using recursive_lock_guard = std::lock_guard<recursive_lock>;
+    using simple_lock          = std::mutex;
+    using simple_lock_guard    = std::lock_guard<simple_lock>;
   
     // variables, exported (extern)
 
