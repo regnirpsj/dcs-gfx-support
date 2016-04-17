@@ -18,10 +18,14 @@
 
 // includes, system
 
-#include <iosfwd> // std::ostream (fwd)
-#include <mutex>  // std::mutex, std::lock_guard<>
-#include <string> // std::string
-#include <thread> // std::this_thread, std::thread
+#include <boost/asio/io_service.hpp> // boost::asio::io_service[::work]
+#include <boost/noncopyable.hpp>     // boost::noncopyable
+#include <boost/thread.hpp>          // boost::thread::hardware_concurrency, boost::thread_group
+#include <iosfwd>                    // std::ostream (fwd)
+#include <memory>                    // std::unique_ptr<>
+#include <mutex>                     // std::mutex, std::lock_guard<>
+#include <string>                    // std::string
+#include <thread>                    // std::this_thread, std::thread
 
 // includes, project
 
@@ -31,7 +35,46 @@
 namespace hugh {
   
   namespace support {
+
+    namespace thread {
+
+      // types, exported (class, enum, struct, union, typedef)
+
+      /**
+       * \see http://stackoverflow.com/questions/19500404
+       * \see http://think-async.com/Asio/Recipes
+       */
+      class pool : private boost::noncopyable {
+
+      public:
+
+        explicit pool(unsigned /* size */ = boost::thread::hardware_concurrency()+1);
+        /*   */ ~pool();
+
+        unsigned size() const;
+        
+        template <typename F> void submit(F&&);
+        
+      private:
+
+        using io_service   = boost::asio::io_service;
+        using work         = boost::asio::io_service::work;
+        using thread_group = boost::thread_group;
+        
+        io_service            svc_;
+        std::unique_ptr<work> wrk_;
+        thread_group          grp_;
+        
+      };
+      
+      // variables, exported (extern)
+
+      // functions, inlined (inline)
   
+      // functions, exported (extern)
+      
+    } // namespace thread {
+    
     // types, exported (class, enum, struct, union, typedef)
 
     namespace this_thread = std::this_thread;
@@ -58,5 +101,7 @@ namespace hugh {
   } // namespace support {
 
 } // namespace hugh {
+
+#include <hugh/support/thread.inl>
 
 #endif // #if !defined(HUGH_SUPPORT_THREAD_HPP)

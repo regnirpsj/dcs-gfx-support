@@ -18,12 +18,17 @@
 
 // includes, system
 
-#include <iomanip> // std::setfill, std::setw
-#include <ostream> // std::ostream
-#include <sstream> // std::ostringstream
+#include <algorithm> // std::max<>
+#include <iomanip>   // std::setfill, std::setw
+#include <ostream>   // std::ostream
+#include <sstream>   // std::ostringstream
 
 // includes, project
 
+//#include <>
+
+#define HUGH_USE_TRACE
+#undef HUGH_USE_TRACE
 #include <hugh/support/trace.hpp>
 
 // internal unnamed namespace
@@ -43,7 +48,48 @@ namespace {
 namespace hugh {
   
   namespace support {
+
+    namespace thread {
+
+      // variables, exported
   
+      // functions, exported
+      
+      /* explicit */
+      pool::pool(unsigned a)
+        : boost::noncopyable(),
+          svc_              (),
+          wrk_              (new work(svc_)),
+          grp_              ()
+      {
+        TRACE("hugh::support::thread::pool::pool");
+
+        unsigned nthr(std::max(unsigned(1), a));
+        
+        while (nthr--) {
+          grp_.create_thread(boost::bind(&io_service::run, &svc_));
+        }
+      }
+      
+      pool::~pool()
+      {
+        TRACE("hugh::support::thread::pool::~pool");
+
+        wrk_.reset   ();
+        grp_.join_all();
+        svc_.stop    ();
+      }
+
+      unsigned
+      pool::size() const
+      {
+        TRACE("hugh::support::thread::pool::size");
+
+        return grp_.size();
+      }
+      
+    } // namespace thread {
+    
     // variables, exported
   
     // functions, exported
@@ -59,7 +105,7 @@ namespace hugh {
       if (thread_was_paused || (0 == (frame_count % modulo))) {
         std::ostringstream ostr;
 
-        ostr << std::setfill('0') << std::setw(6) << frame_count << ':';
+        ostr << '#' << std::setfill('0') << std::setw(6) << frame_count << ": ";
 
         clock::duration distance;
 
