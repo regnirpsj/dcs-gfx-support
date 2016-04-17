@@ -35,8 +35,12 @@
 #endif
 
 // noexcept
-#if defined(_MSC_VER) && (_MSC_VER < 1900)
-#  define noexcept
+#if defined(_MSC_VER)
+#  if (_MSC_VER < 1800)
+#    define noexcept
+#  elseif (_MSC_VER == 1800)
+#    define noexcept _NOEXCEPT
+#  endif
 #endif
 
 // thread_local
