@@ -19,12 +19,12 @@
 // includes, system
 
 #include <boost/io/ios_state.hpp> // boost::io::ios_all_saver
-#include <iomanip>                // std::setfill<>, std::fixed, std::setprecision, std::right,
 #include <istream>                // std::basic_istream<>
 #include <ostream>                // std::basic_ostream<>
 
 // includes, project
 
+#include <hugh/support/string.hpp>
 #include <hugh/support/type_info.hpp>
 
 namespace hugh {
@@ -275,66 +275,14 @@ namespace hugh {
 
         return os;
       }
-#endif
-    
-      template <typename CTy, typename CTr,
-                typename T>
-      inline std::basic_ostream<CTy,CTr>&
-      operator<<(std::basic_ostream<CTy,CTr>& os, std::pair<T, T> const& a)
-      {
-        typename std::basic_ostream<CTy,CTr>::sentry const cerberus(os);
-    
-        if (cerberus) {
-          format_punct<CTy> const& fmt(get_facet<format_punct<CTy>>(os));
-        
-          if (fmt.formatted) {
-            os << fmt.delim_left << a.first << fmt.separator << a.second << fmt.delim_right;
-          } else {
-            os << a.first << fmt.space << a.second;
-          }
-        }
-      
-        return os;
-      }
-    
-      template <typename CTy, typename CTr,
-                typename T>
-      inline std::basic_ostream<CTy,CTr>&
-      operator<<(std::basic_ostream<CTy,CTr>& os, std::pair<T const, T const> const& a)
-      {
-        typename std::basic_ostream<CTy,CTr>::sentry const cerberus(os);
-    
-        if (cerberus) {
-          format_punct<CTy> const& fmt(get_facet<format_punct<CTy>>(os));
-
-          if (fmt.formatted) {
-            os << fmt.delim_left << a.first << fmt.separator << a.second << fmt.delim_right;
-          } else {
-            os << a.first << fmt.space << a.second;
-          }
-        }
-      
-        return os;
-      }
+#endif    
 
       template <typename CTy, typename CTr,
                 typename T, typename U>
       inline std::basic_ostream<CTy,CTr>&
       operator<<(std::basic_ostream<CTy,CTr>& os, std::pair<T, U> const& a)
       {
-        typename std::basic_ostream<CTy,CTr>::sentry const cerberus(os);
-    
-        if (cerberus) {
-          format_punct<CTy> const& fmt(get_facet<format_punct<CTy>>(os));
-
-          if (fmt.formatted) {
-            os << fmt.delim_left << a.first << fmt.separator << a.second << fmt.delim_right;
-          } else {
-            os << a.first << fmt.space << a.second;
-          }
-        }
-      
-        return os;
+        return os << static_cast<std::pair<T const, U const> const&>(a);
       }
     
       template <typename CTy, typename CTr,
@@ -357,218 +305,162 @@ namespace hugh {
         return os;
       }
 
-      template <typename CTy, typename CTr,
-                template <typename, std::size_t> class Container, class V, std::size_t N>
-      inline std::basic_ostream<CTy,CTr>&
-      operator<<(std::basic_ostream<CTy,CTr>& os, Container<V,N> const& a)
-      {
-        typename std::basic_ostream<CTy,CTr>::sentry const cerberus(os);
+      namespace detail {
 
-        if (cerberus) {
-          format_punct<CTy> const& fmt(get_facet<format_punct<CTy>>(os));
+        template <typename CTy, typename CTr,
+                  typename Container>
+        inline std::basic_ostream<CTy,CTr>&
+        print_container_on(std::basic_ostream<CTy,CTr>& os, Container const& a, bool b)
+        {
+          typename std::basic_ostream<CTy,CTr>::sentry const cerberus(os);
 
-          if (fmt.formatted) {
-            os << fmt.delim_left;
+          if (cerberus) {
+            format_punct<CTy> const& fmt(get_facet<format_punct<CTy>>(os));
 
-            for (auto const& e : a) {
-              os << fmt.indent << e << fmt.separator;
-            }
+            if (fmt.formatted) {
+              os << fmt.delim_left;
 
-            if (!a.empty()) {
-              os << remove(1);
-            }
+              for (auto const& e : a) {
+                os << fmt.indent << e << fmt.separator;
+              }
+      
+              if (!b) {
+                os << remove(1);
+              }
         
-            os << fmt.delim_right;
-          } else {
-            for (auto const& e : a) {
-              os << e << fmt.space;
+              os << fmt.delim_right;
+            } else {
+              for (auto const& e : a) {
+                os << e << fmt.space;
+              }
             }
           }
+          
+          return os;
         }
+        
+      } // namespace detail {
       
-        return os;
-      }
-    
       template <typename CTy, typename CTr,
-                template <typename, typename> class Container, class V, class A>
+                typename T, std::size_t N>
       inline std::basic_ostream<CTy,CTr>&
-      operator<<(std::basic_ostream<CTy,CTr>& os, Container<V,A> const& a)
+      operator<<(std::basic_ostream<CTy,CTr>& os, std::array<T,N> const& a)
       {
-        typename std::basic_ostream<CTy,CTr>::sentry const cerberus(os);
-
-        if (cerberus) {
-          format_punct<CTy> const& fmt(get_facet<format_punct<CTy>>(os));
-        
-          if (fmt.formatted) {
-            os << fmt.delim_left;
-
-            for (auto const& e : a) {
-              os << fmt.indent << e << fmt.separator;
-            }
-      
-            if (!a.empty()) {
-              os << remove(1);
-            }
-        
-            os << fmt.delim_right;
-          } else {
-            for (auto const& e : a) {
-              os << e << fmt.space;
-            }
-          }
-        }
-      
-        return os;
-      }
-
-      template <typename CTy, typename CTr,
-                template <typename, typename, typename> class Container, class K, class C, class A>
-      inline std::basic_ostream<CTy,CTr>&
-      operator<<(std::basic_ostream<CTy,CTr>& os, Container<K,C,A> const& a)
-      {
-        typename std::basic_ostream<CTy,CTr>::sentry const cerberus(os);
-
-        if (cerberus) {
-          format_punct<CTy> const& fmt(get_facet<format_punct<CTy>>(os));
-
-          if (fmt.formatted) {
-            os << fmt.delim_left;
-
-            for (auto const& e : a) {
-              os << fmt.indent << e << fmt.separator;
-            }
-      
-            if (!a.empty()) {
-              os << remove(1);
-            }
-        
-            os << fmt.delim_right;
-          } else {
-            for (auto const& e : a) {
-              os << e << fmt.space;
-            }
-          }
-        }
-      
-        return os;
+        return detail::print_container_on(os, a, a.empty());
       }
       
       template <typename CTy, typename CTr,
-                template <typename, typename, typename, typename> class Container, class K, class V,
-                class C, class A>
+                typename T>
       inline std::basic_ostream<CTy,CTr>&
-      operator<<(std::basic_ostream<CTy,CTr>& os, Container<K,V,C,A> const& a)
+      operator<<(std::basic_ostream<CTy,CTr>& os, std::deque<T> const& a)
       {
-        typename std::basic_ostream<CTy,CTr>::sentry const cerberus(os);
-
-        if (cerberus) {
-          format_punct<CTy> const& fmt(get_facet<format_punct<CTy>>(os));
-
-          // 'os << e << ' ';' does not work because two viable functions are available
-          //  - operator<<(std::basic_ostream<CTy,CTr>&, std::pair<T,U> const&)
-          //  - operator<<(std::basic_ostream<CTy,CTr>&, Container<V,A> const&)
-        
-          if (fmt.formatted) {
-            os << fmt.delim_left;
-
-            for (auto const& e : a) {
-              os << fmt.delim_left
-                 << fmt.indent << e.first << fmt.separator << e.second
-                 << fmt.delim_right
-                 << fmt.separator;
-            }
-      
-            if (!a.empty()) {
-              os << remove(1);
-            }
-        
-            os << fmt.delim_right;
-          } else {
-            for (auto const& e : a) {
-              os << fmt.delim_left
-                 << e.first << fmt.separator << e.second
-                 << fmt.delim_right
-                 << fmt.space;
-            }
-          }
-        }
-      
-        return os;
+        return detail::print_container_on(os, a, a.empty());
       }
-  
+      
       template <typename CTy, typename CTr,
-                template <typename, typename, typename, typename, typename> class Container, class K,
-                class V, class H, class C, class A>
+                typename T>
       inline std::basic_ostream<CTy,CTr>&
-      operator<<(std::basic_ostream<CTy,CTr>& os, Container<K,V,H,C,A> const& a)
+      operator<<(std::basic_ostream<CTy,CTr>& os, std::forward_list<T> const& a)
       {
-        typename std::basic_ostream<CTy,CTr>::sentry const cerberus(os);
-
-        if (cerberus) {
-          format_punct<CTy> const& fmt(get_facet<format_punct<CTy>>(os));
-
-          if (fmt.formatted) {
-            os << fmt.delim_left;
-
-            for (auto const& e : a) {
-              os << fmt.delim_left
-                 << fmt.indent << e.first << fmt.separator << e.second
-                 << fmt.delim_right
-                 << fmt.separator;
-            }
-      
-            if (!a.empty()) {
-              os << remove(1);
-            }
-        
-            os << fmt.delim_right;
-          } else {
-            for (auto const& e : a) {
-              os << fmt.delim_left
-                 << e.first << fmt.separator << e.second
-                 << fmt.delim_right
-                 << fmt.space;
-            }
-          }
-        }
-      
-        return os;
+        return detail::print_container_on(os, a, a.empty());
       }
-
+      
 #if !defined(_MSC_VER) || (defined(_MSC_VER) && (_MSC_VER > 1700))
       template <typename CTy, typename CTr,
                 typename T>
       inline std::basic_ostream<CTy,CTr>&
       operator<<(std::basic_ostream<CTy,CTr>& os, std::initializer_list<T> a)
       {
-        typename std::basic_ostream<CTy,CTr>::sentry const cerberus(os);
-
-        if (cerberus) {
-          format_punct<CTy> const& fmt(get_facet<format_punct<CTy>>(os));
-
-          if (fmt.formatted) {
-            os << fmt.delim_left;
-
-            for (auto const& e : a) {
-              os << fmt.indent << e << fmt.separator;
-            }
-          
-            if (a.size()) {
-              os << remove(1);
-            }
-        
-            os << fmt.delim_right;
-          } else {
-            for (auto const& e : a) {
-              os << e << fmt.space;
-            }
-          }
-        }
-      
-        return os;
+        return detail::print_container_on(os, a, (0 < a.size()));
       }
 #endif
-    
+      
+      template <typename CTy, typename CTr,
+                typename T>
+      inline std::basic_ostream<CTy,CTr>&
+      operator<<(std::basic_ostream<CTy,CTr>& os, std::list<T> const& a)
+      {
+        return detail::print_container_on(os, a, a.empty());
+      }
+      
+      template <typename CTy, typename CTr,
+                typename K, typename T>
+      inline std::basic_ostream<CTy,CTr>&
+      operator<<(std::basic_ostream<CTy,CTr>& os, std::map<K,T> const& a)
+      {
+        return detail::print_container_on(os, a, a.empty());
+      }
+      
+      template <typename CTy, typename CTr,
+                typename K, typename T>
+      inline std::basic_ostream<CTy,CTr>&
+      operator<<(std::basic_ostream<CTy,CTr>& os, std::multimap<K,T> const& a)
+      {
+        return detail::print_container_on(os, a, a.empty());
+      }
+      
+      template <typename CTy, typename CTr,
+                typename T>
+      inline std::basic_ostream<CTy,CTr>&
+      operator<<(std::basic_ostream<CTy,CTr>& os, std::multiset<T> const& a)
+      {
+        return detail::print_container_on(os, a, a.empty());
+      }
+
+      template <typename CTy, typename CTr,
+                typename T>
+      inline std::basic_ostream<CTy,CTr>&
+      operator<<(std::basic_ostream<CTy,CTr>& os, std::set<T> const& a)
+      {
+        return detail::print_container_on(os, a, a.empty());
+      }
+      
+      template <typename CTy, typename CTr,
+                typename K, typename T>
+      inline std::basic_ostream<CTy,CTr>&
+      operator<<(std::basic_ostream<CTy,CTr>& os, std::unordered_map<K,T> const& a)
+      {
+        return detail::print_container_on(os, a, a.empty());
+      }
+      
+      template <typename CTy, typename CTr,
+                typename K, typename T>
+      inline std::basic_ostream<CTy,CTr>&
+      operator<<(std::basic_ostream<CTy,CTr>& os, std::unordered_multimap<K,T> const& a)
+      {
+        return detail::print_container_on(os, a, a.empty());
+      }
+      
+      template <typename CTy, typename CTr,
+                typename T>
+      inline std::basic_ostream<CTy,CTr>&
+      operator<<(std::basic_ostream<CTy,CTr>& os, std::unordered_multiset<T> const& a)
+      {
+        return detail::print_container_on(os, a, a.empty());
+      }
+
+      template <typename CTy, typename CTr,
+                typename T>
+      inline std::basic_ostream<CTy,CTr>&
+      operator<<(std::basic_ostream<CTy,CTr>& os, std::unordered_set<T> const& a)
+      {
+        return detail::print_container_on(os, a, a.empty());
+      }
+
+      template <typename CTy, typename CTr,
+                typename T>
+      inline std::basic_ostream<CTy,CTr>&
+      operator<<(std::basic_ostream<CTy,CTr>& os, std::vector<T> const& a)
+      {
+        return detail::print_container_on(os, a, a.empty());
+      }
+
+      inline std::ostream&
+      operator<<(std::ostream& os, std::wstring const& a)
+      {
+        return os << support::wstring_to_string(a);
+      }
+      
     } // namespace ostream {
   
     namespace iostream {

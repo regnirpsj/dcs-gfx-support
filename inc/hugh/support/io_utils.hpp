@@ -21,12 +21,19 @@
 #include <array>                 // std::array<>
 #include <boost/io_fwd.hpp>      // basic_ios_all_saver<> (fwd)
 #include <boost/noncopyable.hpp> // boost::noncopyable
+#include <deque>                 // std::deque<>
+#include <forward_list>          // std::forward_list<>
 #include <functional>            // std::function<>
 #include <initializer_list>      // std::initializer_list<>
 #include <iosfwd>                // std::basic_istream<>, std::basic_iostream<>,
                                  // std::basic_ostream<> (fwd decl), std::streampos
+#include <list>                  // std::list<> 
 #include <locale>                // std::locale, std::locale::facet, std::locale::id
+#include <map>                   // std::map<>, std::multimap<>
+#include <set>                   // std::multiset<>, std::set<>
 #include <string>                // std::basic_string<>
+#include <unordered_map>         // std::unordered_map<>, std::unordered_multimap<>
+#include <unordered_set>         // std::unordered_multiset<>, std::unordered_set<>
 #include <utility>               // std::pair<>
 #include <vector>                // std::vector<>
 
@@ -253,7 +260,7 @@ namespace hugh {
       };
 
       /**
-       * \brief (experimental) char remover (will probably never work)
+       * \brief (experimental) char remover
        */
       struct remove { 
 
@@ -284,64 +291,98 @@ namespace hugh {
 
       template <typename CTy, typename CTr = std::char_traits<CTy>>
       std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&, remove const&);
-
+      
 #if !defined(_MSC_VER) || (defined(_MSC_VER) && (_MSC_VER > 1700))
       template <typename CTy, typename CTr,
                 typename ResultTy, typename... ArgTy>
       std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
                                               std::function<ResultTy(ArgTy...)> const&);
 #endif
-    
-      template <typename CTy, typename CTr,
-                typename T>
-      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&, std::pair<T, T> const&);
-    
-      template <typename CTy, typename CTr,
-                typename T>
-      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
-                                              std::pair<T const, T const> const&);
-
+      
       template <typename CTy, typename CTr,
                 typename T, typename U>
-      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&, std::pair<T, U> const&);
+      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
+                                              std::pair<T, U> const&);
     
       template <typename CTy, typename CTr,
                 typename T, typename U>
       std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
                                               std::pair<T const, U const> const&);
-    
+
       template <typename CTy, typename CTr,
-                template <typename, std::size_t> class Container, class V, std::size_t N>
-      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&, Container<V,N> const&);
-    
-      template <typename CTy, typename CTr,
-                template <typename, typename> class Container, class V, class A>
-      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&, Container<V,A> const&);
-    
-      template <typename CTy, typename CTr,
-                template <typename, typename, typename> class Container, class K, class C, class A>
+                typename T, std::size_t N>
       std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
-                                              Container<K,C,A> const&);
-    
+                                              std::array<T,N> const&);
+      
       template <typename CTy, typename CTr,
-                template <typename, typename, typename, typename> class Container, class K, class V,
-                class C, class A>
+                typename T>
       std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
-                                              Container<K,V,C,A> const&);
-    
+                                              std::deque<T> const&);
+      
       template <typename CTy, typename CTr,
-                template <typename, typename, typename, typename, typename> class Container,
-                class K, class V, class H, class C, class A>
+                typename T>
       std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
-                                              Container<K,V,H,C,A> const&);
-    
+                                              std::forward_list<T> const&);
+
 #if !defined(_MSC_VER) || (defined(_MSC_VER) && (_MSC_VER > 1700))
       template <typename CTy, typename CTr,
                 typename T>
       std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
                                               std::initializer_list<T>);
 #endif
-    
+      
+      template <typename CTy, typename CTr,
+                typename T>
+      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
+                                              std::list<T> const&);
+
+      template <typename CTy, typename CTr,
+                typename K, typename T>
+      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
+                                              std::map<K,T> const&);
+      
+      template <typename CTy, typename CTr,
+                typename K, typename T>
+      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
+                                              std::multimap<K,T> const&);
+      
+      template <typename CTy, typename CTr,
+                typename T>
+      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
+                                              std::multiset<T> const&);
+
+      template <typename CTy, typename CTr,
+                typename T>
+      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
+                                              std::set<T> const&);
+      
+      template <typename CTy, typename CTr,
+                typename K, typename T>
+      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
+                                              std::unordered_map<K,T> const&);
+      
+      template <typename CTy, typename CTr,
+                typename K, typename T>
+      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
+                                              std::unordered_multimap<K,T> const&);
+      
+      template <typename CTy, typename CTr,
+                typename T>
+      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
+                                              std::unordered_multiset<T> const&);
+
+      template <typename CTy, typename CTr,
+                typename T>
+      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
+                                              std::unordered_set<T> const&);
+      
+      template <typename CTy, typename CTr,
+                typename T>
+      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
+                                              std::vector<T> const&);
+
+      std::ostream& operator<<(std::ostream&, std::wstring const&);
+      
       // functions, exported (extern)
     
     } // namespace ostream {
