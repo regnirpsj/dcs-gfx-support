@@ -2,12 +2,6 @@
 
 sudo: false # request container-base infrastructure
 language: cpp
-
-cache:
-  apt: true
-  directories:
-    - ${HOME}/.hunter
-    - ${HOME}/extra
   
 matrix:
   include:
