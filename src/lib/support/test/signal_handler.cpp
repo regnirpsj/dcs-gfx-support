@@ -119,8 +119,11 @@ main()
 
   using namespace hugh;
 
+#if !defined(_WIN32)
   support::signal_handler::handler_function_type
     urg_handler(support::signal_handler::instance->handler(SIGURG));
+#endif
+  
   support::signal_handler::handler_function_type
     fpe_handler(support::signal_handler::instance->handler(SIGFPE));
   
@@ -144,10 +147,16 @@ main()
   }
 
   if (EXIT_FAILURE != result) {
+#if !defined(_WIN32)
     support::signal_handler::instance->handler(SIGURG, urg_handler);
-    support::signal_handler::instance->handler(SIGFPE, fpe_handler);
+#endif
     
+    support::signal_handler::instance->handler(SIGFPE, fpe_handler);
+
+#if !defined(_WIN32)
     raise_signal(SIGURG); // ignored,   direct handler
+#endif
+    
     //raise_signal(SIGFPE); // abort,   indirect handler
     support::sleep(delay);
   }
