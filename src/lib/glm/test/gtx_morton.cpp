@@ -77,7 +77,7 @@ namespace {
   void
   print_variant(V<T,P> const&)
   {
-    static unsigned const N(glm::type<V>::components);
+    static unsigned const N(glm::type<V,T,P>::components);
     
     std::ostringstream ostr;
 
