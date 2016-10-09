@@ -119,6 +119,7 @@ namespace glm {
 
       return result;
     }
+    
   } // namespace convert {
   
 } // namespace glm {
