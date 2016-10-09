@@ -147,7 +147,7 @@ BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_convert_transform)
     }
   };
 
-  static float const epsilon(256 * std::numeric_limits<float>::epsilon());
+  static float const epsilon(1024 * std::numeric_limits<float>::epsilon());
 
   BOOST_TEST_MESSAGE("epsilon used for equality comparison to pass: " << std::fixed << epsilon);
   
@@ -164,7 +164,7 @@ BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_convert_transform)
       
       for (unsigned i(0); i < 4; ++i) {
         for (unsigned j(0); j < 4; ++j) {
-          BOOST_CHECK(std::abs(p.first[i][j] - p.second[i][j]) < epsilon);
+          BOOST_CHECK(std::abs(p.first[i][j] - p.second[i][j]) <= epsilon);
         }
       }
     }
@@ -181,7 +181,7 @@ BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_convert_transform)
       
       for (unsigned i(0); i < 4; ++i) {
         for (unsigned j(0); j < 4; ++j) {
-          BOOST_CHECK(std::abs(p.first[i][j] - p.second[i][j]) < epsilon);
+          BOOST_CHECK(std::abs(p.first[i][j] - p.second[i][j]) <= epsilon);
         }
       }
     }
