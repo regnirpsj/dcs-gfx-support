@@ -35,7 +35,7 @@ namespace hugh {
 
     public:
 
-      virtual ~printable();
+      virtual ~printable() noexcept(false);
     
       virtual void print_on(std::ostream&)  const =0;
       virtual void print_on(std::wostream&) const;

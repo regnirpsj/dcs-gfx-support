@@ -51,7 +51,7 @@ namespace hugh {
     // functions, exported
 
     /* virtual */
-    printable::~printable()
+    printable::~printable() noexcept(false)
     {
       TRACE("hugh::support::printable::~printable");
     }
