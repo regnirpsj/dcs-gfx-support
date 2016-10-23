@@ -187,3 +187,58 @@ BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_convert_transform)
     }
   }
 }
+
+BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_swizzle)
+{
+  glm::vec4 const cv(1,2,3,4);
+
+  BOOST_CHECK(glm::vec4(1,2,3,4) == cv);
+
+  {
+    glm::vec4 const v(cv.xyzw);
+
+    BOOST_CHECK(cv == v);
+  }
+  
+  {
+    glm::vec4 const v(cv.xyzw());
+
+    BOOST_CHECK(cv == v);
+  }
+
+  {
+    glm::vec4 const v(cv.rgba);
+
+    BOOST_CHECK(cv == v);
+  }
+
+  {
+    glm::vec4 const v(cv.rgba());
+
+    BOOST_CHECK(cv == v);
+  }
+
+  {
+    glm::vec4 const v(cv.stpq);
+
+    BOOST_CHECK(cv == v);
+  }
+
+  {
+    glm::vec4 const v(cv.stpq());
+
+    BOOST_CHECK(cv == v);
+  }
+
+  {
+    glm::vec4 const v(cv.yx, cv.zz);
+
+    BOOST_CHECK(glm::vec4(cv.yx, cv.zz) == v);
+  }
+    
+  {
+    glm::vec4 const v(cv.yx(), cv.zz());
+
+    BOOST_CHECK(glm::vec4(cv.yx(), cv.zz()) == v);
+  }
+}
