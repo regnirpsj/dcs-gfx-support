@@ -386,7 +386,52 @@ namespace hugh {
 #if defined(_MSC_VER)
 #  pragma warning(pop)
 #endif
-  
+
+    std::string
+    pretty_print(clock::duration const& a, unsigned b, unsigned c)
+    {
+      static std::array<std::pair<double const, std::string const>, 11> const suffixes = {
+        {
+          { 1000.00, "ns" },
+          { 1000.00, "us" },
+          { 1000.00, "ms" },
+          {   60.00, "s " },
+          {   60.00, "m " },
+          {   24.00, "h " },
+          {  365.25, "d " },
+          { 1000.00, "aj" }, // see [http://www.wikipedia.org/wiki/Year] 
+          { 1000.00, "ka" }, // .5ka max for 64bit float
+          { 1000.00, "Ma" },
+          {    1.00, "Ga" }, // requires 85bit float
+        }
+      };
+
+      using std::chrono::duration_cast;
+      using std::chrono::nanoseconds;
+
+      double   duration(double(duration_cast<nanoseconds>(a).count()));
+      unsigned idx(0);
+      
+      while ((idx < suffixes.size()) && (suffixes[idx].first < duration)) {
+        duration /= suffixes[idx].first;
+
+        ++idx;
+      }
+
+      std::ostringstream ostr;
+      
+      // corrected duration w/ unit as suffix and no space delimter (e.g. 1234ns)
+      ostr << std::setfill(' ')
+           << std::setw(b)
+           << std::setprecision(c)
+           << std::fixed
+           << std::right
+           << duration 
+           << suffixes[idx].second;
+
+      return ostr.str();
+    }
+    
     namespace {
 
       clock::time_point const null(clock::now().time_since_epoch());

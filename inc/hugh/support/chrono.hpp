@@ -93,7 +93,10 @@ namespace hugh {
 
     HUGH_SUPPORT_EXPORT void        sleep(clock::duration const&);
     HUGH_SUPPORT_EXPORT std::string date_time_iso8601();
-
+    HUGH_SUPPORT_EXPORT std::string pretty_print(clock::duration const& /* duration  */,
+                                                 unsigned               /* width     */ = 5,
+                                                 unsigned               /* precision */ = 1);
+    
     /**
      * \brief inserts a \c clock::time_point into an \c std::ostream (or derived)
      *
