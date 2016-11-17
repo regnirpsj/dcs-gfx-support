@@ -215,41 +215,7 @@ namespace hugh {
       static unsigned suffix_width  (2);
     
       if (ctx && show_duration) {
-        static std::array<std::pair<double const, std::string const>, 11> const suffixes = {
-          {
-            { 1000.00, "ns" },
-            { 1000.00, "us" },
-            { 1000.00, "ms" },
-            {   60.00, "s " },
-            {   60.00, "m " },
-            {   24.00, "h " },
-            {  365.25, "d " },
-            { 1000.00, "aj" }, // see [http://www.wikipedia.org/wiki/Year] 
-            { 1000.00, "ka" }, // .5ka max for 64bit float
-            { 1000.00, "Ma" },
-            {    1.00, "Ga" }, // requires 85bit float
-          }
-        };
-
-        using std::chrono::nanoseconds;
-      
-        double   duration(double(duration_cast<nanoseconds>(ctx->stop_ - ctx->start_).count()));
-        unsigned idx     (0);
-      
-        while ((idx < suffixes.size()) && (suffixes[idx].first < duration)) {
-          duration /= suffixes[idx].first;
-
-          ++idx;
-        }
-
-        // corrected duration w/ unit as suffix and no space delimter (e.g. 1234ns)
-        ostr << std::setfill(' ')
-             << std::setw(duration_width)
-             << std::setprecision(1)
-             << std::fixed
-             << std::right
-             << duration 
-             << suffixes[idx].second;
+        ostr << pretty_print(ctx->stop_ - ctx->start_, duration_width, 1);
       } else {
         ostr << std::string(duration_width + suffix_width, ' ');
       }
