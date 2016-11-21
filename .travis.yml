@@ -63,8 +63,8 @@ before_script:
   - export FETCHREPO=${HUGH_INSTALL_PREFIX}/share/hugh/travis.ci/fetch-or-update-git-repo.sh
   - export GLI_ROOT_DIR=${HOME}/extra/gli-git
   - export GLM_ROOT_DIR=${HOME}/extra/glm-git
-  - ${FETCHREPO} http://github.com/g-truc/gli.git ${GLI_ROOT_DIR}
-  - ${FETCHREPO} http://github.com/g-truc/glm.git ${GLM_ROOT_DIR}
+  - ${FETCHREPO} http://github.com/g-truc/gli.git ${GLI_ROOT_DIR} 0.8.1
+  - ${FETCHREPO} http://github.com/g-truc/glm.git ${GLM_ROOT_DIR} 0.9.8
   - mkdir ${TRAVIS_BUILD_DIR}/build
   
 script:
