@@ -22,25 +22,25 @@ matrix:
         - MATRIX_CC=gcc-5
         - MATRIX_CXX=g++-5
         - MATRIX_LCOV_ARGS="--gcov-tool gcov-5"
-    - compiler: clang
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.7
-            - george-edison55-precise-backports
-            - boost-latest
-          packages:
-            - cmake
-            - cmake-data
-            - git
-            - libboost1.55-all-dev
-            - g++-5
-            - clang-3.7
-      env:
-        - MATRIX_CC=clang-3.7
-        - MATRIX_CXX=clang++-3.7
-        - MATRIX_LCOV_ARGS=""
+#    - compiler: clang
+#      addons:
+#        apt:
+#          sources:
+#            - ubuntu-toolchain-r-test
+#            - llvm-toolchain-precise-3.7
+#            - george-edison55-precise-backports
+#            - boost-latest
+#          packages:
+#            - cmake
+#            - cmake-data
+#            - git
+#            - libboost1.55-all-dev
+#            - g++-5
+#            - clang-3.7
+#      env:
+#        - MATRIX_CC=clang-3.7
+#        - MATRIX_CXX=clang++-3.7
+#        - MATRIX_LCOV_ARGS=""
         
 before_script:
   - export CC=${MATRIX_CC} && ${CC} --version
