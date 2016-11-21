@@ -74,7 +74,7 @@ Mandatory:
 
 * `Boost`_
 * `GLM`_/`GLI`_
-* `_hugh-build-system`_
+* `hugh-build-system`_
 
 Optional:
 
