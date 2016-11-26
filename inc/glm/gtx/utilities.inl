@@ -28,7 +28,7 @@ namespace glm {
   
   // functions, inlined (inline)
 
-#if !defined(_MSC_VER) || (defined(_MSC_VER) && (_MSC_VER > 1900))
+#if !defined(_MSC_VER) || (defined(_MSC_VER) && (_MSC_VER >= 1900))
   inline constexpr double
   operator "" _deg(unsigned long long a)
   {
@@ -38,27 +38,29 @@ namespace glm {
   inline constexpr double
   operator "" _deg(long double a)
   {
-    return radians(a);
+    return radians(double(a));
   }
   
   inline constexpr double
   operator "" _rad(unsigned long long a)
   {
-    return a;
+    return double(a);
   }
    
   inline constexpr double
   operator "" _rad(long double a)
   {
-    return a;
+    return double(a);
   }
-#endif // #if !defined(_MSC_VER) || (defined(_MSC_VER) && (_MSC_VER > 1800))
+#endif // #if !defined(_MSC_VER) || (defined(_MSC_VER) && (_MSC_VER >= 1900))
 
   template <typename T>
   inline T
   rev(T a)
   {
-    return a - glm::floor(a / glm::two_pi<T>()) * glm::two_pi<T>();
+    return (a -
+            glm::floor(a / glm::two_pi<typename T::value_type>()) *
+            glm::two_pi<typename T::value_type>());
   }
   
   // http://stackoverflow.com/questions/1903954

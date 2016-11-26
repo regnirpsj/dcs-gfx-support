@@ -16,8 +16,6 @@
 
 #define HUGH_SUPPORT_CONFIG_HPP
 
-// includes, system
-
 #include <boost/system/api_config.hpp> // BOOST_POSIX_API || BOOST_WINDOWS_API
 
 // includes, project
@@ -36,6 +34,9 @@
 
 // noexcept
 #if defined(_MSC_VER)
+//# define STR2(x) #x
+//# define STR1(x) STR2(x)
+//# pragma message("_MSC_VER: " STR1(_MSC_VER))
 #  if (_MSC_VER < 1800)
 #    define noexcept
 #  elseif (_MSC_VER == 1800)

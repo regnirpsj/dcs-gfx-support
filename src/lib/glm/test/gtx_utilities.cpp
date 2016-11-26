@@ -48,7 +48,7 @@ namespace {
 
 BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_op_literal_deg)
 {
-#if defined(_MSC_VER) && (_MSC_VER <= 1900)
+#if defined(_MSC_VER) && (_MSC_VER < 1900)
   BOOST_CHECK(glm::pi<double>() == 180.0 _deg);
 
   BOOST_TEST_MESSAGE(std::setprecision(12)
@@ -60,12 +60,12 @@ BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_op_literal_deg)
   BOOST_TEST_MESSAGE(std::setprecision(12)
                      << "glm::pi<double>():" << glm::pi<double>()
                      << " =?= 180.0_deg:"    << 180.0_deg);
-#endif
+#endif // #if defined(_MSC_VER) && (_MSC_VER < 1900)
 }
 
 BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_op_literal_rad)
 {
-#if defined(_MSC_VER) && (_MSC_VER <= 1900)
+#if defined(_MSC_VER) && (_MSC_VER < 1900)
   BOOST_CHECK(glm::pi<double>() == 180.0 _deg);
 
   BOOST_TEST_MESSAGE(std::setprecision(12)
@@ -77,7 +77,7 @@ BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_op_literal_rad)
   BOOST_TEST_MESSAGE(std::setprecision(12)
                      << "180.0_deg:"              << 180.0_deg
                      << " =?= glm::pi<double>():" << glm::pi<double>());
-#endif
+#endif // #if defined(_MSC_VER) && (_MSC_VER < 1900)
 }
 
 using rev_types = boost::mpl::list<glm::vec1,  glm::vec2,  glm::vec3,  glm::vec4,
@@ -108,11 +108,11 @@ BOOST_AUTO_TEST_CASE(test_hugh_glm_gtx_utilities_convert_transform)
 {
   using matrix_pair = std::pair<glm::mat4 const, glm::mat4 const>;
   
-#if defined(_MSC_VER) && (_MSC_VER <= 1900)
+#if defined(_MSC_VER) && (_MSC_VER < 1900)
   glm::vec3::value_type const angle(float(45 _deg));
 #else
   glm::vec3::value_type const angle(float(45_deg));
-#endif
+#endif // #if defined(_MSC_VER) && (_MSC_VER < 1900)
   
   glm::mat4 const ir(glm::rotate   (angle, glm::vec3(glm::gaussRand(  0.0, 20.0),
                                                      glm::gaussRand(  0.0, 20.0),

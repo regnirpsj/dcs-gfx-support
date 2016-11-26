@@ -47,7 +47,7 @@ namespace glm {
   namespace convert {
 
     /**
-     * \brief transformtion to be left multiplied to an opengl projection matrix for use in a
+     * \brief transformation to be left multiplied to an opengl projection matrix for use in a
      *        D3D11 pipeline
      */
     extern HUGH_GLM_EXPORT mat4 const opengl_to_d3d;
@@ -61,7 +61,7 @@ namespace glm {
   
   // functions, inlined (inline)  
   
-#if !defined(_MSC_VER) || (defined(_MSC_VER) && (_MSC_VER > 1900))
+#if !defined(_MSC_VER) || (defined(_MSC_VER) && (_MSC_VER >= 1900))
   /**
    * \brief user-defined literals for distinguishing degrees and radians
    *
@@ -77,7 +77,7 @@ namespace glm {
 #else
 #  pragma message("Note: user-defined string literal operators not supported ")
 #  pragma message("      using (unreliable) macro workaround for _deg/_rad")
-#endif // !defined(_MSC_VER) || (defined(_MSC_VER) && (_MSC_VER > 1800))
+#endif // !defined(_MSC_VER) || (defined(_MSC_VER) && (_MSC_VER >= 1900))
 
   /**
    * \brief convert the input angle (in radians) to be between [0, 2*pi]
@@ -129,7 +129,7 @@ namespace glm {
 
 } // namespace glm {
 
-#if !defined(_MSC_VER) || (defined(_MSC_VER) && (_MSC_VER > 1900))
+#if !defined(_MSC_VER) || (defined(_MSC_VER) && (_MSC_VER >= 1900))
 // for convenience, to avoid cumbersome lines like 'using glm::operator "" _deg;'
 using glm::operator "" _deg;
 using glm::operator "" _rad;
@@ -138,7 +138,7 @@ using glm::operator "" _rad;
 // must then be '180.0 _deg'; will possible break at the most inconvenient of times
 # define _deg * (3.14159265358979323846264338327950288 / 180.0)
 # define _rad
-#endif // !defined(_MSC_VER) || (defined(_MSC_VER) && (_MSC_VER > 1800))
+#endif // !defined(_MSC_VER) || (defined(_MSC_VER) && (_MSC_VER >= 1900))
 
 #include <glm/gtx/utilities.inl>
 
