@@ -280,7 +280,7 @@ namespace hugh {
         return enumeration<T,R>(a, b);
       }
 
-      template <typename T, typename R, typename CTy, typename CTr = std::char_traits<CTy>>
+      template <typename T, typename R, typename CTy, typename CTr>
       inline std::basic_ostream<CTy,CTr>&
       operator<<(std::basic_ostream<CTy,CTr>& os, enumeration<T,R> const& a)
       {
@@ -314,7 +314,7 @@ namespace hugh {
         return bitmask<T,R>(a, b);
       }
 
-      template <typename T, typename R, typename CTy, typename CTr = std::char_traits<CTy>>
+      template <typename T, typename R, typename CTy, typename CTr>
       inline std::basic_ostream<CTy,CTr>&
       operator<<(std::basic_ostream<CTy,CTr>& os, bitmask<T,R> const& a)
       {
