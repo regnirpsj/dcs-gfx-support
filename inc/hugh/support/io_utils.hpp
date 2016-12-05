@@ -260,7 +260,7 @@ namespace hugh {
       };
 
       /**
-       * \brief (experimental) char remover
+       * \brief char remover
        */
       struct remove { 
 
@@ -270,6 +270,38 @@ namespace hugh {
 
       };
     
+      /**
+       * \brief enum printer
+       */
+      template <typename T, typename R>
+      struct enumeration { 
+
+        using enum_type  = T;
+        using enum_range = R;
+        
+        enum_type const   value;
+        enum_range const& range;
+
+        explicit enumeration(enum_type /* value */, enum_range const& /* range */);
+
+      };
+
+      /**
+       * \brief enum printer
+       */
+      template <typename T, typename R>
+      struct bitmask { 
+
+        using bitmask_type  = T;
+        using bitmask_range = R;
+        
+        bitmask_type const   value;
+        bitmask_range const& range;
+
+        explicit bitmask(bitmask_type /* value */, bitmask_range const& /* range */);
+
+      };
+      
       // variables, exported (extern)
     
       // functions, inlined (inline)
@@ -291,6 +323,20 @@ namespace hugh {
 
       template <typename CTy, typename CTr = std::char_traits<CTy>>
       std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&, remove const&);
+
+      template <typename T, typename R>
+      enumeration<T,R> enumerate(T, R const&);
+      
+      template <typename T, typename R, typename CTy, typename CTr = std::char_traits<CTy>>
+      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
+                                              enumeration<T,R> const&);
+      
+      template <typename T, typename R>
+      bitmask<T,R> flags(T, R const&);
+
+      template <typename T, typename R, typename CTy, typename CTr = std::char_traits<CTy>>
+      std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&,
+                                              bitmask<T,R> const&);
       
 #if !defined(_MSC_VER) || (defined(_MSC_VER) && (_MSC_VER > 1700))
       template <typename CTy, typename CTr,

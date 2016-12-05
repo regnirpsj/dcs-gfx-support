@@ -179,7 +179,19 @@ namespace hugh {
       remove::remove(unsigned a)
         : value(a)
       {}
-    
+
+      template <typename T, typename R>
+      inline /* explicit */
+      enumeration<T,R>::enumeration(enum_type a, enum_range const& b)
+        : value(a), range(b)
+      {}
+
+      template <typename T, typename R>
+      inline /* explicit */
+      bitmask<T,R>::bitmask(bitmask_type a, bitmask_range const& b)
+        : value(a), range(b)
+      {}
+      
       template <typename FTy, typename CTy, typename CTr>
       inline FTy const&
       get_facet(std::basic_ios<CTy,CTr>& ios)
@@ -260,7 +272,77 @@ namespace hugh {
         
         return os;
       }
-    
+
+      template <typename T, typename R>
+      inline enumeration<T,R>
+      enumerate(T a, R const& b)
+      {
+        return enumeration<T,R>(a, b);
+      }
+
+      template <typename T, typename R, typename CTy, typename CTr = std::char_traits<CTy>>
+      inline std::basic_ostream<CTy,CTr>&
+      operator<<(std::basic_ostream<CTy,CTr>& os, enumeration<T,R> const& a)
+      {
+        typename std::basic_ostream<CTy,CTr>::sentry const cerberus(os);
+
+        if (cerberus) {
+          bool found(false);
+
+          for (auto const& e : a.range) {
+            if (e.first == a.value) {
+              os << e.second;
+
+              found = true;
+
+              break;
+            }
+          }
+
+          if (!found) {
+            os << "INVALID (" << signed(a.value) << ')';
+          }
+        }
+        
+        return os;
+      }
+      
+      template <typename T, typename R>
+      inline bitmask<T,R>
+      flags(T a, R const& b)
+      {
+        return bitmask<T,R>(a, b);
+      }
+
+      template <typename T, typename R, typename CTy, typename CTr = std::char_traits<CTy>>
+      inline std::basic_ostream<CTy,CTr>&
+      operator<<(std::basic_ostream<CTy,CTr>& os, bitmask<T,R> const& a)
+      {
+        typename std::basic_ostream<CTy,CTr>::sentry const cerberus(os);
+
+        if (cerberus) {
+          using pos_type = typename std::basic_ostream<CTy,CTr>::pos_type;
+
+          pos_type const pos_old(os.tellp());
+          
+          for (auto f : a.range) {
+            if (a.value & f.first) {
+              os << f.second << '|';
+            }
+          }
+          
+          os << remove(1);
+
+          pos_type const pos_new(os.tellp());
+          
+          if ((pos_type(-1) != pos_old) && (0 == (pos_new - pos_old))) {
+            os << "NONE";
+          }
+        }
+        
+        return os;
+      }
+
 #if !defined(_MSC_VER) || (defined(_MSC_VER) && (_MSC_VER > 1700))
       template <typename CTy, typename CTr,
                 typename ResultTy, typename... ArgTy>

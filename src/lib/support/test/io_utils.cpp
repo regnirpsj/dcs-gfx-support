@@ -15,6 +15,7 @@
 // includes, system
 
 #include <boost/concept_check.hpp> // boost::ignore_unused_variable_warning<>
+#include <iomanip>                 // std::setfill, std:setw
 #include <iostream>                // std::cout, std::endl
 #include <memory>                  // std::unique_ptr<>
 #include <sstream>                 // std::ostringstream
@@ -281,6 +282,65 @@ BOOST_AUTO_TEST_CASE(test_hugh_support_io_utils_manipulator_remove)
                        << tellp[2] << ':'
                        << tellp[3]
                        << ']');
+  }
+}
+
+BOOST_AUTO_TEST_CASE(test_hugh_support_io_utils_manipulator_enumeration)
+{
+  enum class type {
+    T1 = 1, T2 = 2, T3 = -1, T4 = 0,
+  };
+  
+  static std::array<std::pair<type const, std::string const>, 4> const types = {
+    std::make_pair(type::T1, "type::T1"),
+    std::make_pair(type::T2, "type::T2"),
+    std::make_pair(type::T3, "type::T3"),
+    std::make_pair(type::T4, "type::T4"),
+  };
+  
+  for (auto t : types) {
+    using hugh::support::ostream::enumerate;
+
+    std::ostringstream ostr;
+
+    ostr << enumerate(t.first, types);
+
+    BOOST_CHECK       (t.second == ostr.str());
+    BOOST_TEST_MESSAGE(ostr.str());
+  }
+}
+
+BOOST_AUTO_TEST_CASE(test_hugh_support_io_utils_manipulator_bitmask)
+{
+  static std::array<unsigned const, 27> const primes_plus = {
+    0, 1,
+    2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97,
+  };
+  static std::array<std::pair<unsigned const, std::string const>, 8> const masks = {
+    std::make_pair(0x0040, "SIXTYFOUR"),
+    std::make_pair(0x0020, "THIRTYTWO"),
+    std::make_pair(0x0010, "  SIXTEEN"),
+    std::make_pair(0x0008, "    EIGHT"),
+    std::make_pair(0x0004, "     FOUR"),
+    std::make_pair(0x0002, "      TWO"),
+    std::make_pair(0x0001, "      ONE"),
+    std::make_pair(0x0000, "     ZERO"),
+  };
+  
+  for (auto f : primes_plus) {
+    using hugh::support::ostream::flags;
+    using hugh::support::ostream::remove;
+    
+    std::ostringstream ostr;
+
+    ostr << flags(f, masks) << remove(1);
+      
+    BOOST_CHECK       (!ostr.str().empty());
+    BOOST_TEST_MESSAGE(   std::setw(2) << std::setfill('0')                               << f
+                       << ":0x"
+                       << std::setw(2) << std::setfill('0') << std::hex << std::uppercase << f
+                       << ':'
+                       << ostr.str());
   }
 }
 
