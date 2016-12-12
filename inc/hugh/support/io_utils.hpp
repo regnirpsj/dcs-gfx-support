@@ -86,7 +86,7 @@ namespace hugh {
     
       // types, exported (class, enum, struct, union, typedef)
 
-      class HUGH_SUPPORT_EXPORT binary : public printable {
+      class HUGH_SUPPORT_EXPORT binary : public support::printable {
 
       public:
 
