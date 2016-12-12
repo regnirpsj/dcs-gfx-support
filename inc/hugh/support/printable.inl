@@ -27,22 +27,30 @@
 namespace hugh {
   
   namespace support {
-  
-    // functions, inlined (inline)
 
-    template <typename CTy, typename CTr>
-    inline std::basic_ostream<CTy,CTr>&
-    operator<<(std::basic_ostream<CTy,CTr>& os, printable const& a)
-    {
-      typename std::basic_ostream<CTy,CTr>::sentry const cerberus(os);
+    namespace ostream {
+
+      namespace printable {
+        
+        // functions, inlined (inline)
+
+        template <typename CTy, typename CTr>
+        inline std::basic_ostream<CTy,CTr>&
+        operator<<(std::basic_ostream<CTy,CTr>& os, base const& a)
+        {
+          typename std::basic_ostream<CTy,CTr>::sentry const cerberus(os);
     
-      if (cerberus) {
-        a.print_on(os);
-      }
+          if (cerberus) {
+            a.print_on(os);
+          }
     
-      return os;
-    }
-  
+          return os;
+        }
+
+      } // namespace printable {
+
+    } // namespace ostream {
+    
   } // namespace support {
 
 } // namespace hugh {

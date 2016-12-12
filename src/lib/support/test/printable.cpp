@@ -23,66 +23,104 @@
 
 #include <hugh/support/printable.hpp>
 #include <hugh/support/string.hpp>
+#include <hugh/support/type_info.hpp>
 
 // internal unnamed namespace
 
 namespace {
   
   // types, internal (class, enum, struct, union, typedef)
-  
-  class printable_derived : public hugh::support::printable {
 
-  public:
-
-    explicit printable_derived()
-      : hugh::support::printable(),
-        attribute_b_            (false),
-        attribute_f_            (-3.141f)
-    {}
+  namespace derived {
     
-    virtual void print_on(std::ostream& os) const
-    {
-      os << '['
-         << std::boolalpha << attribute_b_ << ','
-         <<                   attribute_f_
-         << ']';
-    }
+    class printable : public hugh::support::printable {
 
-  private:
+    public:
 
-    bool  attribute_b_;
-    float attribute_f_;
+      explicit printable()
+        : hugh::support::printable(),
+          attribute_b_            (false),
+          attribute_f_            (-3.141f)
+      {}
     
-  };
+      virtual void print_on(std::ostream& os) const
+      {
+        os << '['
+           << std::boolalpha << attribute_b_ << ','
+           <<                   attribute_f_
+           << ']';
+      }
 
-  class printable_derived_derived : public printable_derived {
+    private:
 
-  public:
-
-    explicit printable_derived_derived()
-      : printable_derived(),
-        attribute_c_  ('?'),
-        attribute_u_  (42)
-    {}
+      bool  attribute_b_;
+      float attribute_f_;
     
-    virtual void print_on(std::ostream& os) const
-    {
-      os << '[';
+    };
 
-      printable_derived::print_on(os);
+    namespace derived {
       
-      os << ','
-         << std::boolalpha << attribute_c_ << ','
-         <<                   attribute_u_
-         << ']';
-    }
+      class printable : public ::derived::printable {
 
-  private:
+      public:
 
-    char     attribute_c_;
-    unsigned attribute_u_;
+        explicit printable()
+          : ::derived::printable(),
+            attribute_c_      ('?'),
+            attribute_u_      (42)
+        {}
     
-  };
+        virtual void print_on(std::ostream& os) const
+        {
+          os << '[';
+
+          ::derived::printable::print_on(os);
+      
+          os << ','
+             << std::boolalpha << attribute_c_ << ','
+             <<                   attribute_u_
+             << ']';
+        }
+
+      private:
+
+        char     attribute_c_;
+        unsigned attribute_u_;
+    
+      };
+
+    } // namespace derived {
+    
+  } // namespace derived {
+  
+  namespace derived1 {
+    
+    class printable : public hugh::support::printable {
+
+    public:
+
+      explicit printable()
+        : hugh::support::printable(),
+          attribute_u_            (+1),
+          attribute_s_            (-1)
+      {}
+    
+      virtual void print_on(std::ostream& os) const
+      {
+        os << '['
+           << attribute_u_ << ','
+           << attribute_s_
+           << ']';
+      }
+
+    private:
+
+      unsigned attribute_u_;
+      signed   attribute_s_;
+    
+    };
+
+  } // namespace derived1 {
   
   // variables, internal
   
@@ -104,11 +142,14 @@ using ostream_types = boost::mpl::list<std::ostringstream,
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_support_printable_derived, T, ostream_types)
 {
-  T ostr;
+  using hugh::support::demangle;
   
-  ostr << '\n'
-       << "printable_derived:         " << printable_derived()         << '\n'
-       << "printable_derived_derived: " << printable_derived_derived();
+  T ostr;
+
+  // using 'demangle(typeid(T)).c_str()' to allow insertion of narrow string in either stream type
+  ostr << '\n' << demangle(typeid(T)).c_str() << '\n'
+       << "derived::printable:          " << derived::printable()          << '\n'
+       << "derived::derived::printable: " << derived::derived::printable();
 
   BOOST_CHECK       (!ostr.str().empty());
   BOOST_TEST_MESSAGE(hugh::support::wstring_to_string(ostr.str()));
@@ -116,36 +157,70 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_support_printable_derived, T, ostream_ty
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_support_printable_derived_via_base, T, ostream_types)
 {
+  using hugh::support::demangle;
   using hugh::support::printable;
   
-  std::unique_ptr<printable> p(new printable_derived_derived);
+  std::unique_ptr<printable> p(new derived::derived::printable);
 
   T ostr;
   
-  ostr << '\n'
+  // using 'demangle(typeid(T)).c_str()' to allow insertion of narrow string in either stream type
+  ostr << '\n' << demangle(typeid(T)).c_str() << '\n'
        << "printable: " << *p;
   
   BOOST_CHECK       (!ostr.str().empty());
   BOOST_TEST_MESSAGE(hugh::support::wstring_to_string(ostr.str()));
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_support_printable_print_on, T, ostream_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_support_printable_print_on_throw, T, ostream_types)
 {
-  using hugh::support::printable;
-  
-  class derived : public printable {
+  class derived : public hugh::support::printable {
 
   public:
 
     virtual void print_on(std::ostream& os) const
     {
-      printable::print_on(os);
+      hugh::support::printable::print_on(os);
     }
     
   };
 
-  std::unique_ptr<printable> p(new derived);
-  T                          ostr;
+  std::unique_ptr<hugh::support::printable> p(new derived);
+  T                                         ostr;
   
   BOOST_REQUIRE_THROW(p->print_on(ostr), std::logic_error);
+}
+
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_support_printable_multiple_inheritance, T, ostream_types)
+{
+  class final : public derived::derived::printable,
+                public derived1::printable {
+
+  public:
+
+    virtual void print_on(std::ostream& os) const
+    {
+      os << '[';
+
+      derived::derived::printable::print_on(os);
+      
+      os << ',';
+
+      derived1::printable::print_on(os);
+      
+      os << ']';
+    }
+    
+  };
+
+  using hugh::support::demangle;
+  
+  T ostr;
+
+  // using 'demangle(typeid(T)).c_str()' to allow insertion of narrow string in either stream type
+  ostr << '\n' << demangle(typeid(T)).c_str() << '\n'
+       << "final: " << final();
+
+  BOOST_CHECK       (!ostr.str().empty());
+  BOOST_TEST_MESSAGE(hugh::support::wstring_to_string(ostr.str()));
 }

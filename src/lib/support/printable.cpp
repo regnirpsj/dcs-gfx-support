@@ -45,37 +45,46 @@ namespace {
 namespace hugh {
   
   namespace support {
+
+    namespace ostream {
+
+      namespace printable {
+        
+        // variables, exported
   
-    // variables, exported
+        // functions, exported
+
+        /* virtual */
+        base::~base()
+        {
+          TRACE("hugh::support::ostream::printable::base::~base");
+        }
   
-    // functions, exported
+        /* virtual */ void
+        base::print_on(std::ostream&) const
+        {
+          TRACE_NEVER("hugh::support::ostream::printable::base::print_on(std::ostream)");
 
-    /* virtual */
-    printable::~printable() noexcept(false)
-    {
-      TRACE("hugh::support::printable::~printable");
-    }
-  
-    /* virtual */ void
-    printable::print_on(std::ostream&) const
-    {
-      TRACE_NEVER("hugh::support::printable::print_on(std::ostream)");
+          throw std::logic_error("pure virtual function "
+                                 "'hugh::support::ostream::printable::base::print_on' called");
+        }
 
-      throw std::logic_error("pure virtual function 'hugh::support::printable::print_on' called");
-    }
+        /* virtual */ void
+        base::print_on(std::wostream& wos) const
+        {
+          TRACE_NEVER("hugh::support::ostream::printable::base::print_on(std::wostream)");
 
-    /* virtual */ void
-    printable::print_on(std::wostream& wos) const
-    {
-      TRACE_NEVER("hugh::support::printable::print_on(std::wostream)");
-
-      std::ostringstream ostr;
+          std::ostringstream ostr;
     
-      print_on(ostr);
+          print_on(ostr);
 
-      wos << string_to_wstring(ostr.str());
-    }
-  
+          wos << string_to_wstring(ostr.str());
+        }
+
+      } // namespace printable {
+
+    } // namespace ostream {
+    
   } // namespace support {
 
 } // namespace hugh {
