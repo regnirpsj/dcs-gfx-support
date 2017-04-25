@@ -2,19 +2,15 @@
 
 /**************************************************************************************************/
 /*                                                                                                */
-/* Copyright (C) 2016-2017 University of Hull                                                     */
+/* Copyright (C) 2017 University of Hull                                                          */
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  hugh/support.hpp                                                                */
+/*  module     :  hugh/support/test/pci_ids.cpp                                                   */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
 /**************************************************************************************************/
-
-#if !defined(HUGH_SUPPORT_HPP)
-
-#define HUGH_SUPPORT_HPP
 
 // includes, system
 
@@ -22,32 +18,48 @@
 
 // includes, project
 
-#include <hugh/support/chrono.hpp>
-#include <hugh/support/hasher.hpp>
-#include <hugh/support/io_utils.hpp>
 #include <hugh/support/pci_ids.hpp>
-#include <hugh/support/printable.hpp>
-#include <hugh/support/refcounted.hpp>
-#include <hugh/support/signal_handler.hpp>
-#include <hugh/support/string.hpp>
-#include <hugh/support/thread.hpp>
+
+#define HUGH_USE_TRACE
+#undef HUGH_USE_TRACE
 #include <hugh/support/trace.hpp>
-#include <hugh/support/type_info.hpp>
 
-namespace hugh {
+// internal unnamed namespace
 
-  namespace support {
-    
-    // types, exported (class, enum, struct, union, typedef)
-
-    // variables, exported (extern)
-
-    // functions, inlined (inline)
+namespace {
   
-    // functions, exported (extern)
+  // types, internal (class, enum, struct, union, typedef)
 
-  } // namespace support {
+  // variables, internal
   
-} // namespace hugh {
+  // functions, internal
 
-#endif // #if !defined(HUGH_SUPPORT_HPP)
+} // namespace {
+
+#define BOOST_TEST_MAIN
+#include <boost/test/unit_test.hpp>
+#include <boost/test/output_test_stream.hpp>
+
+BOOST_AUTO_TEST_CASE(test_hugh_support_pci_vendor_name)
+{
+  using namespace hugh::support;
+
+  pci::vendor const v(0x8086);
+  
+  BOOST_CHECK(!v.name().empty());
+}
+
+BOOST_AUTO_TEST_CASE(test_hugh_support_pci_vendor_print_on)
+{
+  using namespace hugh::support;
+
+  pci::vendor const v(0x8086);
+  
+  BOOST_CHECK(!v.name().empty());
+
+  boost::test_tools::output_test_stream output;
+
+  v.print_on(output);
+
+  BOOST_TEST_MESSAGE(output.str());
+}

@@ -2,11 +2,18 @@
 
 ####################################################################################################
 #                                                                                                  #
-# Copyright (C) 2016 University of Hull                                                            #
+# Copyright (C) 2016-2017 University of Hull                                                       #
 #                                                                                                  #
 ####################################################################################################
 
 cma_print_current_directory()
+
+find_package(PkgConfig)
+pkg_check_modules(LIBPCI libpci)
+
+if(LIBPCI_FOUND)
+  include_directories(SYSTEM ${LIBPCI_INCLUDE_DIRS})
+endif()
 
 find_package(Boost ${BOOST_MINIMUM_VERSION} REQUIRED
              COMPONENTS chrono date_time filesystem program_options system thread)
@@ -18,6 +25,9 @@ LIST(APPEND SRC chrono.cpp)
 LIST(APPEND SRC chrono_io.cpp)
 LIST(APPEND SRC hasher.cpp)
 LIST(APPEND SRC io_utils.cpp)
+if(LIBPCI_FOUND)
+  LIST(APPEND SRC pci_ids.cpp)
+endif()
 LIST(APPEND SRC printable.cpp)
 LIST(APPEND SRC refcounted.cpp)
 if(CMAKE_HOST_WIN32)
@@ -34,7 +44,9 @@ LIST(APPEND SRC type_info.cpp)
 
 set(LIBS)
 list(APPEND LIBS ${Boost_LIBRARIES})
-
+if(LIBPCI_FOUND)
+  list(APPEND LIBS ${LIBPCI_LIBRARIES})
+endif()
 if(CMAKE_HOST_UNIX)
   # 'pthread_sigmask' used in signal_handler_posix.cpp
   list(APPEND LIBS pthread)

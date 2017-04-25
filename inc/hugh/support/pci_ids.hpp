@@ -2,52 +2,63 @@
 
 /**************************************************************************************************/
 /*                                                                                                */
-/* Copyright (C) 2016-2017 University of Hull                                                     */
+/* Copyright (C) 2017 University of Hull                                                          */
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  hugh/support.hpp                                                                */
+/*  module     :  hugh/support/pci_ids.hpp                                                        */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
 /**************************************************************************************************/
 
-#if !defined(HUGH_SUPPORT_HPP)
+#if !defined(HUGH_SUPPORT_PCI_IDS_HPP)
 
-#define HUGH_SUPPORT_HPP
+#define HUGH_SUPPORT_PCI_IDS_HPP
 
 // includes, system
 
-//#include <>
+// #include <>
 
 // includes, project
 
-#include <hugh/support/chrono.hpp>
-#include <hugh/support/hasher.hpp>
-#include <hugh/support/io_utils.hpp>
-#include <hugh/support/pci_ids.hpp>
 #include <hugh/support/printable.hpp>
-#include <hugh/support/refcounted.hpp>
-#include <hugh/support/signal_handler.hpp>
-#include <hugh/support/string.hpp>
-#include <hugh/support/thread.hpp>
-#include <hugh/support/trace.hpp>
-#include <hugh/support/type_info.hpp>
 
 namespace hugh {
 
   namespace support {
-    
-    // types, exported (class, enum, struct, union, typedef)
 
-    // variables, exported (extern)
+    namespace pci {
+      
+      // types, exported (class, enum, struct, union, typedef)
 
-    // functions, inlined (inline)
+      class HUGH_SUPPORT_EXPORT vendor : public printable {
+
+      public:
+
+        explicit vendor(unsigned);
+        
+        std::string const& name()  const;
+        
+        virtual void print_on(std::ostream&) const;
+        
+      private:
+
+        unsigned const id_;
+        std::string    name_;
+        
+      };
+      
+      // variables, exported (extern)
+
+      // functions, inlined (inline)
   
-    // functions, exported (extern)
+      // functions, exported (extern)
 
+    } // namespace pci {
+    
   } // namespace support {
   
 } // namespace hugh {
 
-#endif // #if !defined(HUGH_SUPPORT_HPP)
+#endif // #if !defined(HUGH_SUPPORT_PCI_IDS_HPP)
