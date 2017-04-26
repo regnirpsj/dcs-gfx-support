@@ -2,28 +2,27 @@
 
 /**************************************************************************************************/
 /*                                                                                                */
-/* Copyright (C) 2016 University of Hull                                                          */
+/* Copyright (C) 2017 University of Hull                                                          */
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  hugh/support/io_utils.cpp                                                       */
+/*  module     :  hugh/support/test/io_format_saver.cpp                                           */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
 /**************************************************************************************************/
 
-// include i/f header
-
-#include "hugh/support/io_utils.hpp"
-
 // includes, system
 
-#include <array>  // std::array<>
-#include <bitset> // std::bitset<>
+//#include <>
 
 // includes, project
 
-// #include <>
+#include <hugh/support/io/format_saver.hpp>
+
+#define HUGH_USE_TRACE
+#undef HUGH_USE_TRACE
+#include <hugh/support/trace.hpp>
 
 // internal unnamed namespace
 
@@ -34,38 +33,13 @@ namespace {
   // variables, internal
   
   // functions, internal
-  
+
 } // namespace {
 
-namespace hugh {
-  
-  namespace support {
+#define BOOST_TEST_MAIN
+#include <boost/test/unit_test.hpp>
 
-    namespace istream  {
-    
-      // variables, exported
-  
-      // functions, exported
-    
-    } // namespace istream  {
-  
-    namespace ostream  {
-    
-      // variables, exported
-  
-      // functions, exported
-
-    
-    } // namespace ostream  {
-
-    namespace iostream  {
-    
-      // variables, exported
-  
-      // functions, exported
-    
-    } // namespace iostream  {
-  
-  } // namespace support {
-  
-} // namespace hugh {
+BOOST_AUTO_TEST_CASE(test_hugh_support_io_format_saver)
+{
+  BOOST_CHECK(true);
+}

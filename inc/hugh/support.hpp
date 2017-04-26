@@ -24,7 +24,7 @@
 
 #include <hugh/support/chrono.hpp>
 #include <hugh/support/hasher.hpp>
-#include <hugh/support/io_utils.hpp>
+#include <hugh/support/io.hpp>
 #include <hugh/support/pci_ids.hpp>
 #include <hugh/support/printable.hpp>
 #include <hugh/support/refcounted.hpp>

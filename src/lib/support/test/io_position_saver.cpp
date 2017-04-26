@@ -2,11 +2,11 @@
 
 /**************************************************************************************************/
 /*                                                                                                */
-/* Copyright (C) 2016 University of Hull                                                          */
+/* Copyright (C) 2017 University of Hull                                                          */
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  hugh/support/test/io_utils.cpp                                                  */
+/*  module     :  hugh/support/test/io_position_saver.cpp                                         */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
@@ -14,18 +14,11 @@
 
 // includes, system
 
-#include <boost/concept_check.hpp> // boost::ignore_unused_variable_warning<>
-#include <iomanip>                 // std::setfill, std:setw
-#include <iostream>                // std::cout, std::endl
-#include <memory>                  // std::unique_ptr<>
-#include <sstream>                 // std::ostringstream
-#include <typeinfo>                // typeid usage
+#include <sstream> // std::stringstream
 
 // includes, project
 
-#include <hugh/support/io_utils.hpp>
-#include <hugh/support/string.hpp>
-#include <hugh/support/type_info.hpp>
+#include <hugh/support/io/position_saver.hpp>
 
 #define HUGH_USE_TRACE
 #undef HUGH_USE_TRACE
@@ -38,17 +31,49 @@ namespace {
   // types, internal (class, enum, struct, union, typedef)
 
   // variables, internal
-
   
   // functions, internal
 
-  
 } // namespace {
 
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
-#include <boost/test/test_case_template.hpp>
-#include <boost/mpl/list.hpp>
 
+BOOST_AUTO_TEST_CASE(test_hugh_support_io_position_saver)
+{
+  using namespace hugh::support;
+  
+  std::string       text("1234567890");
+  std::stringstream iostr;
 
+  {
+    ostream::position_saver const ops(iostr);
 
+    iostr << text;
+  }
+
+  BOOST_CHECK       (0 == iostr.tellp());
+  BOOST_TEST_MESSAGE('\n' << iostr.str());
+
+  {
+    istream::position_saver const ips(iostr);
+
+    iostr >> text;
+  } 
+  
+  BOOST_CHECK       (0 == iostr.tellg());
+  BOOST_TEST_MESSAGE('\n' << iostr.str() << ':' << text);
+  
+  {
+    iostream::position_saver const iops(iostr);
+
+    std::reverse(text.begin(), text.end());
+    
+    iostr << text;
+    iostr >> text;
+  } 
+
+  BOOST_CHECK       (0 == iostr.tellp());
+  BOOST_CHECK       (0 == iostr.tellg());
+  BOOST_TEST_MESSAGE('\n' << iostr.str() << ':' << text);
+}

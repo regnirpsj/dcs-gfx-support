@@ -2,70 +2,47 @@
 
 /**************************************************************************************************/
 /*                                                                                                */
-/* Copyright (C) 2016 University of Hull                                                          */
+/* Copyright (C) 2017 University of Hull                                                          */
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  hugh/support/io_utils.cpp                                                       */
+/*  module     :  hugh/support/io.hpp                                                             */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
 /**************************************************************************************************/
 
-// include i/f header
+#if !defined(HUGH_SUPPORT_IO_HPP)
 
-#include "hugh/support/io_utils.hpp"
+#define HUGH_SUPPORT_IO_HPP
 
 // includes, system
 
-#include <array>  // std::array<>
-#include <bitset> // std::bitset<>
+// #include <>
 
 // includes, project
 
-// #include <>
-
-// internal unnamed namespace
-
-namespace {
-  
-  // types, internal (class, enum, struct, union, typedef)
-
-  // variables, internal
-  
-  // functions, internal
-  
-} // namespace {
+#include <hugh/support/io/format_saver.hpp>
+#include <hugh/support/io/manipulators.hpp>
+#include <hugh/support/io/operators.hpp>
+#include <hugh/support/io/position_saver.hpp>
+#include <hugh/support/io/printer.hpp>
+#include <hugh/support/io/scoped_redirect.hpp>
 
 namespace hugh {
-  
+
   namespace support {
+  
+    // types, exported (class, enum, struct, union, typedef)
 
-    namespace istream  {
-    
-      // variables, exported
-  
-      // functions, exported
-    
-    } // namespace istream  {
-  
-    namespace ostream  {
-    
-      // variables, exported
-  
-      // functions, exported
+    // variables, exported (extern)
 
+    // functions, inlined (inline)
     
-    } // namespace ostream  {
+    // functions, exported (extern)
 
-    namespace iostream  {
-    
-      // variables, exported
-  
-      // functions, exported
-    
-    } // namespace iostream  {
-  
   } // namespace support {
-  
+      
 } // namespace hugh {
+
+#endif // #if !defined(HUGH_SUPPORT_IO_HPP)

@@ -2,11 +2,11 @@
 
 /**************************************************************************************************/
 /*                                                                                                */
-/* Copyright (C) 2016 University of Hull                                                          */
+/* Copyright (C) 2017 University of Hull                                                          */
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  hugh/support/io_utils.cpp                                                       */
+/*  module     :  hugh/support/io/operators.cpp                                                   */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
@@ -14,16 +14,19 @@
 
 // include i/f header
 
-#include "hugh/support/io_utils.hpp"
+#include "hugh/support/io/operators.hpp"
 
 // includes, system
 
-#include <array>  // std::array<>
-#include <bitset> // std::bitset<>
+//#include <>
 
 // includes, project
 
-// #include <>
+//#include <>
+
+#define HUGH_USE_TRACE
+#undef HUGH_USE_TRACE
+#include <hugh/support/trace.hpp>
 
 // internal unnamed namespace
 
@@ -34,38 +37,17 @@ namespace {
   // variables, internal
   
   // functions, internal
-  
+
 } // namespace {
 
 namespace hugh {
-  
+
   namespace support {
+    
+  // variables, exported
+  
+  // functions, exported
 
-    namespace istream  {
-    
-      // variables, exported
-  
-      // functions, exported
-    
-    } // namespace istream  {
-  
-    namespace ostream  {
-    
-      // variables, exported
-  
-      // functions, exported
-
-    
-    } // namespace ostream  {
-
-    namespace iostream  {
-    
-      // variables, exported
-  
-      // functions, exported
-    
-    } // namespace iostream  {
-  
   } // namespace support {
   
 } // namespace hugh {
